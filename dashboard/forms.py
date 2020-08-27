@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Garden
+from .models import Garden, Area
 
 class GardenForm(forms.ModelForm):
     class Meta:
@@ -10,4 +10,13 @@ class GardenForm(forms.ModelForm):
             'city'
         ]
 
+
+class AreaForm(forms.ModelForm):
+    class Meta:
+        model = Area
+        fields = [
+            'garden',
+            'name',
+
+        ]
 

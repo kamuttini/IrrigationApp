@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {%  block content %}
     <h1>{{ garden }}</h1>
+    <h3>{{ garden.city }}</h3>
     <ul>
     {% for area in garden.area_set.all %}
         <li>{{ area.name }}</li>
@@ -9,7 +10,7 @@
         <li>ultima irrigazione : {{ area.last_irrigation }}</li>
         </ul>
     {% endfor %}
-    
+
     </ul>
     <a href="../area_create/"> aggiungi una nuova area</a>
 {% endblock content %}
