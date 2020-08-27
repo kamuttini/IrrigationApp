@@ -1,13 +1,14 @@
 from django import forms
 
-from .models import Garden, Area
+from .models import Garden, Area, Event
+
 
 class GardenForm(forms.ModelForm):
     class Meta:
         model = Garden
         fields = [
             'name',
-            'city'
+            'city',
         ]
 
 
@@ -20,3 +21,12 @@ class AreaForm(forms.ModelForm):
 
         ]
 
+
+class EventForm(forms.ModelForm):
+    class Meta:
+        model = Event
+        fields = [
+            'name',
+            'data',
+            'type',
+        ]

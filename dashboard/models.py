@@ -33,5 +33,12 @@ class Area(models.Model):
     def was_irrigated_recently(self):
         return self.last_irrigation >= timezone.now() - datetime.timedelta(days=1)
 
+class Event(models.Model):
+    name = models.CharField(max_length=200)
+    data = models.DateTimeField('data')
+    type = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.name
 
 

@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
-from .forms import GardenForm, AreaForm
+from .forms import GardenForm, AreaForm, EventForm
 from .models import Area
 from .models import Garden
 
@@ -37,3 +37,12 @@ def area_create(request):
     }
     return render(request, 'dashboard/area_create.html', context)
 
+def event_create(request):
+    form = EventForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context = {
+        'form': form
+    }
+    return render(request, 'dashboard/event_create.html', context)
