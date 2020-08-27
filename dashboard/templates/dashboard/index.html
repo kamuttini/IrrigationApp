@@ -1,7 +1,7 @@
 {% if latest_irrigation_list %}
     <ul>
     {% for area in latest_irrigation_list %}
-        <li><a href="/dashboard/{{ area.id }}/">{{ area.name }} irrigated at {{ area.last_irrigation }}</a></li>
+        <li><a href="/{{ area.id }}/">{{ area.name }} irrigated at {{ area.last_irrigation }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
