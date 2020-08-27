@@ -1,9 +1,10 @@
-{% if latest_irrigation_list %}
+{% if garden_list %}
     <ul>
-    {% for area in latest_irrigation_list %}
-        <li><a href="/{{ area.id }}/">{{ area.name }} irrigated at {{ area.last_irrigation }}</a></li>
+    {% for garden in garden_list %}
+        <li><a href="/{{ garden.id }}/">{{ garden.name }} last rain on {{ garden.last_rain }}</a></li>
+        <p>prossima pioggia prevista fra: </p>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No irrigations are available.</p>
+    <p>Create a garden</p>
 {% endif %}
