@@ -1,9 +1,13 @@
-{% if latest_irrigation_list %}
+{% extends 'base.html' %}
+{%  block content %}
+   {% if latest_irrigation_list %}
     <ul>
-    {% for area in latest_irrigation_list %}
-        <li><a href="/{{ area.id }}/">{{ area.name }} irrigated at {{ area.last_irrigation }}</a></li>
-    {% endfor %}
+        {% for area in latest_irrigation_list %}
+            <li><a href="/{{ area.id }}/">{{ area.name }} irrigated at {{ area.last_irrigation }}</a></li>
+        {% endfor %}
     </ul>
-{% else %}
-    <p>No irrigations are available.</p>
-{% endif %}
+    {% else %}
+        <p>No irrigations are available.</p>
+    {% endif %}
+{% endblock content %}
+
