@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{%  block content %}
 {% if garden_list %}
     <ul>
     {% for garden in garden_list %}
@@ -8,3 +10,5 @@
 {% else %}
     <p>Create a garden</p>
 {% endif %}
+{% endblock content %}
+
