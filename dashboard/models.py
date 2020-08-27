@@ -15,7 +15,7 @@ class Garden(models.Model):
     name = models.CharField(max_length=200)
     position = models.IntegerField(default=0)
     city = models.ForeignKey( Location , on_delete=models.CASCADE, default=None)
-    last_rain = models.DateTimeField('date of last_rain', default=None)
+    last_rain = models.DateTimeField('date of last_rain', default="2012-01-01 00:01", editable=False)
 
     def __str__(self):
         return self.name
@@ -25,7 +25,7 @@ class Area(models.Model):
     name = models.CharField(max_length=200)
     position = models.IntegerField(default=0)
     humidity = models.IntegerField(default=0)
-    last_irrigation = models.DateTimeField('date of irrigation')
+    last_irrigation = models.DateTimeField('date of irrigation', default="2012-01-01 00:01", editable=False)
 
     def __str__(self):
         return self.name
