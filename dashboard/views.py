@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm
 from .models import Area
@@ -18,6 +18,8 @@ def garden_create(request):
     form = GardenForm(request.POST or None)
     if form.is_valid():
         form.save()
+        return HttpResponseRedirect('/')
+
 
     context = {
         'form': form
@@ -29,6 +31,7 @@ def area_create(request):
     if form.is_valid():
         form.save()
 
+        return HttpResponseRedirect('/')
     context = {
         'form': form
     }
