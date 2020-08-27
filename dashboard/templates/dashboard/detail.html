@@ -1,13 +1,16 @@
-<h1>{{ garden }}</h1>
-<ul>
-{% for area in garden.area_set.all %}
-    <li>{{ area.name }}</li>
+{% extends 'base.html' %}
+{%  block content %}
+    <h1>{{ garden }}</h1>
     <ul>
-        <li>umidità: {{ area.humidity }}%</li>
-    <li>ultima irrigazione : {{ area.last_irrigation }}</li>
+    {% for area in garden.area_set.all %}
+        <li>{{ area.name }}</li>
+        <ul>
+            <li>umidità: {{ area.humidity }}%</li>
+        <li>ultima irrigazione : {{ area.last_irrigation }}</li>
+        </ul>
+    {% endfor %}
+    
     </ul>
-{% endfor %}
-
-</ul>
-<a href="../area_create/"> aggiungi una nuova area</a>
+    <a href="../area_create/"> aggiungi una nuova area</a>
+{% endblock content %}
 
