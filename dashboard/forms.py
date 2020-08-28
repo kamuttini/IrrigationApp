@@ -18,6 +18,7 @@ class AreaForm(forms.ModelForm):
         fields = [
             'garden',
             'name',
+            'irrigation_type'
 
         ]
 

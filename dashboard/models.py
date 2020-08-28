@@ -26,6 +26,15 @@ class Area(models.Model):
     position = models.IntegerField(default=0)
     humidity = models.IntegerField(default=0)
     last_irrigation = models.DateTimeField('date of irrigation', default="2012-01-01 00:01", editable=False)
+    MANUAL= 'M'
+    CALENDAR= 'C'
+    SMART= 'S'
+    IRRIGATION = [
+        (MANUAL, 'Manuale'),
+        (CALENDAR, 'Calendario'),
+        (SMART, 'Intelligente'),
+    ]
+    irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
 
     def __str__(self):
         return self.name

@@ -7,7 +7,9 @@
         <li>{{ area.name }}</li>
         <ul>
             <li>Umidità: {{ area.humidity }}%</li>
-        <li>Ultima irrigazione : {{ area.last_irrigation }}</li>
+            <li>Ultima irrigazione : {{ area.last_irrigation }}</li>
+            <li>tipo di irrigazione: {{ area.get_irrigation_type_display }}</li>
+
         </ul>
     {% endfor %}
 
