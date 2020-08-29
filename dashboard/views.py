@@ -101,7 +101,7 @@ def weather(request):
     garden = get_object_or_404(Garden)
 
     #Cambia qui le tue coordinate
-    
+
     my_lat = "43.2446"
     my_lon = "10.3438"
 
