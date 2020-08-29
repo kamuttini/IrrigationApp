@@ -38,7 +38,7 @@ def garden_create(request):
     context = {
         'form': form
     }
-    return render(request, 'dashboard/garden_create.html', context)
+    return render(request, 'dashboard/create.html', context)
 
 
 def area_create(request):
@@ -50,7 +50,7 @@ def area_create(request):
     context = {
         'form': form
     }
-    return render(request, 'dashboard/area_create.html', context)
+    return render(request, 'dashboard/create.html', context)
 
 
 def event_create(request):
@@ -62,7 +62,7 @@ def event_create(request):
     context = {
         'form': form
     }
-    return render(request, 'dashboard/event_create.html', context)
+    return render(request, 'dashboard/create.html', context)
 
 
 def garden_delete(request, garden_id):
