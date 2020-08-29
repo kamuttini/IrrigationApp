@@ -45,6 +45,9 @@ class Garden(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return f"/{self.id}"
+
 class Area(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=200)
@@ -58,6 +61,9 @@ class Area(models.Model):
 
     def was_irrigated_recently(self):
         return self.last_irrigation >= timezone.now() - datetime.timedelta(days=1)
+
+    def get_absolute_url(self):
+        return f"/{self.id}"
 
 class Event(models.Model):
     name = models.CharField(max_length=200)
