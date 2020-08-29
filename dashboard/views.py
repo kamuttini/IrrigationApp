@@ -4,15 +4,18 @@ from .forms import GardenForm, AreaForm, EventForm
 from .models import Area
 from .models import Garden
 
+
 # Create your views here.
 def index(request):
     garden_list = Garden.objects.order_by('name')
     context = {'garden_list': garden_list}
     return render(request, 'dashboard/index.html', context)
 
+
 def detail(request, garden_id):
     garden = get_object_or_404(Garden, pk=garden_id)
-    return render(request, 'dashboard/detail.html', {'garden': garden} )
+    return render(request, 'dashboard/detail.html', {'garden': garden})
+
 
 def garden_create(request):
     form = GardenForm(request.POST or None)
@@ -20,11 +23,11 @@ def garden_create(request):
         form.save()
         return HttpResponseRedirect('/')
 
-
     context = {
         'form': form
     }
     return render(request, 'dashboard/garden_create.html', context)
+
 
 def area_create(request):
     form = AreaForm(request.POST or None)
@@ -37,12 +40,27 @@ def area_create(request):
     }
     return render(request, 'dashboard/area_create.html', context)
 
+
 def event_create(request):
     form = EventForm(request.POST or None)
     if form.is_valid():
         form.save()
 
+        return HttpResponseRedirect('/')
     context = {
         'form': form
     }
     return render(request, 'dashboard/event_create.html', context)
+
+
+def garden_delete(request, garden_id):
+    obj = get_object_or_404(Garden, pk=garden_id)
+    # POST request
+    if request.method == "POST":
+        # confirming delete
+        obj.delete()
+        return HttpResponseRedirect('/')
+    context = {
+        'object': obj
+    }
+    return render(request, "dashboard/garden_delete.html", context)

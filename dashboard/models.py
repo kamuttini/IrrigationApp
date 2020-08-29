@@ -20,6 +20,9 @@ class Garden(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return f"/{self.id}"
+
 class Area(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=200)
