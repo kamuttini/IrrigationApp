@@ -1,10 +1,8 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm, EventForm
-from .models import Area
-from .models import Garden
+from .models import Area, Garden, Location
 import requests
-
 
 
 # Create your views here.
@@ -22,7 +20,7 @@ def detail(request, garden_id):
         'garden': garden
     }
 
-    return render(request, 'dashboard/detail.html',  context)
+    return render(request, 'dashboard/detail.html', context)
 
 
 def area_detail(request, area_id):
@@ -98,27 +96,28 @@ def area_delete(request, area_id):
 
 
 def weather(request):
-    garden = get_object_or_404(Garden)
-
-    #Cambia qui le tue coordinate
-
-    my_lat = "43.2446"
-    my_lon = "10.3438"
+    location_list = Location.objects.order_by('city')
+    location = get_object_or_404(Location)
 
     url = "https://api.climacell.co/v3/weather/forecast/daily"
 
-    querystring = {"lat": my_lat, "lon": my_lon, "unit_system": "si", "start_time": "now",
-                   "fields": "precipitation,temp", "apikey": "6KIHRzYEnmDjo2nD68e6GWlHYGfbRIO2"}
+    querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
+                   "fields": "precipitation_probability,temp,weather_code",
+                   "apikey": "6KIHRzYEnmDjo2nD68e6GWlHYGfbRIO2"}
 
     response = requests.request("GET", url, params=querystring).json()
 
     weather_info = {
-        'temperature': str(response[0]['temp'][0]['min']['value']) + response[0]['temp'][0]['min']['units'],
-        'precipitation': str(response[0]['precipitation'][0]['max']['value']) + response[0]['precipitation'][0]['max']['units']
+        'temperature_min': str(response[0]['temp'][0]['min']['value']) + response[0]['temp'][0]['min']['units'],
+        'temperature_max': str(response[0]['temp'][1]['max']['value']) + response[0]['temp'][1]['max']['units'],
+        'precipitation': str(response[0]['precipitation_probability']['value']) +
+                         response[0]['precipitation_probability']['units'],
+        'description': response[0]['weather_code']['value']
     }
 
     context = {
-        'garden': garden,
+        'location_list': location_list,
+        'location': location,
         'weather_info': weather_info
     }
 

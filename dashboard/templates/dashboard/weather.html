@@ -1,10 +1,16 @@
 {% extends 'layout/base.html' %}
 {%  block content %}
     <h1>Meteo</h1>
-    <h4>{{ weather.city }}</h4>
-    <ul>
-        <li> Tempertaura: {{ weather_info.temperature }} </li>
-        <li> Precipitazioni: {{ weather_info.precipitation }} </li>
-    </ul>
-
+    {% if location_list %}
+        {% for location in location_list %}
+            <h4>{{ location.city }}</h4>
+            <ul>
+                <li> Temperatura: {{ weather_info.temperature_min }} - {{ weather_info.temperature_max }}  </li>
+                <li> Precipitazioni: {{ weather_info.precipitation }} </li>
+                <li> {{ weather_info.description }} </li>
+            </ul>
+        {% endfor %}
+    {% else %}
+        <h5>Non ci sono luoghi salvati</h5>
+    {% endif %}
 {% endblock content %}

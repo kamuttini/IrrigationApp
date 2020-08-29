@@ -25,6 +25,7 @@ IRRIGATION = [
     (SMART, 'Intelligente'),
 ]
 
+
 # Create your models here.
 class Location(models.Model):
     city = models.CharField(max_length=100)
@@ -34,19 +35,22 @@ class Location(models.Model):
     def __str__(self):
         return self.city
 
+
 class Garden(models.Model):
     name = models.CharField(max_length=200)
     position = models.IntegerField(default=0)
-    city = models.ForeignKey( Location , on_delete=models.CASCADE, default=None)
+    city = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
     last_rain = models.DateTimeField('date of last_rain', default="2012-01-01 00:01", editable=False)
     image = models.CharField(max_length=255,
-                                  choices=IMG_CHOICES,
-                                  default=PLANT)
+                             choices=IMG_CHOICES,
+                             default=PLANT)
+
     def __str__(self):
         return self.name
 
     def get_absolute_url(self):
         return f"/{self.id}"
+
 
 class Area(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
@@ -65,6 +69,7 @@ class Area(models.Model):
     def get_absolute_url(self):
         return f"/{self.id}"
 
+
 class Event(models.Model):
     name = models.CharField(max_length=200)
     data = models.DateTimeField('data')
@@ -72,5 +77,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-
