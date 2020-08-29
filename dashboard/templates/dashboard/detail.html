@@ -4,18 +4,12 @@
     <h3>{{ garden.city }}</h3>
     <ul>
     {% for area in garden.area_set.all %}
-        <li>{{ area.name }}</li>
-        <ul>
-            <li>Umidità: {{ area.humidity }}%</li>
-            <li>Ultima irrigazione : {{ area.last_irrigation }}</li>
-            <li>tipo di irrigazione: {{ area.get_irrigation_type_display }}</li>
-
-        </ul>
+        <li><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></li>
     {% endfor %}
-
     </ul>
+
     <a href="../area_create/"> Aggiungi una nuova area</a><br>
     <a href="../event_create/"> Aggiungi un nuovo evento</a><br>
-    <a href="{{ garden.get_absolute_url}}/garden_delete">Elimina il giardino</a>
+    <a href="{{ garden.get_absolute_url }}/garden_delete">Elimina il giardino</a>
 {% endblock content %}
 

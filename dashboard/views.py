@@ -17,6 +17,12 @@ def detail(request, garden_id):
     return render(request, 'dashboard/detail.html', {'garden': garden})
 
 
+def area_detail(request, area_id):
+    garden = get_object_or_404(Garden)
+    area = get_object_or_404(Area, pk=area_id)
+    return render(request, 'dashboard/area_detail.html', {'area': area, 'garden' : garden})
+
+
 def garden_create(request):
     form = GardenForm(request.POST or None)
     if form.is_valid():
@@ -64,3 +70,16 @@ def garden_delete(request, garden_id):
         'object': obj
     }
     return render(request, "dashboard/garden_delete.html", context)
+
+
+def area_delete(request, area_id):
+    obj = get_object_or_404(Area, pk=area_id)
+    # POST request
+    if request.method == "POST":
+        # confirming delete
+        obj.delete()
+        return HttpResponseRedirect('/')
+    context = {
+        'object': obj
+    }
+    return render(request, "dashboard/area_delete.html", context)
