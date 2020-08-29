@@ -26,7 +26,8 @@ def detail(request, garden_id):
 def area_detail(request, area_id):
     garden = get_object_or_404(Garden)
     area = get_object_or_404(Area, pk=area_id)
-    return render(request, 'dashboard/area_detail.html', {'area': area, 'garden' : garden})
+    context = {'area': area, 'garden': garden}
+    return render(request, 'dashboard/area_detail.html', context)
 
 
 def garden_create(request):
@@ -89,3 +90,7 @@ def area_delete(request, area_id):
         'object': obj
     }
     return render(request, "dashboard/area_delete.html", context)
+
+
+def weather(request):
+    return render(request, "dashboard/weather.html")
