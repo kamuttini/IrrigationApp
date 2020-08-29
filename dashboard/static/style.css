@@ -1,14 +1,39 @@
  /* GENERAL */
-.body-container{
+.body-container {
      height: 100vh;
  }
 
   li a {
      color: dimgrey;
  }
- /* SIDEBAR */
- #sidebar {
-     background-color: white;
+/* HEADER */
+.header {
+    position: relative;
+    height: 10vh;
+    background: rgb(160, 197, 141);
+    background: linear-gradient(90deg, rgba(160, 197, 141, 1) 10%, rgba(118, 158, 99, 1) 81%, rgba(118, 158, 99, 1) 83%);
+    z-index: 50;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    padding: 2.5vh;
+}
+
+.sidebar-toggle{
+    margin-top: 10px;
+    color: #3e3e3e;
+}
+
+/* FOOTER */
+.footer {
+    height: 6vh;
+    background: rgb(203, 243, 184);
+    background: linear-gradient(90deg, rgba(185, 226, 165, 0.9587185215883228) 24%, rgba(160, 197, 141, 0.9026961126247374) 53%, rgba(137, 181, 116, 0.8970938717283788) 97%);
+    padding: 1.5vh;
+
+}
+
+/* SIDEBAR */
+#sidebar {
+    background-color: white;
      padding: 10px;
      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      z-index: 100;
@@ -21,7 +46,7 @@
      margin-left: 25%;
  }
 
- #sidebar .active{
+#sidebar .active {
      font-weight: bold;
  }
 
