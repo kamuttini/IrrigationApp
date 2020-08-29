@@ -2,6 +2,29 @@ from django.db import models
 import datetime
 from django.utils import timezone
 
+PLANT = 'cover/balcony.jpg'
+TERRACE = 'cover/terrace.jpg'
+FLOWER = 'cover/flower.jpg'
+GARDEN = 'cover/garden.jpg'
+VEGETABLE = 'cover/vegetable.jpg'
+IMG_CHOICES = (
+    (PLANT, 'Plant'),
+    (TERRACE, 'Tree'),
+    (GARDEN, 'Garden'),
+    (VEGETABLE, 'Vegetable'),
+    (FLOWER, 'Flower'),
+
+)
+
+MANUAL = 'M'
+CALENDAR = 'C'
+SMART = 'S'
+IRRIGATION = [
+    (MANUAL, 'Manuale'),
+    (CALENDAR, 'Calendario'),
+    (SMART, 'Intelligente'),
+]
+
 # Create your models here.
 class Location(models.Model):
     city = models.CharField(max_length=100)
@@ -16,7 +39,9 @@ class Garden(models.Model):
     position = models.IntegerField(default=0)
     city = models.ForeignKey( Location , on_delete=models.CASCADE, default=None)
     last_rain = models.DateTimeField('date of last_rain', default="2012-01-01 00:01", editable=False)
-
+    image = models.CharField(max_length=255,
+                                  choices=IMG_CHOICES,
+                                  default=PLANT)
     def __str__(self):
         return self.name
 
@@ -26,14 +51,6 @@ class Area(models.Model):
     position = models.IntegerField(default=0)
     humidity = models.IntegerField(default=0)
     last_irrigation = models.DateTimeField('date of irrigation', default="2012-01-01 00:01", editable=False)
-    MANUAL= 'M'
-    CALENDAR= 'C'
-    SMART= 'S'
-    IRRIGATION = [
-        (MANUAL, 'Manuale'),
-        (CALENDAR, 'Calendario'),
-        (SMART, 'Intelligente'),
-    ]
     irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
 
     def __str__(self):

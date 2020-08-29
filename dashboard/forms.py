@@ -9,6 +9,8 @@ class GardenForm(forms.ModelForm):
         fields = [
             'name',
             'city',
+            'image',
+
         ]
 
 
@@ -18,8 +20,7 @@ class AreaForm(forms.ModelForm):
         fields = [
             'garden',
             'name',
-            'irrigation_type'
-
+            'irrigation_type',
         ]
 
 

@@ -1,11 +1,16 @@
- /* GENERAL */
+/* GENERAL */
 .body-container {
-     height: 100vh;
- }
+    height: 100vh;
+}
 
-  li a {
-     color: dimgrey;
- }
+li a {
+    color: dimgrey;
+}
+
+.main-content {
+    padding: 50px;
+}
+
 /* HEADER */
 .header {
     position: relative;
@@ -34,30 +39,40 @@
 /* SIDEBAR */
 #sidebar {
     background-color: white;
-     padding: 10px;
-     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-     z-index: 100;
- }
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    z-index: 100;
+}
 
- #sidebar ul {
-     text-decoration: none;
-     list-style: none;
-     margin-top: 30%;
-     margin-left: 25%;
- }
+#sidebar ul {
+    text-decoration: none;
+    list-style: none;
+    margin-top: 30%;
+    margin-left: 25%;
+}
 
 #sidebar .active {
-     font-weight: bold;
- }
+    font-weight: bold;
+}
 
- #logo {
-     width: 80%;
-     height: auto;
- }
+#logo {
+    width: 80%;
+    height: auto;
+}
 
- #sidebar i {
-     margin-right: 10px;
- }
+#sidebar i {
+    margin-right: 10px;
+}
+
+.create-btn {
+    background-color: #91B77E !important;
+    border-color: transparent !important;
+    transition: 0.2s;
+}
+
+.create-btn:hover {
+    background-color: #638d4c !important;
+}
 
 
 
