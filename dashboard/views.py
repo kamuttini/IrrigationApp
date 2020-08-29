@@ -25,51 +25,61 @@ def detail(request, garden_id):
 
 def area_detail(request, area_id):
     garden = get_object_or_404(Garden)
+    garden_list = Garden.objects.order_by('name')
     area = get_object_or_404(Area, pk=area_id)
     context = {
         'area': area,
-        'garden': garden
+        'garden': garden,
+        'garden_list': garden_list,
+
     }
     return render(request, 'dashboard/area_detail.html', context)
 
 
 def garden_create(request):
+    garden_list = Garden.objects.order_by('name')
     form = GardenForm(request.POST or None)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect('/')
 
     context = {
-        'form': form
+        'form': form,
+        'garden_list': garden_list,
     }
-    return render(request, 'dashboard/garden_create.html', context)
+    return render(request, 'dashboard/create.html', context)
 
 
 def area_create(request):
+    garden_list = Garden.objects.order_by('name')
     form = AreaForm(request.POST or None)
     if form.is_valid():
         form.save()
 
         return HttpResponseRedirect('/')
     context = {
-        'form': form
+        'form': form,
+        'garden_list': garden_list,
     }
-    return render(request, 'dashboard/area_create.html', context)
+    return render(request, 'dashboard/create.html', context)
 
 
 def event_create(request):
+    garden_list = Garden.objects.order_by('name')
     form = EventForm(request.POST or None)
     if form.is_valid():
         form.save()
 
         return HttpResponseRedirect('/')
     context = {
-        'form': form
+        'form': form,
+        'garden_list': garden_list,
     }
-    return render(request, 'dashboard/event_create.html', context)
+    return render(request, 'dashboard/create.html', context)
 
 
 def garden_delete(request, garden_id):
+    garden_list = Garden.objects.order_by('name')
     obj = get_object_or_404(Garden, pk=garden_id)
     # POST request
     if request.method == "POST":
@@ -77,12 +87,14 @@ def garden_delete(request, garden_id):
         obj.delete()
         return HttpResponseRedirect('/')
     context = {
-        'object': obj
+        'object': obj,
+        'garden_list': garden_list,
     }
     return render(request, "dashboard/garden_delete.html", context)
 
 
 def area_delete(request, area_id):
+    garden_list = Garden.objects.order_by('name')
     obj = get_object_or_404(Area, pk=area_id)
     # POST request
     if request.method == "POST":
@@ -90,7 +102,8 @@ def area_delete(request, area_id):
         obj.delete()
         return HttpResponseRedirect('/')
     context = {
-        'object': obj
+        'object': obj,
+        'garden_list': garden_list,
     }
     return render(request, "dashboard/area_delete.html", context)
 
@@ -122,3 +135,20 @@ def weather(request):
     }
 
     return render(request, "dashboard/weather.html", context)
+
+
+def garden_update(request, garden_id):
+    garden_list = Garden.objects.order_by('name')
+    obj = get_object_or_404(Garden, id=garden_id)
+
+    form = GardenForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/")
+
+    context = {
+        "form": form,
+        'garden_list': garden_list,
+    }
+
+    return render(request, "dashboard/update.html", context)
