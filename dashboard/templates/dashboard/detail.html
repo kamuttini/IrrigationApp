@@ -1,11 +1,12 @@
 {% extends 'layout/base.html' %}
-{%  block content %}
-    <h1>{{ garden }}</h1>
+{% block content %}
+    <h1 id="editable" style="display: inline">{{ garden }}</h1>
+    <a id="edit" href="{{ garden.get_absolute_url }}/update"><i class="fas fa-pen"></i></a>
     <h3>{{ garden.city }}</h3>
     <ul>
-    {% for area in garden.area_set.all %}
-        <li><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></li>
-    {% endfor %}
+        {% for area in garden.area_set.all %}
+            <li><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></li>
+        {% endfor %}
     </ul>
 
     <a href="../area_create/"> Aggiungi una nuova area</a><br>

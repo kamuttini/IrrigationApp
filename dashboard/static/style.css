@@ -77,5 +77,13 @@ li a {
     background-color: #638d4c !important;
 }
 
+#edit{
+    color: white;
+}
 
-
+#edit:hover{
+    color: #999999;
+}
+#editable:hover + #edit{
+    color: #999999;
+}
