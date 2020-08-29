@@ -1,6 +1,10 @@
 {% extends 'layout/base.html' %}
 {%  block content %}
     <h1>Meteo</h1>
-    <h2>{{ garden.city }}</h2>
-    <p>27.9°C</p>
+    <h4>{{ weather.city }}</h4>
+    <ul>
+        <li> {{ weather_info.temperature }} </li>
+        <li> {{ weather_info.precipitation }} </li>
+    </ul>
+
 {% endblock content %}

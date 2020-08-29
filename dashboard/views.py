@@ -3,6 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm, EventForm
 from .models import Area
 from .models import Garden
+import requests
+
 
 
 # Create your views here.
@@ -26,7 +28,10 @@ def detail(request, garden_id):
 def area_detail(request, area_id):
     garden = get_object_or_404(Garden)
     area = get_object_or_404(Area, pk=area_id)
-    context = {'area': area, 'garden': garden}
+    context = {
+        'area': area,
+        'garden': garden
+    }
     return render(request, 'dashboard/area_detail.html', context)
 
 
@@ -93,4 +98,28 @@ def area_delete(request, area_id):
 
 
 def weather(request):
-    return render(request, "dashboard/weather.html")
+    garden = get_object_or_404(Garden)
+
+    #Cambia qui le tue coordinate
+    
+    my_lat = "43.2446"
+    my_lon = "10.3438"
+
+    url = "https://api.climacell.co/v3/weather/forecast/daily"
+
+    querystring = {"lat": my_lat, "lon": my_lon, "unit_system": "si", "start_time": "now",
+                   "fields": "precipitation,temp", "apikey": "6KIHRzYEnmDjo2nD68e6GWlHYGfbRIO2"}
+
+    response = requests.request("GET", url, params=querystring).json()
+
+    weather_info = {
+        'temperature': str(response[0]['temp'][0]['min']['value']) + response[0]['temp'][0]['min']['units'],
+        'precipitation': str(response[0]['precipitation'][0]['max']['value']) + response[0]['precipitation'][0]['max']['units']
+    }
+
+    context = {
+        'garden': garden,
+        'weather_info': weather_info
+    }
+
+    return render(request, "dashboard/weather.html", context)
