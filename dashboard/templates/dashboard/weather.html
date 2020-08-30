@@ -1,4 +1,5 @@
 {% extends 'layout/base.html' %}
+{% load static %}
 {%  block content %}
     <h1>Meteo</h1>
     {% if location_list %}
@@ -9,7 +10,10 @@
                 <li> Precipitazioni: {{ weather_info.precipitation }} </li>
                 <li> {{ weather_info.description }} </li>
             </ul>
+
         {% endfor %}
+
+        <img class="weather-image-icon" src="{% static icon_path %}" alt="Weather icon">
     {% else %}
         <h5>Non ci sono luoghi salvati</h5>
     {% endif %}

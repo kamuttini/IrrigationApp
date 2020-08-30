@@ -6,6 +6,55 @@ import requests
 
 
 # Create your views here.
+
+def translate_weather(list):
+    if list['description'] == 'rain':
+        list['description'] = "Pioggia"
+    if list['description'] == 'rain_heavy':
+        list['description'] = "Pioggia forte"
+    if list['description'] == 'rain_light':
+        list['description'] = "Pioggia leggera"
+    if list['description'] == 'freezing_rain_heavy':
+        list['description'] = "Pioggia ghiacciata forte"
+    if list['description'] == 'freezing_rain':
+        list['description'] = "Pioggia ghiacciata"
+    if list['description'] == 'freezing_rain_light':
+        list['description'] = "Pioggia ghiacciata leggera"
+    if list['description'] == 'freezing_drizzle':
+        list['description'] = "Pioggerella ghiacciata"
+    if list['description'] == 'drizzle':
+        list['description'] = "Pioggerella"
+    if list['description'] == 'ice_pellets_heavy':
+        list['description'] = "Grandinata forte"
+    if list['description'] == 'ice_pellets':
+        list['description'] = "Grandinata"
+    if list['description'] == 'ice_pellets_light':
+        list['description'] = "Grandinata leggera"
+    if list['description'] == 'snow_heavy':
+        list['description'] = "	Neve forte"
+    if list['description'] == 'snow':
+        list['description'] = "Neve"
+    if list['description'] == 'snow_light':
+        list['description'] = "Neve leggera"
+    if list['description'] == 'flurries':
+        list['description'] = "Raffica di neve"
+    if list['description'] == 'tstorm':
+        list['description'] = "Temporale"
+    if list['description'] == 'fog_light':
+        list['description'] = "Nebbia leggera"
+    if list['description'] == 'fog':
+        list['description'] = "Nebbia"
+    if list['description'] == 'cloudy':
+        list['description'] = "Nuvoloso"
+    if list['description'] == 'mostly_cloudy':
+        list['description'] = "Abbastanza nuvoloso"
+    if list['description'] == 'partly_cloudy':
+        list['description'] = "Parzialmente nuvoloso"
+    if list['description'] == 'clear':
+        list['description'] = "Sereno"
+    if list['description'] == 'mostly_clear':
+        list['description'] = "Abbastanza sereno"
+
 def index(request):
     garden_list = Garden.objects.order_by('name')
     context = {'garden_list': garden_list}
@@ -109,6 +158,10 @@ def area_delete(request, area_id):
 
 
 def weather(request):
+    garden_list = Garden.objects.order_by('name')
+    garden = get_object_or_404(Garden)
+
+
     location_list = Location.objects.order_by('city')
     location = get_object_or_404(Location)
 
@@ -128,10 +181,19 @@ def weather(request):
         'description': response[0]['weather_code']['value']
     }
 
+    weather_icons_path = "images/weather icons/color/"
+    image_icon = weather_info['description'] + ".svg"
+    icon_path = weather_icons_path + image_icon
+
+    translate_weather(weather_info)
+
     context = {
         'location_list': location_list,
         'location': location,
-        'weather_info': weather_info
+        'garden': garden,
+        'garden_list': garden_list,
+        'weather_info': weather_info,
+        'icon_path': icon_path
     }
 
     return render(request, "dashboard/weather.html", context)
@@ -152,3 +214,4 @@ def garden_update(request, garden_id):
     }
 
     return render(request, "dashboard/update.html", context)
+
