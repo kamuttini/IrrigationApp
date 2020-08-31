@@ -2,18 +2,19 @@
 {% load static %}
 {%  block content %}
     <h1>Meteo</h1>
-    {% if location_list %}
-        {% for location in location_list %}
-            <h4>{{ location.city }}</h4>
+    {% if garden_list %}
+        {% for item in weather_info %}
+            <h4>{{ garden.city }}</h4>
             <ul>
-                <li> Temperatura: {{ weather_info.temperature_min }} - {{ weather_info.temperature_max }}  </li>
-                <li> Precipitazioni: {{ weather_info.precipitation }} </li>
-                <li> {{ weather_info.description }} </li>
+            <h3> {{ item.weather_info.location }}</h3>
+                <li> Temperatura: {{ item.weather_info.temperature_min }} - {{ item.weather_info.temperature_max }}  </li>
+                <li> Precipitazioni: {{ item.weather_info.precipitation }} </li>
+                <li> {{item.weather_info.description }} </li>
             </ul>
+        <img class="weather-image-icon" src="{% static item.icon_path %}" alt="Weather icon">
 
         {% endfor %}
 
-        <img class="weather-image-icon" src="{% static icon_path %}" alt="Weather icon">
     {% else %}
         <h5>Non ci sono luoghi salvati</h5>
     {% endif %}
