@@ -12,8 +12,8 @@ def get_weather_info(location):
 
     weather_info = {
         'location': location,
-        'temperature_min': str(response[0]['temp'][0]['min']['value']) + response[0]['temp'][0]['min']['units'],
-        'temperature_max': str(response[0]['temp'][1]['max']['value']) + response[0]['temp'][1]['max']['units'],
+        'temperature_min': str(response[0]['temp'][0]['min']['value']) + '° ' + response[0]['temp'][0]['min']['units'],
+        'temperature_max': str(response[0]['temp'][1]['max']['value']) + '° ' + response[0]['temp'][1]['max']['units'],
         'precipitation': str(response[0]['precipitation_probability']['value']) +
                          response[0]['precipitation_probability']['units'],
         'description': response[0]['weather_code']['value']
