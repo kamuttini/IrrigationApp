@@ -94,23 +94,44 @@ li a {
    padding-top: 20px;
 }
 
-.weather-image-icon {
-    height: 50px;
-    position: relative;
+.weather_days{
 
-}
-
-.weather_descr{
-    display: block;
-    position: relative;
-    top: -50px;
-    left: 50px;
-}
-
-
-
-.weather_box .weather-info_list{
+    width: 900px;
     padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
     list-style: none;
 }
 
+.weather_days li{
+    display: block;
+}
+
+.weather_days .day{
+    border-left: 1px rgba(185, 226, 165, 0.6) solid;
+}
+
+.weather_days .day:first-child{
+    border: 0;
+}
+
+.weather_days .weather_info_list{
+    text-align: center;
+    height: 100%;
+    padding: 20px 40px 20px 40px;
+}
+
+.weather_info_list li{
+    font-size: 13px;
+    font-weight: lighter;
+    text-align: center;
+    color: dimgray;
+    padding: 2px 0 4px 0;
+}
+
+.weather_info_list .weather_description{
+    font-size: 15px;
+    font-weight: bold;
+}
