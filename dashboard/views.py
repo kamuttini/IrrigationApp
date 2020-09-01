@@ -23,12 +23,10 @@ def detail(request, garden_id):
 
 
 def area_detail(request, area_id):
-    garden = get_object_or_404(Garden)
     garden_list = Garden.objects.order_by('name')
     area = get_object_or_404(Area, pk=area_id)
     context = {
         'area': area,
-        'garden': garden,
         'garden_list': garden_list,
 
     }
