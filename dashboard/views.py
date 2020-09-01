@@ -113,12 +113,13 @@ def weather(request):
 
     for garden in garden_list:
         if garden.city not in locations:
-            weather_list.append(get_weather_info(garden.city))
+            for i in range(5):
+                weather_list.append(get_weather_info(garden.city, i))
             locations.append(garden.city)
 
     context = {
         'garden_list': garden_list,
-        'weather_info': weather_list,
+        'weather_list': weather_list,
     }
     return render(request, "dashboard/weather.html", context)
 
