@@ -121,7 +121,7 @@ def weather(request):
 
     context = {
         'garden_list': garden_list,
-        'weather_info': weather_list,
+        'weather_list': weather_list,
     }
     return render(request, "dashboard/weather.html", context)
 
