@@ -113,6 +113,11 @@ li a {
     border-left: 1px rgba(185, 226, 165, 0.6) solid;
 }
 
+.weather_image_icon{
+    height: 80px;
+    width: 80px;
+}
+
 .weather_days .day:first-child{
     border: 0;
 }

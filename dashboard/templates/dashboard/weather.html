@@ -1,26 +1,26 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-    <h1>Meteo</h1>
+   <h1>Meteo</h1>
     <div class="weather_box">
         {% if garden_list %}
             {% for garden in garden_list %}
-                <h3>{{ garden.city }}</h3>
+                <h3> {{ garden.city }} </h3>
+                 <ul class="weather_days">
+                    {% for item in weather_list %}
+                        <li class="day">
+                            <ul class="weather_info_list">
+                                <li class="day_of_week">{{ item.weather_info.day }}</li>
+                                <img class="weather_image_icon" src="https://via.placeholder.com/107" alt="Weather icon">
+                                <h6 class="weather_description">{{ item.weather_info.location }}</h6>
+                                <li style="color:red"><b>28°C</b></li>
+                                <li style="color:dodgerblue"><b>19°C</b></li>
+                                <li><b>Precipitazioni: 10%</b></li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
             {% endfor %}
-            <ul class="weather_days">
-                {% for item in weather_list %}
-                    <li class="day">
-                        <ul class="weather_info_list">
-                            <li class="day_of_week">{{ item.weather_info.day }}</li>
-                            <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
-                            <li class="weather_description">{{ item.weather_info.description }}</li>
-                            <li style="color:#de2632"><b>{{ item.weather_info.temperature_max }}</b></li>
-                            <li style="color:#1fa8de"><b>{{ item.weather_info.temperature_min }}</b></li>
-                            <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
         {% else %}
             <h5>Non ci sono luoghi salvati</h5>
         {% endif %}
@@ -33,22 +33,22 @@
     <div class="weather_box">
         {% if garden_list %}
             {% for garden in garden_list %}
-                <h3>Castellina Marittima</h3>
+                <h3>{{ garden.city }}</h3>
+                 <ul class="weather_days">
+                    {% for item in weather_list %}
+                        <li class="day">
+                            <ul class="weather_info_list">
+                                <li class="day_of_week"><b>Giorno</b></li>
+                                <img class="weather_image_icon" src="https://via.placeholder.com/107" alt="Weather icon">
+                                <h6 class="weather_description">Sereno</h6>
+                                <li style="color:red"><b>28°C</b></li>
+                                <li style="color:dodgerblue"><b>19°C</b></li>
+                                <li><b>Precipitazioni: 10%</b></li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
             {% endfor %}
-            <ul class="weather_days">
-                {% for item in weather_list %}
-                    <li class="day">
-                        <ul class="weather_info_list">
-                            <li class="day_of_week"><b>Giorno</b></li>
-                            <img class="weather_image_icon" src="https://via.placeholder.com/107" alt="Weather icon">
-                            <h6 class="weather_description">Sereno</h6>
-                            <li style="color:red"><b>28°C</b></li>
-                            <li style="color:dodgerblue"><b>19°C</b></li>
-                            <li><b>Precipitazioni: 10%</b></li>
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
         {% else %}
             <h5>Non ci sono luoghi salvati</h5>
         {% endif %}
@@ -60,21 +60,21 @@
         {% if garden_list %}
             {% for garden in garden_list %}
                 <h3>{{ garden.city }}</h3>
+                <ul class="weather_days">
+                    {% for item in weather_list %}
+                        <li class="day">
+                            <ul class="weather_info_list">
+                                <li class="day_of_week">{{ item.weather_info.day }}</li>
+                                <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
+                                <li class="weather_description">{{ item.weather_info.description }}</li>
+                                <li style="color:#de2632"><b>{{ item.weather_info.temperature_max }}</b></li>
+                                <li style="color:#1fa8de"><b>{{ item.weather_info.temperature_min }}</b></li>
+                                <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
+                            </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
             {% endfor %}
-            <ul class="weather_days">
-                {% for item in weather_list %}
-                    <li class="day">
-                        <ul class="weather_info_list">
-                            <li class="day_of_week">{{ item.weather_info.day }}</li>
-                            <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
-                            <li class="weather_description">{{ item.weather_info.description }}</li>
-                            <li style="color:#de2632"><b>{{ item.weather_info.temperature_max }}</b></li>
-                            <li style="color:#1fa8de"><b>{{ item.weather_info.temperature_min }}</b></li>
-                            <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
-                        </ul>
-                    </li>
-                {% endfor %}
-            </ul>
         {% else %}
             <h5>Non ci sono luoghi salvati</h5>
         {% endif %}

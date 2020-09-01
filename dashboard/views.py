@@ -110,10 +110,11 @@ def area_delete(request, area_id):
 def weather(request):
     from .methods import get_weather_info
     garden_list = Garden.objects.order_by('name')
-    weather_list = []
+
     locations = []
 
     for garden in garden_list:
+        weather_list = []
         if garden.city not in locations:
             for i in range(5):
                 weather_list.append(get_weather_info(garden.city, i))
