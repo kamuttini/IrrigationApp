@@ -1,0 +1,43 @@
+{% extends "layout/base-fullscreen.html" %}
+
+{% block title %} Login {% endblock title %}
+
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="col-6 offset-3" style="margin-top: 15%">
+        {% if msg %}
+            <h4>{{ msg | safe }}</h4>
+        {% endif %}
+        <h4> Inserisci le tue credenziali per accedere o<br> crea un nuovo account</h4>
+
+        <form method="post" action="">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label class="text-normal text-dark">Username</label>
+                {{ form.username }}
+            </div>
+
+            <div class="form-group">
+                <label class="text-normal text-dark">Password</label>
+                {{ form.password }}
+            </div>
+
+            <div class="form-group">
+                <div class="peers ai-c jc-sb fxw-nw">
+                    <div class="peer">
+                        <button type="submit" name="login" class="btn btn-primary">Login</button>
+
+                        &nbsp; &nbsp;
+                        <span class="text-small font-weight-semibold">Not a member?</span>
+                        <a href="{% url 'register' %}" class="text-black text-small">Register</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock content %}

@@ -23,7 +23,8 @@
             </a>
         </li>
         <li>
-            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == "detail" %}active {% endif %}" data-toggle="collapse" href="#collapseExample" role="button"
+            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == "detail" %}active {% endif %}"
+               data-toggle="collapse" href="#collapseExample" role="button"
                aria-expanded="false" aria-controls="collapseExample">
                 <i class="fas fa-seedling"></i>
                 <span class="nav-text">Impianti</span>
@@ -32,7 +33,7 @@
                 {% if garden_list %}
 
                     {% for garden in garden_list %}
-                        <a  class="nav-link" href=" /{{ garden.id }}/">{{ garden.name }} </a>
+                        <a class="nav-link" href=" /{{ garden.id }}/">{{ garden.name }} </a>
                     {% endfor %}
                 {% else %}
                     <p> Non ci sono giardini salvati</p>
@@ -45,6 +46,14 @@
                 <span class="nav-text">Impostazioni</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span class="nav-text">Logout</span>
+            </a>
+        </li>
+
+
     </ul>
 
 </nav>

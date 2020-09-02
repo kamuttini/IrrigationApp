@@ -19,4 +19,6 @@ from django.urls import include, path
 urlpatterns = [
     path('', include('dashboard.urls')),
     path('admin/', admin.site.urls),
+    path("authentication/", include("authentication.urls")),  # Auth routes - login / register
+
 ]
