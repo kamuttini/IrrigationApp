@@ -1,16 +1,20 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm, EventForm
 from .models import Area, Garden
-
+from notification.models import Notification
 
 # Create your views here.
+@login_required(login_url="/authentication/login/")
 def index(request):
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden_list = Garden.objects.order_by('name')
-    context = {'garden_list': garden_list}
+    context = {'garden_list': garden_list,
+               'notifications': n}
     return render(request, 'dashboard/index.html', context)
 
-
+@login_required(login_url="/authentication/login/")
 def detail(request, garden_id):
     garden_list = Garden.objects.order_by('name')
     garden = get_object_or_404(Garden, pk=garden_id)
@@ -21,20 +25,18 @@ def detail(request, garden_id):
 
     return render(request, 'dashboard/detail.html', context)
 
-
+@login_required(login_url="/authentication/login/")
 def area_detail(request, area_id):
-    garden = get_object_or_404(Garden)
     garden_list = Garden.objects.order_by('name')
     area = get_object_or_404(Area, pk=area_id)
     context = {
         'area': area,
-        'garden': garden,
         'garden_list': garden_list,
 
     }
     return render(request, 'dashboard/area_detail.html', context)
 
-
+@login_required(login_url="/authentication/login/")
 def garden_create(request):
     garden_list = Garden.objects.order_by('name')
     form = GardenForm(request.POST or None)
@@ -48,7 +50,7 @@ def garden_create(request):
     }
     return render(request, 'dashboard/create.html', context)
 
-
+@login_required(login_url="/authentication/login/")
 def area_create(request):
     garden_list = Garden.objects.order_by('name')
     form = AreaForm(request.POST or None)
@@ -62,7 +64,7 @@ def area_create(request):
     }
     return render(request, 'dashboard/create.html', context)
 
-
+@login_required(login_url="/authentication/login/")
 def event_create(request):
     garden_list = Garden.objects.order_by('name')
     form = EventForm(request.POST or None)
@@ -76,7 +78,7 @@ def event_create(request):
     }
     return render(request, 'dashboard/create.html', context)
 
-
+@login_required(login_url="/authentication/login/")
 def garden_delete(request, garden_id):
     garden_list = Garden.objects.order_by('name')
     obj = get_object_or_404(Garden, pk=garden_id)
@@ -91,7 +93,7 @@ def garden_delete(request, garden_id):
     }
     return render(request, "dashboard/delete.html", context)
 
-
+@login_required(login_url="/authentication/login/")
 def area_delete(request, area_id):
     garden_list = Garden.objects.order_by('name')
     obj = get_object_or_404(Area, pk=area_id)
@@ -106,7 +108,7 @@ def area_delete(request, area_id):
     }
     return render(request, "dashboard/delete.html", context)
 
-
+@login_required(login_url="/authentication/login/")
 def weather(request):
     from .methods import get_weather_info
     garden_list = Garden.objects.order_by('name')
@@ -126,7 +128,7 @@ def weather(request):
     }
     return render(request, "dashboard/weather.html", context)
 
-
+@login_required(login_url="authentication/login/")
 def garden_update(request, garden_id):
     garden_list = Garden.objects.order_by('name')
     obj = get_object_or_404(Garden, id=garden_id)

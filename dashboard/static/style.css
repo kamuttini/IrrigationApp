@@ -27,6 +27,28 @@ li a {
     color: #3e3e3e;
 }
 
+.white{
+    color: #ffffff;
+}
+
+.notification{
+    position: relative;
+    left: 30px;
+}
+
+.notification-count{
+    position: absolute;
+    width: 30px;
+    height: 20px;
+    background: #a84909;
+    border-radius: 13px;
+    margin-top: 20px;
+    margin-right: -10px;
+    cursor: pointer;
+    color: white;
+    font-weight: 900;
+    text-align: center;
+}
 /* FOOTER */
 .footer {
     height: 6vh;
