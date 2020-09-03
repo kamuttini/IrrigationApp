@@ -1,9 +1,27 @@
 <div class="row header">
-    <div class="col-1 ">
-            <a href="javascript:void(0)" onclick="toggleNav()"><i class="fas fa-bars fa-lg sidebar-toggle"></i></a>
+    <div class="col-1">
+        <a href="javascript:void(0)" onclick="toggleNav()"><i class="fas fa-bars fa-lg sidebar-toggle"></i></a>
     </div>
-    <div class="col-3 se">
-            <input class="form-control" type="text" placeholder="Search...">
+    <div class="col-3">
+        <input class="form-control" type="text" placeholder="Search...">
+    </div>
+    <div class="col-8">
+        <div class="row justify-content-end" style="padding-right: 15px">
+            <i class="fas fa-bell fa-2x white"></i>
+            {% if notifications.count > 0 %}
+                <span class="notification-count" role="button" type="button" class="btn" data-toggle="dropdown">{{ notifications.count }}</span>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    {% for n in notifications %}
+                        <span class="dropdown-item">
+                            <h5> {{ n.title }}</h5>
+                                <p>{{ n.message }}</p>
+                        </span>
+                    {% endfor %}
+                <span  class="dropdown-item"><a href="/notification/delete/">Delete Notifications</a></span>
+                </div>
+            {% endif %}
+
+        </div>
 
     </div>
 </div>

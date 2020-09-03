@@ -1,15 +1,17 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm, EventForm
 from .models import Area, Garden
-
+from notification.models import Notification
 
 # Create your views here.
 @login_required(login_url="/authentication/login/")
 def index(request):
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden_list = Garden.objects.order_by('name')
-    context = {'garden_list': garden_list}
+    context = {'garden_list': garden_list,
+               'notifications': n}
     return render(request, 'dashboard/index.html', context)
 
 @login_required(login_url="/authentication/login/")
