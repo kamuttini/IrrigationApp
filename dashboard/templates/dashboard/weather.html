@@ -4,11 +4,10 @@
     <h1>Meteo</h1>
     <div class="weather_box">
         {% if garden_list %}
-            {% for garden in garden_list %}
-                <h3>{{ garden.city }}</h3>
-            {% endfor %}
-            <ul class="weather_days">
-                {% for item in weather_list %}
+            {% for item in weather_list %}
+                <h3>{{ item.0 }}</h3>
+                <ul class="weather_days">
+                {% for item in item.1 %}
                     <li class="day">
                         <ul class="weather_info_list">
                             <li class="day_of_week">{{ item.weather_info.day }}</li>
@@ -19,8 +18,10 @@
                             <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
                         </ul>
                     </li>
-                {% endfor %}
-            </ul>
+                    {% endfor %}
+                </ul>
+
+            {% endfor %}
         {% else %}
             <h5>Non ci sono luoghi salvati</h5>
         {% endif %}
