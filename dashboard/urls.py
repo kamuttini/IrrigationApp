@@ -13,6 +13,4 @@ urlpatterns = [
     path('<int:area_id>/area_delete/', views.area_delete, name='area_delete'),
     path('<int:area_id>/area_detail/', views.area_detail, name='area_detail'),
     path('weather/', views.weather, name='weather')
-
-
 ]

@@ -1,18 +1,34 @@
 {% extends 'layout/base.html' %}
+{% load static %}
 {% block content %}
     <h1 id="editable" style="display: inline">{{ garden }}</h1>
     <a id="edit" href="{{ garden.get_absolute_url }}/update"><i class="fas fa-pen"></i></a>
     <h3>{{ garden.city }}</h3>
-    <ul>
+    <ul class="area_name">
         {% for area in garden.area_set.all %}
             <li><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></li>
         {% endfor %}
     </ul>
 
-    <a href="../area_create/"> Aggiungi una nuova area</a><br>
+    <br><a href="../area_create/"> Aggiungi una nuova area</a><br>
     <a href="../event_create/"> Aggiungi un nuovo evento</a><br>
     <a href="{{ garden.get_absolute_url }}/garden_delete">Elimina il giardino</a>
-{% endblock content %}
 
+   <div class="weather_box_garden">
+         <ul class="weather_days">
+            {% for item in weather_info %}
+                <li class="day">
+                    <ul class="weather_info_list">
+                        <li class="day_of_week"><b>{{ item.weather_info.day }}</b></li>
+                        <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
+                        <li class="weather_description">{{ item.weather_info.description }}</li>
+                        <li style="color:orange"><b> {{ item.weather_info.temp }}</b></li>
+                        <li><b>Precipitazioni: {{ item.weather_info.precipitation }} </b></li>
+                    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}
 
 

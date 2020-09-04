@@ -110,6 +110,32 @@ li a {
     color: #999999;
 }
 
+/*GARDEN_DETAIL*/
+
+.area_name{
+    display: inline-block;
+    width: 300px;
+    margin:0;
+}
+
+.weather_box_garden{
+    float: left;
+    font-weight: normal;
+    position: fixed;
+    margin:0;
+    width: 250px;
+    display: block;
+    left:70%;
+    top: 25%;
+}
+
+.weather_box_garden .weather_days{
+    width: 200px;
+    border: 1px rgba(185, 226, 165, 0.6) solid;
+    border-radius: 5px;
+}
+
+
 /* WEATHER */
 
 .weather_box{
@@ -117,7 +143,6 @@ li a {
 }
 
 .weather_days{
-
     width: 900px;
     padding: 0;
     margin: 0;
@@ -132,6 +157,7 @@ li a {
 }
 
 .weather_days .day{
+    min-width: 200px;
     border-left: 1px rgba(185, 226, 165, 0.6) solid;
 }
 

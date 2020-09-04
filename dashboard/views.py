@@ -5,6 +5,7 @@ from .forms import GardenForm, AreaForm, EventForm
 from .models import Area, Garden
 from notification.models import Notification
 
+
 # Create your views here.
 @login_required(login_url="/authentication/login/")
 def index(request):
@@ -14,16 +15,21 @@ def index(request):
                'notifications': n}
     return render(request, 'dashboard/index.html', context)
 
+
 @login_required(login_url="/authentication/login/")
 def detail(request, garden_id):
+    from .methods import get_weather_info
     garden_list = Garden.objects.order_by('name')
     garden = get_object_or_404(Garden, pk=garden_id)
+    weather_list = [get_weather_info(garden.city, "hourly")]
     context = {
         'garden_list': garden_list,
-        'garden': garden
+        'garden': garden,
+        'weather_info': weather_list
     }
 
     return render(request, 'dashboard/detail.html', context)
+
 
 @login_required(login_url="/authentication/login/")
 def area_detail(request, area_id):
@@ -35,6 +41,7 @@ def area_detail(request, area_id):
 
     }
     return render(request, 'dashboard/area_detail.html', context)
+
 
 @login_required(login_url="/authentication/login/")
 def garden_create(request):
@@ -50,6 +57,7 @@ def garden_create(request):
     }
     return render(request, 'dashboard/create.html', context)
 
+
 @login_required(login_url="/authentication/login/")
 def area_create(request):
     garden_list = Garden.objects.order_by('name')
@@ -64,6 +72,7 @@ def area_create(request):
     }
     return render(request, 'dashboard/create.html', context)
 
+
 @login_required(login_url="/authentication/login/")
 def event_create(request):
     garden_list = Garden.objects.order_by('name')
@@ -77,6 +86,7 @@ def event_create(request):
         'garden_list': garden_list,
     }
     return render(request, 'dashboard/create.html', context)
+
 
 @login_required(login_url="/authentication/login/")
 def garden_delete(request, garden_id):
@@ -93,6 +103,7 @@ def garden_delete(request, garden_id):
     }
     return render(request, "dashboard/delete.html", context)
 
+
 @login_required(login_url="/authentication/login/")
 def area_delete(request, area_id):
     garden_list = Garden.objects.order_by('name')
@@ -108,21 +119,21 @@ def area_delete(request, area_id):
     }
     return render(request, "dashboard/delete.html", context)
 
+
 @login_required(login_url="/authentication/login/")
 def weather(request):
     from .methods import get_weather_info
     garden_list = Garden.objects.order_by('name')
-
+    weather_list = []
     locations = []
 
     for garden in garden_list:
-        weather_list = []
-        if garden.city not in locations:
-            locations.append(garden.city)
+         if garden.city not in locations:
+             locations.append(garden.city)
     for city in locations:
         five_days_weather = []
         for j in range(5):
-            five_days_weather.append(get_weather_info(city, j))
+            five_days_weather.append(get_weather_info(city, "daily", j))
         weather_list.append([city.city, five_days_weather])
 
     print(weather_list)
@@ -132,6 +143,7 @@ def weather(request):
         'weather_list': weather_list,
     }
     return render(request, "dashboard/weather.html", context)
+
 
 @login_required(login_url="authentication/login/")
 def garden_update(request, garden_id):

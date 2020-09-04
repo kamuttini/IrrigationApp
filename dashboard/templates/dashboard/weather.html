@@ -7,27 +7,25 @@
             {% for item in weather_list %}
                 <h3>{{ item.0 }}</h3>
                 <ul class="weather_days">
-                {% for item in item.1 %}
-                    <li class="day">
-                        <ul class="weather_info_list">
-                            <li class="day_of_week">{{ item.weather_info.day }}</li>
-                            <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
-                            <li class="weather_description">{{ item.weather_info.description }}</li>
-                            <li style="color:#de2632"><b>{{ item.weather_info.temperature_max }}</b></li>
-                            <li style="color:#1fa8de"><b>{{ item.weather_info.temperature_min }}</b></li>
-                            <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
-                        </ul>
-                    </li>
+                    {% for item in item.1 %}
+                        <li class="day">
+                            <ul class="weather_info_list">
+                                <li class="day_of_week">{{ item.weather_info.day }}</li>
+                                <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
+                                <li class="weather_description">{{ item.weather_info.description }}</li>
+                                <li style="color:#de2632"><b>{{ item.weather_info.temperature_max }}</b></li>
+                                <li style="color:#1fa8de"><b>{{ item.weather_info.temperature_min }}</b></li>
+                                <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
+                            </ul>
+                        </li>
                     {% endfor %}
                 </ul>
-
             {% endfor %}
         {% else %}
             <h5>Non ci sono luoghi salvati</h5>
         {% endif %}
     </div>
 {% endblock content %}
-
 
 <!--
 <h1>Meteo</h1>
