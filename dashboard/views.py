@@ -118,9 +118,14 @@ def weather(request):
     for garden in garden_list:
         weather_list = []
         if garden.city not in locations:
-            for i in range(5):
-                weather_list.append(get_weather_info(garden.city, i))
             locations.append(garden.city)
+    for city in locations:
+        five_days_weather = []
+        for j in range(5):
+            five_days_weather.append(get_weather_info(city, j))
+        weather_list.append([city.city, five_days_weather])
+
+    print(weather_list)
 
     context = {
         'garden_list': garden_list,
