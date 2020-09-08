@@ -23,3 +23,14 @@ WEATHER ={
     'clear': "Sereno",
     'mostly_clear': "Abbastanza sereno",
 }
+
+
+WEEK ={
+    'Mon': "Lun",
+    'Tue': "Mar",
+    'Wed': "Mer",
+    'Thu': "Gio",
+    'Fri': "Ven",
+    'Sat': "Sab",
+    'Sun': "Dom"
+}

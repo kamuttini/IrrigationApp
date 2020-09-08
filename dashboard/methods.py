@@ -1,4 +1,4 @@
-from .static.translation import WEATHER
+from .static.translation import WEATHER, WEEK
 import requests
 import datetime as DT
 
@@ -19,7 +19,7 @@ def get_weather_info(location, forecast_type, day=1):
         weather_info = {
             'location': location,
 
-            'day': day_of_week.strftime("%a"),
+            'day': WEEK[day_of_week.strftime("%a")],
 
             'temperature_min': str(response[day - 1]['temp'][0]['min']['value']) + '°' +
                                response[day - 1]['temp'][0]['min'][
@@ -34,7 +34,7 @@ def get_weather_info(location, forecast_type, day=1):
     if forecast_type == "hourly":
         weather_info = {
             'location': location,
-            'day': today.strftime("%a"),
+            'day': WEEK[today.strftime("%a")],
             'temp': str(response[day - 1]['temp']['value']) + '°' + response[day - 1]['temp']['units'],
             'precipitation': str(response[day - 1]['precipitation_probability']['value']) +
                              response[day - 1]['precipitation_probability']['units'],
