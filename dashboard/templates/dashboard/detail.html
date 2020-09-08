@@ -3,27 +3,30 @@
 {% block content %}
     <h1 id="editable" style="display: inline">{{ garden }}</h1>
     <a id="edit" href="{{ garden.get_absolute_url }}/update"><i class="fas fa-pen"></i></a>
-    <h3>{{ garden.city }}</h3>
-    <ul class="area_name">
-        {% for area in garden.area_set.all %}
-            <li><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></li>
-        {% endfor %}
-    </ul>
+    <div class="garden-info>">
+        <h3 class="garden-city">{{ garden.city }}</h3>
+        <ul class="area-name">
+            {% for area in garden.area_set.all %}
+                <div class="garden-area"><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></div>
+            {% endfor %}
+        </ul>
+    </div>
+    <div class="garden-options">
+        <a class="btn btn-primary create-btn" href="../area_create/"> Aggiungi una nuova area</a>
+        <a class="btn btn-primary create-btn"href="../event_create/"> Aggiungi un nuovo evento</a>
+        <a class="btn btn-primary create-btn-delete" href="{{ garden.get_absolute_url }}/garden_delete">Elimina il giardino</a>
+    </div>
 
-    <br><a href="../area_create/"> Aggiungi una nuova area</a><br>
-    <a href="../event_create/"> Aggiungi un nuovo evento</a><br>
-    <a href="{{ garden.get_absolute_url }}/garden_delete">Elimina il giardino</a>
-
-   <div class="weather_box_garden">
-         <ul class="weather_days">
+   <div class="weather-box-garden">
+         <ul class="weather-days">
             {% for item in weather_info %}
                 <li class="day">
-                    <ul class="weather_info_list">
+                    <ul class="weather-info-list">
                         <li class="day_of_week"><b>{{ item.weather_info.day }}</b></li>
-                        <img class="weather_image_icon" src="{% static item.icon_path %}" alt="Weather icon">
-                        <li class="weather_description">{{ item.weather_info.description }}</li>
-                        <li style="color:orange"><b> {{ item.weather_info.temp }}</b></li>
-                        <li><b>Precipitazioni: {{ item.weather_info.precipitation }} </b></li>
+                        <img class="weather-image-icon" src="{% static item.icon_path %}" alt="Weather icon">
+                        <li class="weather-description">{{ item.weather_info.description }}</li>
+                        <li style="color:orange"><b>22,8°C</b></li>
+                        <li><b>Precipitazioni: 10% </b></li>
                     </ul>
                 </li>
             {% endfor %}

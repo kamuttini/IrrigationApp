@@ -6,14 +6,14 @@
         <div class="row">
         {% for garden in garden_list %}
             <div class="col-4">
-            <div class="card" style="width: 18rem;">
-                <img class="card-img-top" src="{% static "images/" %}{{garden.image}}" alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h5>
-                    <p class="card-text">last rain on {{ garden.last_rain }}</p>
-                    <p>prossima pioggia prevista fra: </p>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="{% static "images/" %}{{garden.image}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h5>
+                        <p class="card-text">Last rain on {{ garden.last_rain }}</p>
+                        <p class="card-text">Prossima pioggia prevista fra: </p>
+                    </div>
                 </div>
-            </div>
             </div>
         {% endfor %}
         </div>
@@ -21,7 +21,7 @@
         <p>Crea un giardino</p>
     {% endif %}
     <div class="row">
-        <a class="btn btn-primary create-btn" href="garden_create/" style="margin-top: 30px"> Aggiungi un nuovo giardino</a>
+        <a class="btn btn-primary create-btn" href="garden_create/" style="margin: 30px 0 0 15px"> Aggiungi un nuovo giardino</a>
     </div>
 
 {% endblock content %}

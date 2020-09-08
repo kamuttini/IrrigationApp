@@ -2,7 +2,7 @@
 {%  block content %}
 
 <form action="." method="POST">{% csrf_token %}
-    <h1>Procedere con l'eliminazione?</h1>
-    <p><input type="submit" value="Sì" /> <a href="../">Cancel</a></p>
+    <h3>Procedere con l'eliminazione?</h3>
+    <p style="padding-top: 10px"><input class="btn btn-primary create-btn-delete" type="submit"  value="Elimina" /> <a class="btn btn-primary create-btn" href="/">Annulla</a></p>
 </form>
 {% endblock content %}

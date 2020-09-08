@@ -1,12 +1,16 @@
 {% extends "layout/base-fullscreen.html" %}
 
+{% load static %}
+
 {% block title %} Login {% endblock title %}
 
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
-    <div class="col-6 offset-3" style="margin-top: 15%">
+    <div class="logo-login">
+        <img src="{% static 'images/logo_new.png' %}" alt="logo_login">
+    </div>
+    <div class="col-6 offset-3" style="margin-top: 15%; border-left: 1px rgba(185, 226, 165, 0.9) solid">
         {% if msg %}
             <h4 style="color:red">{{ msg | safe }}</h4>
         {% endif %}

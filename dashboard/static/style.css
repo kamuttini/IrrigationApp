@@ -7,8 +7,25 @@ li a {
     color: dimgrey;
 }
 
+li a:hover{
+    color: #91B77E;
+}
+
 .main-content {
     padding: 50px;
+}
+
+.main-content h1 {
+    border-left: 2px rgba(185, 226, 165, 0.9) solid;
+    padding-left: 10px;
+}
+
+/* LOGIN */
+
+.logo-login img{
+    position: absolute;
+    width: 250px;
+    top: 250px;
 }
 
 /* HEADER */
@@ -53,13 +70,14 @@ li a {
 .footer {
     height: 6vh;
     background: rgb(203, 243, 184);
-    background: linear-gradient(90deg, rgba(185, 226, 165, 0.9587185215883228) 24%, rgba(160, 197, 141, 0.9026961126247374) 53%, rgba(137, 181, 116, 0.8970938717283788) 97%);
+    background: linear-gradient(90deg, rgba(185, 226, 165, 0.9587185215883228) 24%, rgba(160, 197, 141, 0.9026961126247374) 53%, rgba(137, 181, 116, 0.89) 97%);
     padding: 1.5vh;
 
 }
 
 /* SIDEBAR */
 #sidebar {
+    position: relative;
     background-color: white;
     padding: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -80,8 +98,9 @@ li a {
     font-weight: bold;
 }
 
-#logo {
-    width: 80%;
+#sidebar #logo{
+    width: 70%;
+    margin: 10%;
     height: auto;
 }
 
@@ -110,15 +129,67 @@ li a {
     color: #999999;
 }
 
-/*GARDEN_DETAIL*/
+/*INDEX*/
 
-.area_name{
-    display: inline-block;
-    width: 300px;
-    margin:0;
+.card-title a{
+    color: darkgreen;
 }
 
-.weather_box_garden{
+.card-title a:hover{
+    text-decoration: none;
+    color: #91B77E;
+}
+
+.card-text {
+    font-size: 0.9em;
+    color: grey;
+}
+
+/*GARDEN_DETAIL*/
+
+.garden-city{
+    padding: 30px 0 0 20px;
+    font-weight: normal;
+    color: darkgreen;
+}
+
+.area-name{
+    position: relative;
+    display: block;
+    width: 500px;
+    height: 350px;
+    padding:10px;
+}
+
+.area-name .garden-area {
+    float: left;
+    width: 20%;
+    height: 28%;
+    margin: 10px;
+    padding: 30px 0;
+    border: 2px rgba(95, 255, 55, 0.2) solid;
+    border-radius: 3px;
+    background-color: rgba(145, 183, 126, 0.5);
+    text-align: center;
+    transition: 0.2s;
+}
+
+.area-name .garden-area:hover{
+    background-color: rgba(118, 172, 90, 0.5);
+}
+
+.garden-area a{
+    color: darkgreen;
+    font-weight: bold;
+}
+
+.garden-area a:hover{
+    text-decoration: none;
+    color: darkred;
+}
+
+
+.weather-box-garden{
     float: left;
     font-weight: normal;
     position: fixed;
@@ -129,20 +200,92 @@ li a {
     top: 25%;
 }
 
-.weather_box_garden .weather_days{
+.weather-box-garden .weather-days{
     width: 200px;
     border: 1px rgba(185, 226, 165, 0.6) solid;
     border-radius: 5px;
 }
 
+.garden-options{
+    padding-top: 20px;
+}
+
+
+/*AREA DETAIL*/
+
+.area-info{
+    display: block;
+    width: 1000px;
+    height: 200px;
+    padding-top: 20px;
+}
+.area-info ul{
+    padding: 0;
+}
+
+.area-info .infos{
+    float: left;
+    position: relative;
+    width: 20%;
+    height: 150px;
+    margin: 15px;
+    padding: 50px 0;
+    border: 2px rgba(95, 306, 55, 0.2) solid;
+    border-radius: 3px;
+    background-color: rgba(145, 183, 126, 0.5);
+    text-align: center;
+    color: darkgreen;
+    transition: 0.2s;
+}
+
+.area-info .infos:hover{
+    background-color: rgba(118, 172, 90, 0.5) ;
+}
+
+.area-info h6{
+    position: absolute;
+    top: -25px;
+    color: dimgray;
+}
+
+.area-info p{
+    width: 50%;
+    margin: auto;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.area-options {
+    padding: 15px 0 0 15px ;
+}
+
+.area-options a{
+    font-size: 1.2em;
+}
+
+.create-btn-delete {
+    background-color: rgb(200, 0, 0) !important;
+    border-color: transparent !important;
+    transition: 0.2s;
+}
+
+.create-btn-delete:hover {
+    background-color: darkred !important;
+}
 
 /* WEATHER */
 
-.weather_box{
+.weather-box{
    padding-top: 20px;
 }
 
-.weather_days{
+.weather-box h3{
+    padding: 10px 0 0 20px;
+    font-weight: normal;
+    color: #006400;
+}
+
+.weather-days{
     width: 900px;
     padding: 0;
     margin: 0;
@@ -152,31 +295,31 @@ li a {
     list-style: none;
 }
 
-.weather_days li{
+.weather-days li{
     display: block;
 }
 
-.weather_days .day{
+.weather-days .day{
     min-width: 200px;
     border-left: 1px rgba(185, 226, 165, 0.6) solid;
 }
 
-.weather_image_icon{
+.weather-image-icon{
     height: 80px;
     width: 80px;
 }
 
-.weather_days .day:first-child{
+.weather-days .day:first-child{
     border: 0;
 }
 
-.weather_days .weather_info_list{
+.weather-days .weather-info-list{
     text-align: center;
     height: 100%;
     padding: 20px 40px 20px 40px;
 }
 
-.weather_info_list li{
+.weather-info-list li{
     font-size: 13px;
     font-weight: lighter;
     text-align: center;
@@ -184,7 +327,14 @@ li a {
     padding: 2px 0 4px 0;
 }
 
-.weather_info_list .weather_description{
+.weather-info-list .weather-description{
     font-size: 15px;
     font-weight: bold;
+}
+
+@media screen and (max-width: 1200px) {
+
+    .logo-login img{
+        width:15%;
+    }
 }

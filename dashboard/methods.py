@@ -20,6 +20,7 @@ def get_weather_info(location, forecast_type, day=1):
             'location': location,
 
             'day': day_of_week.strftime("%a"),
+
             'temperature_min': str(response[day - 1]['temp'][0]['min']['value']) + '°' +
                                response[day - 1]['temp'][0]['min'][
                                    'units'],
