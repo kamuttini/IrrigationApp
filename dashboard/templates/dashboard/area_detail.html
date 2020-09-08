@@ -1,6 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    <h1>{{ area.name }}</h1>
+    <h1 id="editable" style="display: inline">{{ area.name }}</h1>
+    <a id="edit" href="{{ area.get_absolute_url }}/area_update"><i class="fas fa-pen"></i></a>
     <div class="area-info">
         <ul>
             <div class="infos">

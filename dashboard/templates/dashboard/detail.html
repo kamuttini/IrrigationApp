@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <h1 id="editable" style="display: inline">{{ garden }}</h1>
-    <a id="edit" href="{{ garden.get_absolute_url }}/update"><i class="fas fa-pen"></i></a>
+    <a id="edit" href="{{ garden.get_absolute_url }}/garden_update"><i class="fas fa-pen"></i></a>
     <div class="garden-info>">
         <h3 class="garden-city">{{ garden.city }}</h3>
         <ul class="area-name">

@@ -128,8 +128,8 @@ def weather(request):
     locations = []
 
     for garden in garden_list:
-         if garden.city not in locations:
-             locations.append(garden.city)
+        if garden.city not in locations:
+            locations.append(garden.city)
     for city in locations:
         five_days_weather = []
         for j in range(5):
@@ -151,6 +151,24 @@ def garden_update(request, garden_id):
     obj = get_object_or_404(Garden, id=garden_id)
 
     form = GardenForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return HttpResponseRedirect("/")
+
+    context = {
+        "form": form,
+        'garden_list': garden_list,
+    }
+
+    return render(request, "dashboard/update.html", context)
+
+
+@login_required(login_url="authentication/login/")
+def area_update(request, area_id):
+    garden_list = Garden.objects.order_by('name')
+    obj = get_object_or_404(Area, id=area_id)
+
+    form = AreaForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect("/")
