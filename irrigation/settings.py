@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'agenda.apps.AgendaConfig',
     'notification.apps.NotificationConfig',
     'dashboard.apps.DashboardConfig',
     'django.contrib.admin',

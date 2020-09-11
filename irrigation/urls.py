@@ -20,5 +20,6 @@ urlpatterns = [
     path('', include('dashboard.urls')),
     path('admin/', admin.site.urls),
     path("authentication/", include("authentication.urls")),  # Auth routes - login / register
-    path("notification/", include("notification.urls"))
+    path("notification/", include("notification.urls")),
+    path("calendar/", include("agenda.urls"))
 ]

@@ -7,7 +7,7 @@ li a {
     color: dimgrey;
 }
 
-li a:hover{
+li a:hover {
     color: #91B77E;
 }
 
@@ -22,7 +22,7 @@ li a:hover{
 
 /* LOGIN */
 
-.logo-login img{
+.logo-login img {
     position: absolute;
     width: 250px;
     top: 250px;
@@ -39,21 +39,21 @@ li a:hover{
     padding: 2.5vh;
 }
 
-.sidebar-toggle{
+.sidebar-toggle {
     margin-top: 10px;
     color: #3e3e3e;
 }
 
-.white{
+.white {
     color: #ffffff;
 }
 
-.notification{
+.notification {
     position: relative;
     left: 30px;
 }
 
-.notification-count{
+.notification-count {
     position: absolute;
     width: 30px;
     height: 20px;
@@ -66,13 +66,17 @@ li a:hover{
     font-weight: 900;
     text-align: center;
 }
+
 /* FOOTER */
 .footer {
     height: 6vh;
     background: rgb(203, 243, 184);
     background: linear-gradient(90deg, rgba(185, 226, 165, 0.9587185215883228) 24%, rgba(160, 197, 141, 0.9026961126247374) 53%, rgba(137, 181, 116, 0.89) 97%);
     padding: 1.5vh;
-
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
 }
 
 /* SIDEBAR */
@@ -83,7 +87,7 @@ li a:hover{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 100;
     flex: none;
-    width: 20% ;
+    width: 20%;
     transition: 0.3s;
 }
 
@@ -98,7 +102,7 @@ li a:hover{
     font-weight: bold;
 }
 
-#sidebar #logo{
+#sidebar #logo {
     width: 70%;
     margin: 10%;
     height: auto;
@@ -108,34 +112,35 @@ li a:hover{
     margin-right: 10px;
 }
 
-.create-btn {
+.green-button {
     background-color: #91B77E !important;
     border-color: transparent !important;
     transition: 0.2s;
 }
 
-.create-btn:hover {
+.green-button:hover {
     background-color: #638d4c !important;
 }
 
-#edit{
+#edit {
     color: white;
 }
 
-#edit:hover{
+#edit:hover {
     color: #999999;
 }
-#editable:hover + #edit{
+
+#editable:hover + #edit {
     color: #999999;
 }
 
 /*INDEX*/
 
-.card-title a{
+.card-title a {
     color: darkgreen;
 }
 
-.card-title a:hover{
+.card-title a:hover {
     text-decoration: none;
     color: #91B77E;
 }
@@ -147,18 +152,18 @@ li a:hover{
 
 /*GARDEN_DETAIL*/
 
-.garden-city{
+.garden-city {
     padding: 30px 0 0 20px;
     font-weight: normal;
     color: darkgreen;
 }
 
-.area-name{
+.area-name {
     position: relative;
     display: block;
     width: 500px;
     height: 350px;
-    padding:10px;
+    padding: 10px;
 }
 
 .area-name .garden-area {
@@ -174,56 +179,57 @@ li a:hover{
     transition: 0.2s;
 }
 
-.area-name .garden-area:hover{
+.area-name .garden-area:hover {
     background-color: rgba(118, 172, 90, 0.5);
 }
 
-.garden-area a{
+.garden-area a {
     color: darkgreen;
     font-weight: bold;
 }
 
-.garden-area a:hover{
+.garden-area a:hover {
     text-decoration: none;
     color: darkred;
 }
 
 
-.weather-box-garden{
+.weather-box-garden {
     float: left;
     font-weight: normal;
     position: fixed;
-    margin:0;
+    margin: 0;
     width: 250px;
     display: block;
-    left:70%;
+    left: 70%;
     top: 25%;
 }
 
-.weather-box-garden .weather-days{
+.weather-box-garden .weather-days {
     width: 200px;
     border: 1px rgba(185, 226, 165, 0.6) solid;
     border-radius: 5px;
 }
 
-.garden-options{
+.garden-options {
     padding-top: 20px;
 }
 
 
 /*AREA DETAIL*/
 
-.area-info{
+.area-info {
     display: block;
     width: 1000px;
     height: 200px;
     padding-top: 20px;
 }
-.area-info ul{
+
+.area-info ul {
     padding: 0;
 }
 
-.area-info .infos{
+.area-info .infos {
     float: left;
     position: relative;
     width: 20%;
@@ -238,17 +244,17 @@ li a:hover{
     transition: 0.2s;
 }
 
-.area-info .infos:hover{
-    background-color: rgba(118, 172, 90, 0.5) ;
+.area-info .infos:hover {
+    background-color: rgba(118, 172, 90, 0.5);
 }
 
-.area-info h6{
+.area-info h6 {
     position: absolute;
     top: -25px;
     color: dimgray;
 }
 
-.area-info p{
+.area-info p {
     width: 50%;
     margin: auto;
     font-size: 1em;
@@ -256,10 +262,10 @@ li a:hover{
 }
 
 .area-options {
-    padding: 15px 0 0 15px ;
+    padding: 15px 0 0 15px;
 }
 
-.area-options a{
+.area-options a {
     font-size: 1.2em;
 }
 
@@ -275,17 +281,17 @@ li a:hover{
 
 /* WEATHER */
 
-.weather-box{
-   padding-top: 20px;
+.weather-box {
+    padding-top: 20px;
 }
 
-.weather-box h3{
+.weather-box h3 {
     padding: 10px 0 0 20px;
     font-weight: normal;
     color: #006400;
 }
 
-.weather-days{
+.weather-days {
     width: 900px;
     padding: 0;
     margin: 0;
@@ -295,31 +301,31 @@ li a:hover{
     list-style: none;
 }
 
-.weather-days li{
+.weather-days li {
     display: block;
 }
 
-.weather-days .day{
+.weather-days .day {
     min-width: 200px;
     border-left: 1px rgba(185, 226, 165, 0.6) solid;
 }
 
-.weather-image-icon{
+.weather-image-icon {
     height: 80px;
     width: 80px;
 }
 
-.weather-days .day:first-child{
+.weather-days .day:first-child {
     border: 0;
 }
 
-.weather-days .weather-info-list{
+.weather-days .weather-info-list {
     text-align: center;
     height: 100%;
     padding: 20px 40px 20px 40px;
 }
 
-.weather-info-list li{
+.weather-info-list li {
     font-size: 13px;
     font-weight: lighter;
     text-align: center;
@@ -327,14 +333,72 @@ li a:hover{
     padding: 2px 0 4px 0;
 }
 
-.weather-info-list .weather-description{
+.weather-info-list .weather-description {
     font-size: 15px;
     font-weight: bold;
 }
 
 @media screen and (max-width: 1200px) {
 
-    .logo-login img{
-        width:15%;
+    .logo-login img {
+        width: 15%;
     }
+}
+
+
+/* CALENDAR */
+
+.calendar {
+    width: 70%;
+    font-size: 13px;
+}
+
+.calendar tr, .calendar td {
+    border: 0.3px solid darkgreen;
+    border-radius: 8px;
+}
+
+.calendar th {
+    padding: 10px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.calendar td {
+    width: 100px;
+    height: 45px;
+    padding: 20px 0px 0px 5px;
+}
+
+.month {
+    font-size: 25px;
+}
+
+.date {
+    font-size: 16px;
+}
+
+ul {
+    height: 100%;
+    padding: 0px 5px 0px 20px;
+}
+
+a {
+    color: #17a2b8;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.center{
+    margin-left: 50px;
+}
+.clearfix {
+    margin-right: 335px;
+    margin-bottom: 15px;
 }

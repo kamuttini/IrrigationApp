@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+
+{% block content %}
+<div class="clearfix">
+  <a class="btn btn-info green-button left" href="/calendar"> Back to calendar </a>
+</div>
+
+<form method="post">
+  {% csrf_token %}
+  <table class="form form-table">
+    {{ form }}
+    <tr><td colspan="2"><button type="submit" class="btn green-button btn-info right"> Submit </button></td></tr>
+  </table>
+</form>
+{% endblock %}
