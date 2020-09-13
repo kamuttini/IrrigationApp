@@ -19,17 +19,15 @@
 
    <div class="weather-box-garden">
          <ul class="weather-days">
-            {% for item in weather_info %}
                 <li class="day">
                     <ul class="weather-info-list">
-                        <li class="day_of_week"><b>{{ item.weather_info.day }}</b></li>
-                        <img class="weather-image-icon" src="{% static item.icon_path %}" alt="Weather icon">
-                        <li class="weather-description">{{ item.weather_info.description }}</li>
-                        <li style="color:orange"><b>22,8°C</b></li>
-                        <li><b>Precipitazioni: 10% </b></li>
+                        <li class="day_of_week"><b>{{ weather.day }}</b></li>
+                        <img class="weather-image-icon" src="{% static weather.weather_icons_path %}" alt="Weather icon">
+                        <li class="weather-description">{{ weather.description }}</li>
+                        <li style="color:orange"><b>{{ weather.temp }}</b></li>
+                        <li><b>possibilità di precipitazioni: {{ weather.precipitation }}% </b></li>
                     </ul>
                 </li>
-            {% endfor %}
         </ul>
     </div>
 {% endblock content %}

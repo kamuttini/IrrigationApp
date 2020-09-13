@@ -21,12 +21,13 @@ def detail(request, garden_id):
     from .methods import get_weather_info
     garden_list = Garden.objects.order_by('name')
     garden = get_object_or_404(Garden, pk=garden_id)
-    weather_list = [get_weather_info(garden.city, "hourly")]
     context = {
         'garden_list': garden_list,
         'garden': garden,
-        'weather_info': weather_list
+        'weather': get_weather_info(garden.city, "hourly")
     }
+
+    print(weather)
 
     return render(request, 'dashboard/detail.html', context)
 
@@ -131,10 +132,7 @@ def weather(request):
         if garden.city not in locations:
             locations.append(garden.city)
     for city in locations:
-        five_days_weather = []
-        for j in range(5):
-            five_days_weather.append(get_weather_info(city, "daily", j))
-        weather_list.append([city.city, five_days_weather])
+        weather_list.append([city.city, get_weather_info(city, "daily")])
 
     print(weather_list)
 

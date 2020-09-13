@@ -7,15 +7,15 @@
             {% for item in weather_list %}
                 <h3>{{ item.0 }}</h3>
                 <ul class="weather-days">
-                    {% for item in item.1 %}
+                    {% for item in item.1.weather_info %}
                        <li class="day">
                             <ul class="weather-info-list">
-                                <li class="day-of-week">{{ item.weather_info.day }}</li>
-                                <img class="weather-image-icon" src="{% static item.icon_path %}" alt="Weather icon">
-                                <li class="weather-description">{{ item.weather_info.description }}</li>
-                                <li style="color:#de2632"><b>{{ item.weather_info.temperature_max }}</b></li>
-                                <li style="color:#1fa8de"><b>{{ item.weather_info.temperature_min }}</b></li>
-                                <li>Precipitazioni: {{ item.weather_info.precipitation }}</li>
+                                <li class="day-of-week">{{ item.0.day }}</li>
+                                <img class="weather-image-icon" src="{% static item.1 %}" alt="Weather icon">
+                                <li class="weather-description">{{ item.0.description }}</li>
+                                <li style="color:#de2632"><b>{{ item.0.temperature_max }}</b></li>
+                                <li style="color:#1fa8de"><b>{{ item.0.temperature_min }}</b></li>
+                                <li>Precipitazioni: {{ item.0.precipitation }}</li>
                             </ul>
                         </li>
                     {% endfor %}
