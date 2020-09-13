@@ -11,7 +11,9 @@
                     <div class="card-body">
                         <h5 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h5>
                         <p class="card-text">Last rain on {{ garden.last_rain }}</p>
-                        <p class="card-text">Prossima pioggia prevista fra: </p>
+                        <p class="card-text">Prossima pioggia prevista fra:
+                            <strong>  {% if garden.next_rain == 'none' %} più di 12
+                                {% else %}{{ garden.next_rain }}{% endif %} giorni</strong> </p>
                     </div>
                 </div>
             </div>

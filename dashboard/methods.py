@@ -1,6 +1,7 @@
 from .static.translation import WEATHER, WEEK
 import requests
 import datetime as DT
+from datetime import datetime
 
 
 def get_weather_info(location, forecast_type, day=1):
@@ -48,19 +49,38 @@ def get_weather_info(location, forecast_type, day=1):
             'description': response[day - 1]['weather_code']['value'],
             'weather_icons_path': ""
         }
-        info_day['weather_icons_path']= "images/weather icons/color/" + info_day['description'] + ".svg"
+        info_day['weather_icons_path'] = "images/weather icons/color/" + info_day['description'] + ".svg"
         info_day['description'] = (WEATHER[info_day['description']])
         context = info_day
 
     return context
 
 
-def get_next_rain(location, forecast_type, ):
+def get_next_rain(location):
     url = "https://api.climacell.co/v3/weather/forecast/daily"
 
-    querystring = {"unit_system": "si", "start_time": "now", "fields": "precipitation_probability",
+    querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
+                   "fields": "precipitation_probability",
                    "apikey": "ncVu9PBL8D7vTbPbY3NKJRRbtQ0yAX1S"}
 
-    response = requests.request("GET", url, params=querystring)
+    response = requests.request("GET", url, params=querystring).json()
 
-    print(response.text)
+    weather_info = []
+    for i in range(12):
+        info_day = {
+            'location': location,
+            'date': response[i - 1]['observation_time']['value'],
+            'precipitation': str(response[i - 1]['precipitation_probability']['value']),
+        }
+        weather_info.append(info_day)
+
+    context = "none"
+    dateformat ="%Y-%m-%d"
+    today = datetime.today()
+    for item in weather_info[::-1]:
+        if item['precipitation'] >= "50":
+            date = datetime.strptime(item['date'], dateformat)
+            delta = date - today
+            context = delta.days
+
+    return context

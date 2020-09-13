@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm, EventForm
 from .models import Area, Garden
 from notification.models import Notification
+from .methods import *
 
 
 # Create your views here.
@@ -13,6 +14,10 @@ def index(request):
     garden_list = Garden.objects.order_by('name')
     context = {'garden_list': garden_list,
                'notifications': n}
+
+    for item in garden_list:
+        item.next_rain = get_next_rain(item.city)
+
     return render(request, 'dashboard/index.html', context)
 
 
@@ -26,8 +31,6 @@ def detail(request, garden_id):
         'garden': garden,
         'weather': get_weather_info(garden.city, "hourly")
     }
-
-    print(weather)
 
     return render(request, 'dashboard/detail.html', context)
 
@@ -123,7 +126,6 @@ def area_delete(request, area_id):
 
 @login_required(login_url="/authentication/login/")
 def weather(request):
-    from .methods import get_weather_info
     garden_list = Garden.objects.order_by('name')
     weather_list = []
     locations = []
@@ -134,7 +136,6 @@ def weather(request):
     for city in locations:
         weather_list.append([city.city, get_weather_info(city, "daily")])
 
-    print(weather_list)
 
     context = {
         'garden_list': garden_list,
