@@ -76,10 +76,11 @@ def garden_create(request):
 
 
 @login_required(login_url="/authentication/login/")
-def area_create(request):
+def area_create(request, garden_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     form = AreaForm(request.POST or None)
     if form.is_valid():
+        form.instance.garden = get_object_or_404(Garden, pk=garden_id)
         form.save()
 
         return HttpResponseRedirect('/')

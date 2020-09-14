@@ -12,7 +12,7 @@
         </ul>
     </div>
     <div class="garden-options">
-        <a class="btn btn-primary green-button" href="../area_create/"> Aggiungi una nuova area</a>
+        <a class="btn btn-primary green-button" href="{{ garden.get_absolute_url }}/area_create/"> Aggiungi una nuova area</a>
         <a class="btn btn-primary green-button" href="../event_create/"> Aggiungi un nuovo evento</a>
         <a class="btn btn-primary create-btn-delete" href="{{ garden.get_absolute_url }}/garden_delete">Elimina il giardino</a>
     </div>

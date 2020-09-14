@@ -17,7 +17,6 @@ class AreaForm(forms.ModelForm):
     class Meta:
         model = Area
         fields = [
-            'garden',
             'name',
             'irrigation_type',
         ]
