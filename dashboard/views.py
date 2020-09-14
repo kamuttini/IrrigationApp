@@ -46,6 +46,16 @@ def area_detail(request, area_id):
     }
     return render(request, 'dashboard/area_detail.html', context)
 
+@login_required(login_url="/authentication/login/")
+def manual_irrigation(request, area_id):
+    garden_list = Garden.objects.order_by('name')
+    area = get_object_or_404(Area, pk=area_id)
+    context = {
+        'area': area,
+        'garden_list': garden_list,
+
+    }
+    return render(request, 'dashboard/manual_irrigation.html', context)
 
 @login_required(login_url="/authentication/login/")
 def garden_create(request):

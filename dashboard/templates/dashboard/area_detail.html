@@ -16,10 +16,13 @@
                 <h6>Tipo di irrigazione</h6>
                 <h3>{{ area.get_irrigation_type_display }}</h3>
             </div>
-
         </ul>
     </div>
+
     <div class="area-options">
+        {% if area.irrigation_type == 'M' %}
+        <a class="btn btn-primary green-button" href="{{ area.get_absolute_url }}/manual_irrigation">Vai a irrigazione</a>
+    {% endif %}
         <a class="btn btn-primary create-btn-delete" href="{{ area.get_absolute_url }}/area_delete">Elimina l'area</a>
     </div>
 
