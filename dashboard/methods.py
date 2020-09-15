@@ -22,15 +22,15 @@ def get_weather_info(location, forecast_type, day=1):
             info_day = {
                 'day': WEEK[day_of_week.strftime("%a")],
 
-                'temperature_min': str(response[i - 1]['temp'][0]['min']['value']) + '°' +
-                                   response[i - 1]['temp'][0]['min'][
+                'temperature_min': str(response[i]['temp'][0]['min']['value']) + '°' +
+                                   response[i]['temp'][0]['min'][
                                        'units'],
-                'temperature_max': str(response[i - 1]['temp'][1]['max']['value']) + '°' +
-                                   response[i - 1]['temp'][1]['max'][
+                'temperature_max': str(response[i]['temp'][1]['max']['value']) + '°' +
+                                   response[i]['temp'][1]['max'][
                                        'units'],
-                'precipitation': str(response[i - 1]['precipitation_probability']['value']) +
-                                 response[i - 1]['precipitation_probability']['units'],
-                'description': response[i - 1]['weather_code']['value']
+                'precipitation': str(response[i]['precipitation_probability']['value']) +
+                                 response[i]['precipitation_probability']['units'],
+                'description': response[i]['weather_code']['value']
             }
 
             weather_icons_path = "images/weather icons/color/" + info_day['description'] + ".svg"
@@ -44,9 +44,9 @@ def get_weather_info(location, forecast_type, day=1):
     if forecast_type == "hourly":
         info_day = {
             'day': WEEK[today.strftime("%a")],
-            'temp': str(response[day - 1]['temp']['value']) + '°' + response[day - 1]['temp']['units'],
-            'precipitation': str(response[day - 1]['precipitation_probability']['value']),
-            'description': response[day - 1]['weather_code']['value'],
+            'temp': str(response[day]['temp']['value']) + '°' + response[day]['temp']['units'],
+            'precipitation': str(response[day]['precipitation_probability']['value']),
+            'description': response[day]['weather_code']['value'],
             'weather_icons_path': ""
         }
         info_day['weather_icons_path'] = "images/weather icons/color/" + info_day['description'] + ".svg"
@@ -75,10 +75,10 @@ def get_next_rain(location):
         weather_info.append(info_day)
 
     context = "none"
-    dateformat ="%Y-%m-%d"
+    dateformat = "%Y-%m-%d"
     today = datetime.today()
     for item in weather_info[::-1]:
-        if item['precipitation'] >= "50":
+        if item['precipitation'] >= "40":
             date = datetime.strptime(item['date'], dateformat)
             delta = date - today
             context = delta.days
