@@ -1,10 +1,9 @@
 from .static.translation import WEATHER, WEEK
 import requests
 import datetime as DT
-from datetime import datetime
 
 
-def get_weather_info(location, forecast_type, day=1):
+def get_weather_info(location, forecast_type):
     today = DT.date.today()
 
     url = "https://api.climacell.co/v3/weather/forecast/" + forecast_type
@@ -44,9 +43,9 @@ def get_weather_info(location, forecast_type, day=1):
     if forecast_type == "hourly":
         info_day = {
             'day': WEEK[today.strftime("%a")],
-            'temp': str(response[day]['temp']['value']) + '°' + response[day]['temp']['units'],
-            'precipitation': str(response[day]['precipitation_probability']['value']),
-            'description': response[day]['weather_code']['value'],
+            'temp': str(response[0]['temp']['value']) + '°' + response[0]['temp']['units'],
+            'precipitation': str(response[0]['precipitation_probability']['value']),
+            'description': response[0]['weather_code']['value'],
             'weather_icons_path': ""
         }
         info_day['weather_icons_path'] = "images/weather icons/color/" + info_day['description'] + ".svg"
@@ -66,21 +65,17 @@ def get_next_rain(location):
     response = requests.request("GET", url, params=querystring).json()
 
     weather_info = []
-    for i in range(12):
+    for i in range(15):
         info_day = {
             'location': location,
-            'date': response[i - 1]['observation_time']['value'],
-            'precipitation': str(response[i - 1]['precipitation_probability']['value']),
+            'date': response[i]['observation_time']['value'],
+            'precipitation': str(response[i]['precipitation_probability']['value']),
         }
         weather_info.append(info_day)
 
-    context = "none"
-    dateformat = "%Y-%m-%d"
-    today = datetime.today()
-    for item in weather_info[::-1]:
-        if item['precipitation'] >= "40":
-            date = datetime.strptime(item['date'], dateformat)
-            delta = date - today
-            context = delta.days
+    context = "più di 12"
+    for item in weather_info:
+        if item['precipitation'] >= "50":
+            return weather_info.index(item)
 
     return context
