@@ -1,15 +1,20 @@
 {% extends 'layout/base.html' %}
 
 {% block content %}
-<div class="clearfix">
-  <a class="btn btn-info green-button left" href="/calendar"> Back to calendar </a>
-</div>
+    <div class="clearfix">
+        <a class="btn btn-info green-button left" href="/calendar"> Back to calendar </a>
+    </div>
 
-<form method="post">
-  {% csrf_token %}
-  <table class="form form-table">
-    {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn green-button btn-info right"> Submit </button></td></tr>
-  </table>
-</form>
+    <form method="post">
+        {% csrf_token %}
+        <table class="form form-table">
+            {{ form }}
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn green-button btn-info right"> Submit</button>
+                </td>
+                <td colspan="3"><a class="btn btn-primary create-btn-delete" href="/calendar/event/delete/{{ event }}/">Elimina l'evento</a></td>
+            </tr>
+        </table>
+    </form>
 {% endblock %}
