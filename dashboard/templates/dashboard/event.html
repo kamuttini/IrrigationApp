@@ -9,7 +9,10 @@
   {% csrf_token %}
   <table class="form form-table">
     {{ form }}
-    <tr><td colspan="2"><button type="submit" class="btn green-button btn-info right"> Submit </button></td></tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn green-button btn-info right"> Submit </button></td>
+        <td colspan="3"><a class="btn btn-primary create-btn-delete" href="event/delete{{ event.get_absolute_url }}">Elimina l'evento</a></td>
+    </tr>
   </table>
 </form>
 {% endblock %}
