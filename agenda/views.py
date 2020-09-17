@@ -22,7 +22,7 @@ class CalendarView(generic.ListView):
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(withyear=True)
-        html_cal = html_cal.replace('>%i<' % d.day, '><b><u>%i</u></b><' % d.day)
+        html_cal = html_cal.replace('>%i<' % d.day, '><b style ="color:rgba(160, 197, 141, 1); font-size:20px;">%i</b><' % d.day)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
