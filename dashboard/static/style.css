@@ -407,6 +407,7 @@ a {
 /* TIMER */
 
 .timer {
+    height: 250px;
     text-align: center;
     background-color: #BCE2A9;
     border-radius: 8px;
@@ -456,3 +457,9 @@ a {
     background: #4CAF50;
     cursor: pointer;
 }
+
+.irrigation-list {
+    max-height: 300px;
+    overflow-y: auto
+}
+

@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-header">
+        <h3> Ultime irrigazioni</h3>
+    </div>
+    <div class="card-body">
+        <ul class=" irrigation-list list-group list-group-flush">
+            {% for item in irrigation_list %}
+                <li class="list-group-item">
+                    <p>Data: {{ item.irrigation }} <br>
+                        Irrigazione: {{ item.get_irrigation_type_display }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+</div>

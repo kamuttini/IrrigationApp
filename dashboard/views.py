@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import GardenForm, AreaForm
-from .models import Area, Garden
+from .models import Area, Garden, Irrigation
 from notification.models import Notification
 from .methods import *
 
@@ -51,9 +51,12 @@ def area_detail(request, area_id):
 def manual_irrigation(request, area_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     area = get_object_or_404(Area, pk=area_id)
+    irrigation_list = Irrigation.objects.filter(area=area)
+
     context = {
         'area': area,
         'garden_list': garden_list,
+        'irrigation_list': irrigation_list
     }
     return render(request, 'dashboard/manual_irrigation.html', context)
 

@@ -1,23 +1,23 @@
 {% extends 'layout/base.html' %}
 {% block content %}
     <div class="col-12">
-    <h1>Irrigazione manuale della zona {{ area.name }}</h1>
+        <h1>Irrigazione manuale della zona {{ area.name }}</h1>
 
     </div>
     <div class="row" style="margin-top: 50px">
-        <div class="col-3 center timer"  >
-        <h2>Timer</h2>
-        <p id="demo"></p>
-        <input type="range" min="1" max="120" value="20" class="slider" id="timerRange">
-        <button class="btn btn-primary green-button" type="button" onclick="Timer(Date.now())">Avvia</button>
-        <button class="btn btn-primary green-button" onclick="Stop()">Stop</button>
-    </div>
-    <div class="col-3" id="description" >
-        <p>imposta il timer e avvia l'irrigazione per quanto tempo desideri </p>
-    </div>
-    <div class="col-3" style="border: solid">
-        <p> #to do <br><strong>log ultime irrigazioni</strong></p>
-    </div>
+        <div class="col-3 center timer">
+            <h2>Timer</h2>
+            <p id="demo"></p>
+            <input type="range" min="1" max="120" value="20" class="slider" id="timerRange">
+            <button class="btn btn-primary green-button" type="button" onclick="Timer(Date.now())">Avvia</button>
+            <button class="btn btn-primary green-button" onclick="Stop()">Stop</button>
+        </div>
+        <div class="col-3" id="description">
+            <p>imposta il timer e avvia l'irrigazione per quanto tempo desideri </p>
+        </div>
+        <div class="col-4">
+            {% include 'includes/irrigation_list.html' %}
+        </div>
     </div>
 
 

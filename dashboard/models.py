@@ -48,7 +48,6 @@ class Garden(models.Model):
                              default=PLANT)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-
     def __str__(self):
         return self.name
 
@@ -72,3 +71,11 @@ class Area(models.Model):
 
     def get_absolute_url(self):
         return f"/{self.id}"
+
+
+class Irrigation(models.Model):
+    area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)
+    irrigation = models.DateField('date of irrigation')
+    start = models.TimeField()
+    end = models.TimeField()
+    irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
