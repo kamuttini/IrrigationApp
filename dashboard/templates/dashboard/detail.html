@@ -2,18 +2,18 @@
 {% load static %}
 {% block content %}
     <h1 id="editable" style="display: inline">{{ garden }}</h1>
-    <a id="edit" href="{{ garden.get_absolute_url }}/garden_update"><i class="fas fa-pen"></i></a>
+    <a id="edit" href="garden_update"><i class="fas fa-pen"></i></a>
     <div class="garden-info>">
         <h3 class="garden-city">{{ garden.city }}</h3>
         <ul class="area-name">
             {% for area in garden.area_set.all %}
-                <div class="garden-area"><a href="{{ area.get_absolute_url }}/area_detail/">{{ area.name }}</a></div>
+                <div class="garden-area"><a href="/{{ area.id }}/area_detail/">{{ area.name }}</a></div>
             {% endfor %}
         </ul>
     </div>
     <div class="garden-options">
-        <a class="btn btn-primary green-button" href="{{ garden.get_absolute_url }}/area_create/"> Aggiungi una nuova area</a>
-        <a class="btn btn-primary create-btn-delete" href="{{ garden.get_absolute_url }}/garden_delete">Elimina il giardino</a>
+        <a class="btn btn-primary green-button" href="area_create/"> Aggiungi una nuova area</a>
+        <a class="btn btn-primary create-btn-delete" href="garden_delete">Elimina il giardino</a>
     </div>
 
    <div class="weather-box-garden">
