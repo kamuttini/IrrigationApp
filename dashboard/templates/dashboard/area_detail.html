@@ -1,7 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
     <h1 id="editable" style="display: inline">{{ area.name }}</h1>
-    <a id="edit" href="../area_update"><i class="fas fa-pen"></i></a>
+    <a id="edit" href="../update/area"><i class="fas fa-pen"></i></a>
     <div class="area-info">
         <ul>
             <div class="infos">
@@ -24,6 +24,7 @@
         <a class="btn btn-primary green-button" href="../manual_irrigation">Vai a irrigazione</a>
     {% endif %}
         <a class="btn btn-primary create-btn-delete" href="../area_delete">Elimina l'area</a>
+        <a class="btn btn-primary create-btn-delete" href="../delete/area">Elimina l'area</a>
     </div>
 
 {% endblock content %}

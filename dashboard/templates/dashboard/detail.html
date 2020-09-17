@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
     <h1 id="editable" style="display: inline">{{ garden }}</h1>
-    <a id="edit" href="garden_update"><i class="fas fa-pen"></i></a>
+    <a id="edit" href="update/garden"><i class="fas fa-pen"></i></a>
     <div class="garden-info>">
         <h3 class="garden-city">{{ garden.city }}</h3>
         <ul class="area-name">
@@ -13,7 +13,7 @@
     </div>
     <div class="garden-options">
         <a class="btn btn-primary green-button" href="area_create/"> Aggiungi una nuova area</a>
-        <a class="btn btn-primary create-btn-delete" href="garden_delete">Elimina il giardino</a>
+        <a class="btn btn-primary create-btn-delete" href="delete/garden">Elimina il giardino</a>
     </div>
 
    <div class="weather-box-garden">
