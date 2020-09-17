@@ -95,25 +95,13 @@ def area_create(request, garden_id):
 
 
 @login_required(login_url="/authentication/login/")
-def garden_delete(request, garden_id):
+def delete(request, id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    obj = get_object_or_404(Garden, pk=garden_id)
-    # POST request
-    if request.method == "POST":
-        # confirming delete
-        obj.delete()
-        return HttpResponseRedirect('/')
-    context = {
-        'object': obj,
-        'garden_list': garden_list,
-    }
-    return render(request, "dashboard/delete.html", context)
+    if type == "area":
+        obj = get_object_or_404(Area, pk=id)
+    else:
+        obj = get_object_or_404(Garden, pk=id)
 
-
-@login_required(login_url="/authentication/login/")
-def area_delete(request, area_id):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    obj = get_object_or_404(Area, pk=area_id)
     # POST request
     if request.method == "POST":
         # confirming delete
