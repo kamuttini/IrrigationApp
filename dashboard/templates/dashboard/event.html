@@ -13,7 +13,9 @@
                 <td colspan="2">
                     <button type="submit" class="btn green-button btn-info right"> Submit</button>
                 </td>
-                <td colspan="3"><a class="btn btn-primary create-btn-delete" href="/calendar/event/delete/{{ event }}/">Elimina l'evento</a></td>
+                 {% if  request.get_full_path != "/calendar/new/" %}
+                <td colspan="3"><a class="btn btn-primary create-btn-delete" href="../delete/">Elimina l'evento</a></td>
+                {% endif %}
             </tr>
         </table>
     </form>
