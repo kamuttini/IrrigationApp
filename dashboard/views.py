@@ -58,32 +58,26 @@ def manual_irrigation(request, area_id):
         'garden_list': garden_list,
         'irrigation_list': irrigation_list
     }
-    return render(request, 'dashboard/manual_irrigation.html', context)
+
+    if type == 0:
+        return render(request, 'dashboard/manual_irrigation.html', context)
+
+    if type == 1:
+        return render(request, 'dashboard/calendar_irrigation.html', context)
 
 
 @login_required(login_url="/authentication/login/")
-def garden_create(request):
+def create(request, garden_id=None):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    form = GardenForm(request.POST or None)
+    if garden_id:
+        form = AreaForm(request.POST or None)
+    else:
+        form = GardenForm(request.POST or None)
     if form.is_valid():
-        form.instance.user = request.user
-        form.save()
-
-        return HttpResponseRedirect('/')
-
-    context = {
-        'form': form,
-        'garden_list': garden_list,
-    }
-    return render(request, 'dashboard/create.html', context)
-
-
-@login_required(login_url="/authentication/login/")
-def area_create(request, garden_id):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    form = AreaForm(request.POST or None)
-    if form.is_valid():
-        form.instance.garden = get_object_or_404(Garden, pk=garden_id)
+        if garden_id:
+            form.instance.garden = get_object_or_404(Garden, pk=garden_id)
+        else:
+            form.instance.user = request.user
         form.save()
 
         return HttpResponseRedirect('/')
@@ -95,25 +89,13 @@ def area_create(request, garden_id):
 
 
 @login_required(login_url="/authentication/login/")
-def garden_delete(request, garden_id):
+def delete(request, id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    obj = get_object_or_404(Garden, pk=garden_id)
-    # POST request
-    if request.method == "POST":
-        # confirming delete
-        obj.delete()
-        return HttpResponseRedirect('/')
-    context = {
-        'object': obj,
-        'garden_list': garden_list,
-    }
-    return render(request, "dashboard/delete.html", context)
+    if type == "area":
+        obj = get_object_or_404(Area, pk=id)
+    else:
+        obj = get_object_or_404(Garden, pk=id)
 
-
-@login_required(login_url="/authentication/login/")
-def area_delete(request, area_id):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    obj = get_object_or_404(Area, pk=area_id)
     # POST request
     if request.method == "POST":
         # confirming delete
@@ -146,29 +128,15 @@ def weather(request):
 
 
 @login_required(login_url="authentication/login/")
-def garden_update(request, garden_id):
+def update(request, id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    obj = get_object_or_404(Garden, id=garden_id)
+    if type == "area":
+        obj = get_object_or_404(Area, id=id)
+        form = AreaForm(request.POST or None, instance=obj)
+    else:
+        obj = get_object_or_404(Garden, id=id)
+        form = GardenForm(request.POST or None, instance=obj)
 
-    form = GardenForm(request.POST or None, instance=obj)
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect("/")
-
-    context = {
-        "form": form,
-        'garden_list': garden_list,
-    }
-
-    return render(request, "dashboard/update.html", context)
-
-
-@login_required(login_url="authentication/login/")
-def area_update(request, area_id):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    obj = get_object_or_404(Area, id=area_id)
-
-    form = AreaForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
         return HttpResponseRedirect("/")
