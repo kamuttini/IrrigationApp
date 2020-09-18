@@ -16,12 +16,16 @@ class CalendarView(generic.ListView):
     model = Event
     template_name = 'dashboard/calendar.html'
 
+    def get_queryset(self):
+        qs = Event.objects.filter(user=self.request.user.id)
+        return qs
+
     def get_context_data(self, **kwargs):
         garden_list = Garden.objects.order_by('name')
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
-        html_cal = cal.formatmonth(withyear=True)
+        html_cal = cal.formatmonth(self.request.user, withyear=True)
         html_cal = html_cal.replace('>%i<' % d.day, '><b style ="color:rgba(160, 197, 141, 1); font-size:20px;">%i</b><' % d.day)
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
@@ -61,7 +65,8 @@ def event(request, event_id=None):
 
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
-        form.save()
+        event = Event.objects.create(**form.cleaned_data, user=request.user)
+        print(event.title)
         return HttpResponseRedirect(reverse('agenda:calendar'))
 
     context = {
@@ -77,7 +82,7 @@ def event_delete(request, event_id):
     if request.method == "POST":
         # confirming delete
         obj.delete()
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect(reverse('agenda:calendar'))
     context = {
         'object': obj,
     }

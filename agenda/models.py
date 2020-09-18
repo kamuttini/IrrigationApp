@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 from django.urls import reverse
@@ -22,11 +23,10 @@ class Event(models.Model):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     color = models.CharField(max_length=10, choices=COLORS, default=GREY)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     @property
     def get_html_url(self):
         url = reverse('agenda:event_edit', args=(self.id,))
         return f'<a href="{url}"> {self.title} </a>'
 
-    def get_absolute_url(self):
-        return f"/{self.id}"
