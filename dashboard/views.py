@@ -135,7 +135,7 @@ def update(request, id, type):
         form = AreaForm(request.POST or None, instance=obj)
     else:
         obj = get_object_or_404(Garden, id=id)
-        form = GardenForm(request.POST or None, instance=obj)
+        form = GardenForm(request.POST or None, instance=obj, initial={ 'city': obj.city })
 
     if form.is_valid():
         form.save()
