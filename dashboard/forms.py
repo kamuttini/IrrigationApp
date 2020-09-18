@@ -1,16 +1,21 @@
 from django import forms
-from .models import Garden, Area
+from .models import Garden, Area, Location
 
 
 class GardenForm(forms.ModelForm):
+    city = forms.ModelChoiceField(label='Città', queryset=Location.objects.all(), to_field_name="city",
+                                  widget=forms.TextInput(attrs={'placeholder':'inserisci il comune'}))
     class Meta:
         model = Garden
         fields = [
             'name',
-            'city',
             'image',
-
+            'city'
         ]
+        labels= {
+            'name': 'Nome',
+            'image': 'Immagine'
+        }
 
 
 class AreaForm(forms.ModelForm):
@@ -20,3 +25,7 @@ class AreaForm(forms.ModelForm):
             'name',
             'irrigation_type',
         ]
+        labels = {
+            'name': 'Nome',
+            'irrigation_type': 'Tipo di irrigazione'
+        }

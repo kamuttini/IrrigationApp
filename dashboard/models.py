@@ -9,11 +9,11 @@ FLOWER = 'cover/flower.jpg'
 GARDEN = 'cover/garden.jpg'
 VEGETABLE = 'cover/vegetable.jpg'
 IMG_CHOICES = (
-    (PLANT, 'Plant'),
-    (TERRACE, 'Tree'),
-    (GARDEN, 'Garden'),
-    (VEGETABLE, 'Vegetable'),
-    (FLOWER, 'Flower'),
+    (PLANT, 'Pianta'),
+    (TERRACE, 'Albero'),
+    (GARDEN, 'Prato'),
+    (VEGETABLE, 'Verdura'),
+    (FLOWER, 'Fiore'),
 
 )
 
