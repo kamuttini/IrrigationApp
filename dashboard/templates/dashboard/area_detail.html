@@ -20,9 +20,10 @@
     </div>
 
     <div class="area-options">
-        {% if area.irrigation_type == 'M' %}
-        <a class="btn btn-primary green-button" href="../manual_irrigation">Vai a irrigazione</a>
-    {% endif %}
+
+        <a class="btn btn-primary green-button" href="../irrigation/{{ area.irrigation_type }}">
+            Vai a irrigazione</a>
+
         <a class="btn btn-primary create-btn-delete" href="../delete/area">Elimina l'area</a>
     </div>
 

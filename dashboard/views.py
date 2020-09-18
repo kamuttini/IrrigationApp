@@ -48,7 +48,7 @@ def area_detail(request, area_id):
 
 
 @login_required(login_url="/authentication/login/")
-def manual_irrigation(request, area_id):
+def irrigation(request, area_id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     area = get_object_or_404(Area, pk=area_id)
     irrigation_list = Irrigation.objects.filter(area=area)
@@ -59,10 +59,10 @@ def manual_irrigation(request, area_id):
         'irrigation_list': irrigation_list
     }
 
-    if type == 0:
+    if type == "M":
         return render(request, 'dashboard/manual_irrigation.html', context)
 
-    if type == 1:
+    elif type == "C":
         return render(request, 'dashboard/calendar_irrigation.html', context)
 
 
