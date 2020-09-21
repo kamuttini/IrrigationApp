@@ -67,7 +67,6 @@ class Area(models.Model):
         return self.last_irrigation >= timezone.now() - datetime.timedelta(days=1)
 
 
-
 class Irrigation(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)
     irrigation = models.DateField('date of irrigation')

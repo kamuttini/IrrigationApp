@@ -65,6 +65,9 @@ def irrigation(request, area_id, type):
     elif type == "C":
         return render(request, 'dashboard/calendar_irrigation.html', context)
 
+    elif type == "S":
+        return render(request, 'dashboard/smart_irrigation.html', context)
+
 
 @login_required(login_url="/authentication/login/")
 def create(request, garden_id=None):
