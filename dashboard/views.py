@@ -16,7 +16,7 @@ def index(request):
                'notifications': n}
 
     for item in garden_list:
-        item.next_rain = get_next_rain(item.city)
+        item.next_rain = get_rain(item.city, 'next')
 
     return render(request, 'dashboard/index.html', context)
 

@@ -55,27 +55,66 @@ def get_weather_info(location, forecast_type):
     return context
 
 
-def get_next_rain(location):
+def get_rain(location, mode):
     url = "https://api.climacell.co/v3/weather/forecast/daily"
 
     querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
                    "fields": "precipitation_probability",
-                   "apikey": "ncVu9PBL8D7vTbPbY3NKJRRbtQ0yAX1S"}
+                   "apikey": "6KIHRzYEnmDjo2nD68e6GWlHYGfbRIO2"}
 
     response = requests.request("GET", url, params=querystring).json()
 
-    weather_info = []
-    for i in range(15):
+    if mode == 'next':
+        weather_info = []
+        for i in range(15):
+            info_day = {
+                'location': location,
+                'date': response[i]['observation_time']['value'],
+                'precipitation': str(response[i]['precipitation_probability']['value']),
+            }
+            weather_info.append(info_day)
+
+        context = "più di 12"
+        for item in weather_info:
+            if item['precipitation'] >= "50":
+                return weather_info.index(item)
+    elif mode == 'today':
         info_day = {
             'location': location,
-            'date': response[i]['observation_time']['value'],
-            'precipitation': str(response[i]['precipitation_probability']['value']),
+            'date': response[0]['observation_time']['value'],
+            'precipitation': str(response[0]['precipitation_probability']['value']),
         }
-        weather_info.append(info_day)
-
-    context = "più di 12"
-    for item in weather_info:
-        if item['precipitation'] >= "50":
-            return weather_info.index(item)
-
+        context = info_day
+    elif mode == 'tomorrow':
+        info_day = {
+            'location': location,
+            'date': response[1]['observation_time']['value'],
+            'precipitation': str(response[1]['precipitation_probability']['value']),
+        }
+        context = info_day
     return context
+
+
+def irrigate(location, umidity):
+    time = DT.time
+    irrigation = False
+    rain_tod = get_rain(location, 'today')
+    rain_tom = get_rain(location, 'tomorrow')
+
+    if time.hour == 6:
+        if rain_tom['precipitation'] > 50 and umidity < 30:
+            print("Irrigazione minore effettuata")  # IRRIGA DI MENO
+            irrigation = True
+        if not irrigation and (umidity < 30 or rain_tod['precipitation'] < 50):
+            print("Irrigazione effettuata")  # IRRIGA
+            irrigation = True
+
+    if not irrigation and time.hour == 20:
+        if rain_tom['precipitation'] > 50 and umidity < 30:
+            print("Irrigazione minore effettuata")  # IRRIGA DI MENO
+            irrigation = True
+        if not irrigation and (umidity < 30 or rain_tod['precipitation'] < 50):
+            print("Irrigazione effettuata")  # IRRIGA
+            irrigation = True
+
+    return irrigation
