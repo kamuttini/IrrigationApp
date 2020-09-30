@@ -20,6 +20,9 @@ li a:hover {
     padding-left: 10px;
 }
 
+.description{
+     padding: 40px;
+}
 /* LOGIN */
 
 .logo-login img {
@@ -463,3 +466,7 @@ a {
     overflow-y: auto
 }
 
+#edit-title, .dropdown-toggle{
+    display: inline;
+    color: darkgreen;
+}

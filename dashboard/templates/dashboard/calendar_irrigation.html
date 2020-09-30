@@ -3,7 +3,33 @@
     <div class="col-12">
         <h1>Irrigazione calendarizzata della zona {{ area.name }}</h1>
     </div><br>
-    <div class="col-4">
-        {% include 'includes/irrigation_list.html' %}
+    <div class="row">
+        <div class="col-4">
+            <p class="description">
+                Questa area viene annafiata <br>
+                {{ irrigation_settings.get_frequency_display }}
+                giorni per {{ irrigation_settings.duration }}
+            </p>
+            <a class=" dropdown-toggle" data-toggle="collapse" href="#settings" role="button"
+               aria-expanded="false" aria-controls="collapseExample">
+                <h4 id="edit-title">modifica le impostazioni</h4>
+            </a>
+
+            <div class="collapse" id="settings" style="margin-top: 20px">
+                <form method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <p style="padding-top: 10px">
+                        <input class="btn btn-primary green-button" type="submit" value="Salva">
+                        <a class="btn btn-primary green-button" href="/">Annulla</a>
+                </form>
+            </div>
+
+        </div>
+        <div class="col-3"></div>
+        <div class="col-4">
+            {% include 'includes/irrigation_list.html' %}
+        </div>
     </div>
+
 {% endblock content %}

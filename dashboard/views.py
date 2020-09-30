@@ -1,8 +1,9 @@
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from .forms import GardenForm, AreaForm
-from .models import Area, Garden, Irrigation
+
+from .forms import *
+from .models import Area, Garden, Irrigation, CalendarIrrigation
 from notification.models import Notification
 from .methods import *
 
@@ -63,6 +64,14 @@ def irrigation(request, area_id, type):
         return render(request, 'dashboard/manual_irrigation.html', context)
 
     elif type == "C":
+        irrigation_settings = get_object_or_404(CalendarIrrigation, area=area)
+        form = CalendarIrrigationForm(request.POST or None, instance=irrigation_settings)
+
+        if form.is_valid():
+            form.save()
+
+        context['form'] = form
+        context['irrigation_settings'] = irrigation_settings
         return render(request, 'dashboard/calendar_irrigation.html', context)
 
     elif type == "S":
@@ -83,6 +92,9 @@ def create(request, garden_id=None):
             form.instance.user = request.user
         form.save()
 
+        if form.instance.irrigation_type == 'C':
+            calendar_irrigation = CalendarIrrigation(area=form.instance)
+            calendar_irrigation.save()
         return HttpResponseRedirect('/')
     context = {
         'form': form,
@@ -138,7 +150,7 @@ def update(request, id, type):
         form = AreaForm(request.POST or None, instance=obj)
     else:
         obj = get_object_or_404(Garden, id=id)
-        form = GardenForm(request.POST or None, instance=obj, initial={ 'city': obj.city })
+        form = GardenForm(request.POST or None, instance=obj, initial={'city': obj.city})
 
     if form.is_valid():
         form.save()
