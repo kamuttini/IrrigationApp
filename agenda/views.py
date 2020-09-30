@@ -21,12 +21,12 @@ class CalendarView(generic.ListView):
         return qs
 
     def get_context_data(self, **kwargs):
-        garden_list = Garden.objects.order_by('name')
+        garden_list = Garden.objects.filter(user=self.request.user).order_by('name')
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
         html_cal = cal.formatmonth(self.request.user, withyear=True)
-        html_cal = html_cal.replace('>%i<' % d.day, '><b style ="color:rgba(160, 197, 141, 1); font-size:20px;">%i</b><' % d.day)
+        html_cal = html_cal.replace('class="date">%i<' % d.day, '><')
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)

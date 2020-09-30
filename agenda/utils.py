@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from calendar import HTMLCalendar
 from .models import Event
+import datetime as dt
 
 
 class Calendar(HTMLCalendar):
@@ -13,7 +14,12 @@ class Calendar(HTMLCalendar):
     # filter events by day
     def formatday(self, day, events):
         events_per_day = events.filter(start_time__day=day)
+        today = dt.datetime.today()
+        if today.year != self.year or today.month != self.month:
+            today = None
         d = ''
+        if today and today.day == day:
+            d=f'<b style ="position: absolute; margin-top: -15px; margin-left:-20px; color:rgba(160, 197, 141, 1); font-size:20px;">{day}</b>'
         for event in events_per_day:
             d += f'<li style="background-color:{event.color}; list-style:none;"> {event.get_html_url} </li>'
 
