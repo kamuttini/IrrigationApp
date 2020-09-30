@@ -9,4 +9,12 @@
     </div>
 
     {{ calendar }}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function (event) {
+            $(function () {
+                $('.event_caption').popover({trigger: 'hover'});
+            });
+        });
+    </script>
 {% endblock %}

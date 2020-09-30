@@ -69,7 +69,11 @@ class Area(models.Model):
 
 class Irrigation(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)
-    irrigation = models.DateField('date of irrigation')
-    start = models.TimeField()
-    end = models.TimeField()
+    date = models.DateField('data di irrigazione')
+    start = models.DateTimeField()
+    end = models.DateTimeField()
     irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
+
+    def get_duration(self):
+        delta = self.end - self.start
+        return divmod(delta.total_seconds(), 60)[0]
