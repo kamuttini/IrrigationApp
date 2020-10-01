@@ -92,7 +92,7 @@ def create(request, garden_id=None):
             form.instance.user = request.user
         form.save()
 
-        if form.instance.irrigation_type == 'C':
+        if garden_id:
             calendar_irrigation = CalendarIrrigation(area=form.instance)
             calendar_irrigation.save()
         return HttpResponseRedirect('/')
@@ -155,6 +155,7 @@ def update(request, id, type):
     if form.is_valid():
         form.save()
         return HttpResponseRedirect("/")
+
 
     context = {
         "form": form,
