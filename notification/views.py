@@ -15,4 +15,4 @@ def delete_notification(request):
         n.viewed = True
         n.save()
 
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))

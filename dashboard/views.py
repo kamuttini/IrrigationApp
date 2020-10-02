@@ -24,26 +24,27 @@ def index(request):
 
 @login_required(login_url="/authentication/login/")
 def detail(request, garden_id):
-    from .methods import get_weather_info
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden = get_object_or_404(Garden, pk=garden_id)
     context = {
         'garden_list': garden_list,
         'garden': garden,
-        'weather': get_weather_info(garden.city, "hourly")
+        'weather': get_weather_info(garden.city, "hourly"),
+        'notifications': n
     }
-
     return render(request, 'dashboard/detail.html', context)
 
 
 @login_required(login_url="/authentication/login/")
 def area_detail(request, area_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
     context = {
         'area': area,
         'garden_list': garden_list,
-
+        'notifications': n
     }
     return render(request, 'dashboard/area_detail.html', context)
 
@@ -51,13 +52,15 @@ def area_detail(request, area_id):
 @login_required(login_url="/authentication/login/")
 def irrigation(request, area_id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
     irrigation_list = Irrigation.objects.filter(area=area)
 
     context = {
         'area': area,
         'garden_list': garden_list,
-        'irrigation_list': irrigation_list
+        'irrigation_list': irrigation_list,
+        'notifications': n
     }
 
     if type == "M":
@@ -81,6 +84,7 @@ def irrigation(request, area_id, type):
 @login_required(login_url="/authentication/login/")
 def create(request, garden_id=None):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     if garden_id:
         form = AreaForm(request.POST or None)
     else:
@@ -99,6 +103,7 @@ def create(request, garden_id=None):
     context = {
         'form': form,
         'garden_list': garden_list,
+        'notifications': n
     }
     return render(request, 'dashboard/create.html', context)
 
@@ -106,6 +111,7 @@ def create(request, garden_id=None):
 @login_required(login_url="/authentication/login/")
 def delete(request, id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     if type == "area":
         obj = get_object_or_404(Area, pk=id)
     else:
@@ -119,6 +125,7 @@ def delete(request, id, type):
     context = {
         'object': obj,
         'garden_list': garden_list,
+        'notifications': n
     }
     return render(request, "dashboard/delete.html", context)
 
@@ -126,6 +133,7 @@ def delete(request, id, type):
 @login_required(login_url="/authentication/login/")
 def weather(request):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     weather_list = []
     locations = []
 
@@ -138,6 +146,7 @@ def weather(request):
     context = {
         'garden_list': garden_list,
         'weather_list': weather_list,
+        'notifications': n
     }
     return render(request, "dashboard/weather.html", context)
 
@@ -145,6 +154,7 @@ def weather(request):
 @login_required(login_url="authentication/login/")
 def update(request, id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     if type == "area":
         obj = get_object_or_404(Area, id=id)
         form = AreaForm(request.POST or None, instance=obj)
@@ -160,6 +170,7 @@ def update(request, id, type):
     context = {
         "form": form,
         'garden_list': garden_list,
+        'notifications': n
     }
 
     return render(request, "dashboard/update.html", context)
