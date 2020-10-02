@@ -13,12 +13,20 @@ from .methods import *
 def index(request):
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    context = {'garden_list': garden_list,
-               'notifications': n}
 
     for item in garden_list:
         item.next_rain = get_rain(item.city, 'next')
 
+    form = GardenForm(request.POST or None)
+    if form.is_valid():
+        form.instance.user = request.user
+        form.save()
+        return HttpResponseRedirect('/')
+
+    context = {'garden_list': garden_list,
+               'notifications': n,
+               'form': form
+               }
     return render(request, 'dashboard/index.html', context)
 
 
@@ -27,11 +35,31 @@ def detail(request, garden_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden = get_object_or_404(Garden, pk=garden_id)
+
+    create_form = AreaForm(request.POST or None)
+    if request.method == "POST" and 'create' in request.POST:
+        if create_form.is_valid():
+            create_form.instance.garden = get_object_or_404(Garden, pk=garden_id)
+            create_form.save()
+            calendar_irrigation = CalendarIrrigation(area=create_form.instance)
+            calendar_irrigation.save()
+
+    if request.method == "POST" and 'delete' in request.POST:
+        garden.delete()
+        return HttpResponseRedirect('/')
+
+    update_form = GardenForm(request.POST or None, instance=garden, initial={'city': garden.city})
+    if request.method == "POST" and 'update' in request.POST:
+        if update_form.is_valid():
+            update_form.save()
+
     context = {
         'garden_list': garden_list,
         'garden': garden,
         'weather': get_weather_info(garden.city, "hourly"),
-        'notifications': n
+        'notifications': n,
+        'create_form': create_form,
+        'update_form': update_form
     }
     return render(request, 'dashboard/detail.html', context)
 
@@ -41,11 +69,23 @@ def area_detail(request, area_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
+
+    if request.method == "POST" and 'delete' in request.POST:
+        area.delete()
+        return HttpResponseRedirect('/')
+
+    update_form = AreaForm(request.POST or None, instance=area)
+    if request.method == "POST" and 'update' in request.POST:
+        if update_form.is_valid():
+            update_form.save()
+
     context = {
         'area': area,
         'garden_list': garden_list,
-        'notifications': n
+        'notifications': n,
+        'update_form': update_form
     }
+
     return render(request, 'dashboard/area_detail.html', context)
 
 
@@ -82,55 +122,6 @@ def irrigation(request, area_id, type):
 
 
 @login_required(login_url="/authentication/login/")
-def create(request, garden_id=None):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
-    if garden_id:
-        form = AreaForm(request.POST or None)
-    else:
-        form = GardenForm(request.POST or None)
-    if form.is_valid():
-        if garden_id:
-            form.instance.garden = get_object_or_404(Garden, pk=garden_id)
-        else:
-            form.instance.user = request.user
-        form.save()
-
-        if garden_id:
-            calendar_irrigation = CalendarIrrigation(area=form.instance)
-            calendar_irrigation.save()
-        return HttpResponseRedirect('/')
-    context = {
-        'form': form,
-        'garden_list': garden_list,
-        'notifications': n
-    }
-    return render(request, 'dashboard/create.html', context)
-
-
-@login_required(login_url="/authentication/login/")
-def delete(request, id, type):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
-    if type == "area":
-        obj = get_object_or_404(Area, pk=id)
-    else:
-        obj = get_object_or_404(Garden, pk=id)
-
-    # POST request
-    if request.method == "POST":
-        # confirming delete
-        obj.delete()
-        return HttpResponseRedirect('/')
-    context = {
-        'object': obj,
-        'garden_list': garden_list,
-        'notifications': n
-    }
-    return render(request, "dashboard/delete.html", context)
-
-
-@login_required(login_url="/authentication/login/")
 def weather(request):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
@@ -149,28 +140,3 @@ def weather(request):
         'notifications': n
     }
     return render(request, "dashboard/weather.html", context)
-
-
-@login_required(login_url="authentication/login/")
-def update(request, id, type):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
-    if type == "area":
-        obj = get_object_or_404(Area, id=id)
-        form = AreaForm(request.POST or None, instance=obj)
-    else:
-        obj = get_object_or_404(Garden, id=id)
-        form = GardenForm(request.POST or None, instance=obj, initial={'city': obj.city})
-
-    if form.is_valid():
-        form.save()
-        return HttpResponseRedirect("/")
-
-
-    context = {
-        "form": form,
-        'garden_list': garden_list,
-        'notifications': n
-    }
-
-    return render(request, "dashboard/update.html", context)

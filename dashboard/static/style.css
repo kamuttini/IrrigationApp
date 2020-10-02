@@ -37,7 +37,7 @@
 }
 
 .main-content .btn, btn:hover {
-    color: white;
+    color: white !important;
 }
 
 .green-button {

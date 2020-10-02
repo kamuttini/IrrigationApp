@@ -3,15 +3,17 @@
 {% block content %}
     <a href="/"><i class="fas fa-arrow-left"></i></a>
     <h1 class="title" id="editable">{{ garden }}</h1>
-    <a id="edit" href="update/garden"><i class="fas fa-pen"></i></a>
+    <a id="edit" href="#" data-toggle="modal" data-target="#update_garden"><i class="fas fa-pen"></i></a>
     <div class="row margin garden">
-        <div class="col-9 margin-left" >
-            <h3 class="dimgray" >{{ garden.city }}</h3>
+        <div class="col-9 margin-left">
+            <h3 class="dimgray">{{ garden.city }}</h3>
             <div class="row margin text-center">
                 {% for area in garden.area_set.all %}
-                    <a><div class="col-2 area margin-left">
+                    <a>
+                        <div class="col-2 area margin-left">
                             <a href="/{{ area.id }}/area_detail/">{{ area.name }}</a>
-                        </div></a>
+                        </div>
+                    </a>
                 {% endfor %}
             </div>
         </div>
@@ -28,13 +30,83 @@
     </div>
     <div class="row">
         <div class="col margin-left">
-            <a class="btn green-button" href="area_create/"> Aggiungi una nuova area</a>
-            <a class="btn red-button" href="delete/garden">Elimina il giardino</a>
+            <a class="btn green-button" data-toggle="modal" data-target="#add_area"> Aggiungi una nuova
+                area</a>
+            <a class="btn red-button" data-toggle="modal" data-target="#delete_garden">Elimina il giardino</a>
         </div>
     </div>
 
+    <!-- Modal for area creation -->
+    <div class="modal fade" id="add_area" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Crea nuova area</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method='POST'> {% csrf_token %}
+                        {{ create_form.as_p }}
+                        <div class="modal-footer">
+                            <input class="btn green-button" type="submit" name="create" value="Salva">
+                            <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
     </div>
 
+    <!-- Modal for garden deletion -->
+    <div class="modal fade" id="delete_garden" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Elimina giardino</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method='POST'> {% csrf_token %}
+                        <p>Procedere con l'eliminazione?</p>
+                        <div class="modal-footer">
+                            <input class="btn red-button" type="submit" name="delete" value="Elimina"/>
+                            <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for garden update -->
+    <div class="modal fade" id="update_garden" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifica giardino</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method='POST'> {% csrf_token %}
+                        {{ update_form.as_p }}
+                        <div class="modal-footer">
+                            <input class="btn green-button" type="submit" name="update" value="Salva">
+                            <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 
 

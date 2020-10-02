@@ -2,7 +2,7 @@
 {% block content %}
     <a href="/{{ area.garden.id }}"><i class="fas fa-arrow-left"></i></a>
     <h1 class="title" id="editable">{{ area.name }}</h1>
-    <a id="edit" href="../update/area"><i class="fas fa-pen"></i></a>
+    <a id="edit" href="#" data-toggle="modal" data-target="#update_area"><i class="fas fa-pen"></i></a>
     <div class="area-info margin col-9" style="padding: 12px; ">
         <div class="row text-center">
             <div class="area col-3">
@@ -23,7 +23,53 @@
     <div class="col margin">
         <a class="btn green-button" href="../irrigation/{{ area.irrigation_type }}">
             Vai a irrigazione</a>
-        <a class="btn red-button" href="../delete/area">Elimina l'area</a>
+        <a class="btn red-button"data-toggle="modal" data-target="#delete_area">Elimina l'area</a>
+    </div>
+
+    <!-- Modal for area deletion -->
+    <div class="modal fade" id="delete_area" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Elimina area</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method='POST'> {% csrf_token %}
+                        <p>Procedere con l'eliminazione?</p>
+                        <div class="modal-footer">
+                            <input class="btn red-button" type="submit" name="delete" value="Elimina"/>
+                            <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal for area update -->
+    <div class="modal fade" id="update_area" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Modifica area</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method='POST'> {% csrf_token %}
+                        {{ update_form.as_p }}
+                        <div class="modal-footer">
+                            <input class="btn green-button" type="submit" name="update" value="Salva">
+                            <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 
 {% endblock content %}

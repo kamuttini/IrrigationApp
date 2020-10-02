@@ -1,9 +1,0 @@
-{% extends 'layout/base.html' %}
-{% block content %}
-
-<form method='POST'> {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn green-button" type="submit" value="Crea">
-    <a class="btn green-button" href="/">Annulla</a>
-</form>
-{% endblock content %}

@@ -10,7 +10,7 @@ def get_weather_info(location, forecast_type):
 
     querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
                    "fields": "precipitation_probability,temp,weather_code",
-                   "apikey": "6KIHRzYEnmDjo2nD68e6GWlHYGfbRIO2"}
+                   "apikey": "ncVu9PBL8D7vTbPbY3NKJRRbtQ0yAX1S"}
 
     response = requests.request("GET", url, params=querystring).json()
     weather_info = []
