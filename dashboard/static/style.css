@@ -80,6 +80,14 @@
     color: #ffffff;
 }
 
+.fa-arrow-left {
+    font-size: 20px;
+    display: block;
+    position: absolute;
+    margin-top: -30px;
+    left: 20px;
+}
+
 /* LOGIN */
 .logo-login img {
     position: absolute;
@@ -187,7 +195,7 @@
     width: 18rem;
 }
 
-.card-title a:hover {
+.card-title a:hover, .fa-arrow-left:hover {
     text-decoration: none;
     color: #91B77E;
 }
