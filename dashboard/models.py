@@ -72,7 +72,7 @@ class Garden(models.Model):
 
 class Area(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=10)
     position = models.IntegerField(default=0)
     humidity = models.IntegerField(default=0)
     last_irrigation = models.DateTimeField('ultima irrigazione', default="2012-01-01 00:01", editable=False)

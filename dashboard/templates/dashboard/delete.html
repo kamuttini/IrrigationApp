@@ -3,6 +3,8 @@
 
 <form method="POST">{% csrf_token %}
     <h3>Procedere con l'eliminazione?</h3>
-    <p style="padding-top: 10px"><input class="btn btn-primary create-btn-delete" type="submit"  value="Elimina" /> <a class="btn btn-primary green-button" href="/">Annulla</a></p>
+    <div class="margin">
+            <input class="btn red-button" type="submit" value="Elimina" /> <a class="btn green-button" href="/">Annulla</a>
+    </div>
 </form>
 {% endblock content %}

@@ -3,8 +3,8 @@
     <div class="col-12">
         <h1>Irrigazione calendarizzata della zona {{ area.name }}</h1>
     </div><br>
-    <div class="row">
-        <div class="col-4">
+    <div class="row settings">
+        <div class="col-4 margin-left">
             <p class="description">
                 Questa area viene annafiata <br>
                 {{ irrigation_settings.get_frequency_display }}
@@ -15,13 +15,15 @@
                 <h4 id="edit-title">modifica le impostazioni</h4>
             </a>
 
-            <div class="collapse" id="settings" style="margin-top: 20px">
+            <div class="col collapse margin" id="settings">
                 <form method="POST">
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <p style="padding-top: 10px">
-                        <input class="btn btn-primary green-button" type="submit" value="Salva">
-                        <a class="btn btn-primary green-button" href="/">Annulla</a>
+                    <div class="margin">
+                        <input class="btn green-button" type="submit" value="Salva">
+                        <a class="btn  green-button" href="/">Annulla</a>
+                    </div>
+
                 </form>
             </div>
 

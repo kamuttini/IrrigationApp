@@ -1,30 +1,32 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 
-{%  block content %}
-    <h2>Benvenuto {{ request.user | capfirst}}</h2><br>
+{% block content %}
+    <h2>Benvenuto {{ request.user | capfirst }}</h2>
     {% if garden_list %}
-        <div class="row">
-        {% for garden in garden_list %}
-            <div class="col-4">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{% static "images/" %}{{garden.image}}" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h5>
-                        <p class="card-text">Last rain on {{ garden.last_rain }}</p>
-                        <p class="card-text">Prossima pioggia prevista
-                              {% if garden.next_rain == 0 %}:<strong> oggi</strong>
+        <div class="row margin">
+            {% for garden in garden_list %}
+                <div class="col-4">
+                    <div class="card">
+                        <img class="card-img-top" src="{% static "images/" %}{{ garden.image }}" alt="Card image cap">
+                        <div class="card-body">
+                            <h4 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h4>
+                            <p class="card-text dimgray">Last rain on {{ garden.last_rain }}</p>
+                            <p class="card-text dimgray">Prossima pioggia prevista
+                                {% if garden.next_rain == 0 %}:<strong> oggi</strong>
                                 {% else %}fra: <strong>{{ garden.next_rain }} giorni</strong> {% endif %}  </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
         </div>
     {% else %}
         <p>Crea un giardino</p>
     {% endif %}
-    <div class="row">
-        <a class="btn btn-primary green-button" href="garden_create/" style="margin: 30px 0 0 15px"> Aggiungi un nuovo giardino</a>
+    <div class="row margin">
+        <div class="col">
+            <a class="btn green-button" href="garden_create/"> Aggiungi un nuovo giardino</a>
+        </div>
     </div>
 
 {% endblock content %}

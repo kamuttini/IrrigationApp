@@ -1,34 +1,39 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-    <h1 id="editable" style="display: inline">{{ garden }}</h1>
+    <h1 class="title" id="editable">{{ garden }}</h1>
     <a id="edit" href="update/garden"><i class="fas fa-pen"></i></a>
-    <div class="garden-info>">
-        <h3 class="garden-city">{{ garden.city }}</h3>
-        <ul class="area-name">
-            {% for area in garden.area_set.all %}
-                <div class="garden-area"><a href="/{{ area.id }}/area_detail/">{{ area.name }}</a></div>
-            {% endfor %}
-        </ul>
+    <div class="row margin garden">
+        <div class="col-9 margin-left" >
+            <h3 class="dimgray" >{{ garden.city }}</h3>
+            <div class="row margin text-center">
+                {% for area in garden.area_set.all %}
+                    <a><div class="col-2 area margin-left">
+                            <a href="/{{ area.id }}/area_detail/">{{ area.name }}</a>
+                        </div></a>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="col-2 weather-days text-center">
+            <ul class="weather-info-list">
+                <li class="day_of_week"><b>{{ weather.day }}</b></li>
+                <img class="weather-image-icon" src="{% static weather.weather_icons_path %}" alt="Weather icon">
+                <li class="weather-description">{{ weather.description }}</li>
+                <li style="color:orange"><b>{{ weather.temp }}</b></li>
+                <li><b>possibilità di precipitazioni: {{ weather.precipitation }}% </b></li>
+            </ul>
+        </div>
     </div>
-    <div class="garden-options">
-        <a class="btn btn-primary green-button" href="area_create/"> Aggiungi una nuova area</a>
-        <a class="btn btn-primary create-btn-delete" href="delete/garden">Elimina il giardino</a>
+    <div class="row">
+        <div class="col margin-left">
+            <a class="btn green-button" href="area_create/"> Aggiungi una nuova area</a>
+            <a class="btn red-button" href="delete/garden">Elimina il giardino</a>
+        </div>
     </div>
 
-   <div class="weather-box-garden">
-         <ul class="weather-days">
-                <li class="day">
-                    <ul class="weather-info-list">
-                        <li class="day_of_week"><b>{{ weather.day }}</b></li>
-                        <img class="weather-image-icon" src="{% static weather.weather_icons_path %}" alt="Weather icon">
-                        <li class="weather-description">{{ weather.description }}</li>
-                        <li style="color:orange"><b>{{ weather.temp }}</b></li>
-                        <li><b>possibilità di precipitazioni: {{ weather.precipitation }}% </b></li>
-                    </ul>
-                </li>
-        </ul>
     </div>
+
 {% endblock content %}
 
 

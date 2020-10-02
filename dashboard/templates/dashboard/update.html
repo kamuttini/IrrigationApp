@@ -1,15 +1,17 @@
 {% extends 'layout/base.html' %}
-{%  block content %}
+{% block content %}
 
     <!-- Create a Form -->
-    <form method="POST"> 
+    <form method="POST">
         <!-- Security token by Django -->
-        {% csrf_token %} 
-  
+        {% csrf_token %}
+
         <!-- form as paragraph -->
-        {{ form.as_p }} 
-  
-        <p style="padding-top: 10px"><input class="btn btn-primary green-button" type="submit" value="Salva"> <a class="btn btn-primary green-button" href="/">Annulla</a>
-    </form> 
-  
+        {{ form.as_p }}
+        <div class="margin">
+            <input class="btn green-button" type="submit" value="Salva">
+            <a class="btn green-button" href="/">Annulla</a>
+        </div>
+    </form>
+
 {% endblock content %}

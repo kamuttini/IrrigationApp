@@ -1,23 +1,25 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-   <h1>Meteo</h1>
-    <div class="weather-box">
+    <h1>Meteo</h1>
+    <div class="row margin">
         {% if garden_list %}
             {% for item in weather_list %}
-                <h3>{{ item.0 }}</h3>
-                <ul class="weather-days">
+                <div class="col dimgray">
+                    <h3>{{ item.0 }}</h3> {# city #}
+                </div>
+                <ul class="weather-days row">
                     {% for item in item.1.weather_info %}
-                       <li class="day">
-                            <ul class="weather-info-list">
+                        <div class="day col-2">
+                            <div class="weather-info-list text-center">
                                 <li class="day-of-week">{{ item.0.day }}</li>
                                 <img class="weather-image-icon" src="{% static item.1 %}" alt="Weather icon">
                                 <li class="weather-description">{{ item.0.description }}</li>
                                 <li style="color:#de2632"><b>{{ item.0.temperature_max }}</b></li>
                                 <li style="color:#1fa8de"><b>{{ item.0.temperature_min }}</b></li>
                                 <li>Precipitazioni: {{ item.0.precipitation }}</li>
-                            </ul>
-                        </li>
+                            </div>
+                        </div>
                     {% endfor %}
                 </ul>
             {% endfor %}

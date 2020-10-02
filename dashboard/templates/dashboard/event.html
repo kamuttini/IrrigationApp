@@ -2,7 +2,7 @@
 
 {% block content %}
     <div class="clearfix">
-        <a class="btn btn-info green-button left" href="/calendar"> Back to calendar </a>
+        <a class="btn green-button left" href="/calendar"> Back to calendar </a>
     </div>
 
     <form method="post">
@@ -11,10 +11,10 @@
             {{ form }}
             <tr>
                 <td colspan="2">
-                    <button type="submit" class="btn green-button btn-info right"> Submit</button>
+                    <button type="submit" class="btn green-button right"> Submit</button>
                 </td>
                  {% if  request.get_full_path != "/calendar/new/" %}
-                <td colspan="3"><a class="btn btn-primary create-btn-delete" href="../delete/">Elimina l'evento</a></td>
+                <td colspan="3"><a class="btn red-button" href="../delete/">Elimina l'evento</a></td>
                 {% endif %}
             </tr>
         </table>
