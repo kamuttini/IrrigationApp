@@ -1,6 +1,8 @@
 from .static.translation import WEATHER, WEEK
 import requests
 import datetime as DT
+from .models import Area, Garden
+from django.db.models import Q
 
 
 def get_weather_info(location, forecast_type):
@@ -118,3 +120,21 @@ def irrigate(location, umidity):
             irrigation = True
 
     return irrigation
+
+
+def search(request):
+    query = request.GET.get('q')
+    queries = query.split(" ")
+    qs = Area.objects.filter(garden__user=request.user)
+    qs2 = Garden.objects.filter(user=request.user)
+    if query is not None:
+        for item in queries:
+            qs = qs.filter(
+                Q(name__icontains=item) |
+                Q(garden__city__city__icontains=item))
+
+            qs2 = qs2.filter(
+                Q(name__icontains=item) |
+                Q(city__city__icontains=item))
+
+    return qs, qs2

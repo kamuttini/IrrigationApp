@@ -1,6 +1,8 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
+    {% include 'dashboard/search_results.html' %}
+
     <a href="/"><i class="fas fa-arrow-left"></i></a>
     <h1 class="title" id="editable">{{ garden }}</h1>
     <a id="edit" href="#" data-toggle="modal" data-target="#update_garden"><i class="fas fa-pen"></i></a>

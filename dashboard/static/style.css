@@ -195,7 +195,7 @@
     width: 18rem;
 }
 
-.card-title a:hover, .fa-arrow-left:hover {
+.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover{
     text-decoration: none;
     color: #91B77E;
 }

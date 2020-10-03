@@ -1,0 +1,20 @@
+{% if query %}
+    <div class="card col-6 search-result" style="margin-bottom: 50px; padding: 30px">
+        <div class="card-title"><h5>I risultati della ricerca '{{ query }}'</h5></div>
+        {% if area_search %}
+            <p>Aree:
+            {% for object in area_search %}
+                <a href="{{ object.id }}/area_detail/"><b>{{ object }}</b></a>
+            {% endfor %}
+            </p>
+        {% endif %}
+
+        {% if garden_search %}
+            <p>Giardini:
+            {% for object in garden_search %}
+                <a href="{{ object.id }}"><b>{{ object }}</b> </a>
+            {% endfor %}
+            </p>
+        {% endif %}
+    </div>
+{% endif %}

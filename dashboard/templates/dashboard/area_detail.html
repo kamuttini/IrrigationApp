@@ -1,5 +1,7 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+    {% include 'dashboard/search_results.html' %}
+
     <a href="/{{ area.garden.id }}"><i class="fas fa-arrow-left"></i></a>
     <h1 class="title" id="editable">{{ area.name }}</h1>
     <a id="edit" href="#" data-toggle="modal" data-target="#update_area"><i class="fas fa-pen"></i></a>

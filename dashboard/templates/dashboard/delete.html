@@ -1,10 +1,12 @@
 {% extends 'layout/base.html' %}
-{%  block content %}
+{% block content %}
+    {% include 'dashboard/search_results.html' %}
 
-<form method="POST">{% csrf_token %}
-    <h3>Procedere con l'eliminazione?</h3>
-    <div class="margin">
-            <input class="btn red-button" type="submit" value="Elimina" /> <a class="btn green-button" href="/">Annulla</a>
-    </div>
-</form>
+    <form method="POST">{% csrf_token %}
+        <h3>Procedere con l'eliminazione?</h3>
+        <div class="margin">
+            <input class="btn red-button" type="submit" value="Elimina"/> <a class="btn green-button"
+                                                                             href="/">Annulla</a>
+        </div>
+    </form>
 {% endblock content %}
