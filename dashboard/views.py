@@ -1,7 +1,6 @@
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-
 from .forms import *
 from .models import Area, Garden, Irrigation, CalendarIrrigation
 from notification.models import Notification
@@ -27,6 +26,11 @@ def index(request):
                'notifications': n,
                'form': form
                }
+
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
+
     return render(request, 'dashboard/index.html', context)
 
 
@@ -61,6 +65,10 @@ def detail(request, garden_id):
         'create_form': create_form,
         'update_form': update_form
     }
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
+
     return render(request, 'dashboard/detail.html', context)
 
 
@@ -85,6 +93,9 @@ def area_detail(request, area_id):
         'notifications': n,
         'update_form': update_form
     }
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
 
     return render(request, 'dashboard/area_detail.html', context)
 
@@ -102,6 +113,9 @@ def irrigation(request, area_id, type):
         'irrigation_list': irrigation_list,
         'notifications': n
     }
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
 
     if type == "M":
         return render(request, 'dashboard/manual_irrigation.html', context)
@@ -139,4 +153,7 @@ def weather(request):
         'weather_list': weather_list,
         'notifications': n
     }
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
     return render(request, "dashboard/weather.html", context)

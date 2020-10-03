@@ -10,7 +10,7 @@ from .models import *
 from .utils import Calendar
 from .forms import EventForm
 from dashboard.models import Garden
-
+from dashboard.methods import search
 
 class CalendarView(generic.ListView):
     model = Event
@@ -30,6 +30,10 @@ class CalendarView(generic.ListView):
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
         context['garden_list'] = garden_list
+
+        if self.request.GET and 'q' in self.request.POST:
+            context['query'] = self.request.GET.get('q')
+            context['area_search'], context['garden_search'] = search(self.request)
         return context
 
 
