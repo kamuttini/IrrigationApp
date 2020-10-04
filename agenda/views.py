@@ -68,13 +68,12 @@ def event(request, event_id=None):
 
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
-        event = Event.objects.create(**form.cleaned_data, user=request.user)
-        print(event.title)
+        instance.user= request.user
+        form.save()
         return HttpResponseRedirect(reverse('agenda:calendar'))
 
     context = {
         'form': form,
-        'event': event_id
     }
     return render(request, 'dashboard/event.html', context)
 
