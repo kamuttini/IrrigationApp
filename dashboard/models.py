@@ -21,7 +21,7 @@ CALENDAR = 'C'
 SMART = 'S'
 IRRIGATION = [
     (MANUAL, 'Manuale'),
-    (CALENDAR, 'Calendario'),
+    (CALENDAR, 'Programmata'),
     (SMART, 'Intelligente'),
 ]
 
