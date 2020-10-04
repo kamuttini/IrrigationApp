@@ -1,4 +1,4 @@
-import django
+import django.utils
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
@@ -25,6 +25,7 @@ def create_welcome_message(sender, **kwargs):
 @receiver(pre_save, sender=Area)
 def notify_low_humidity(sender, instance, **kwargs):
     if instance.humidity < 30:
+        message = f"l'umidità della zona {instance} è sotto il 30%."
         Notification.objects.create(user=instance.garden.user,
                                     title="Umidità bassa",
-                                    message="umidità sotto il 30%")
+                                    message= message)
