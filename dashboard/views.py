@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import *
-from .models import Area, Garden, Irrigation, CalendarIrrigation
+from .models import *
 from notification.models import Notification
 from .methods import *
 
@@ -77,6 +77,7 @@ def area_detail(request, area_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
+    irrigation_list = Irrigation.objects.filter(area=area).order_by('-start')[:20]
 
     if request.method == "POST" and 'delete' in request.POST:
         area.delete()
@@ -91,7 +92,8 @@ def area_detail(request, area_id):
         'area': area,
         'garden_list': garden_list,
         'notifications': n,
-        'update_form': update_form
+        'update_form': update_form,
+        'irrigation_list': irrigation_list,
     }
     if request.GET:
         context['query'] = request.GET.get('q')
