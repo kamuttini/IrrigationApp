@@ -159,3 +159,26 @@ def weather(request):
         context['query'] = request.GET.get('q')
         context['area_search'], context['garden_search'] = search(request)
     return render(request, "dashboard/weather.html", context)
+
+
+@login_required(login_url="/authentication/login/")
+def settings(request):
+    garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
+    settings = get_object_or_404(Setting, user=request.user)
+
+    update_form = SettingsForm(request.POST or None, instance=settings)
+    if request.method == "POST":
+        if update_form.is_valid():
+            update_form.save()
+            return HttpResponseRedirect('/')
+
+    context = {
+        'garden_list': garden_list,
+        'notifications': n,
+        'update_form': update_form
+    }
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
+    return render(request, "dashboard/settings.html", context)

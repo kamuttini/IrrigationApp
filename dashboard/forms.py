@@ -1,5 +1,5 @@
 from django import forms
-from .models import Garden, Area, Location, CalendarIrrigation
+from .models import *
 
 
 class GardenForm(forms.ModelForm):
@@ -34,3 +34,9 @@ class CalendarIrrigationForm(forms.ModelForm):
     class Meta:
         model = CalendarIrrigation
         exclude = ('area',)
+
+
+class SettingsForm(forms.ModelForm):
+    class Meta:
+        model = Setting
+        exclude = ('user',)
