@@ -48,7 +48,7 @@ DURATION = [
 # Create your models here.
 class Setting(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    email_notification = models.BooleanField('Notifiche email', default='TRUE')
+    email_notification = models.BooleanField('Notifiche email', default=True)
 
 class Location(models.Model):
     city = models.CharField(max_length=100)
