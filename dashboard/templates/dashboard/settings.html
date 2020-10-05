@@ -1,8 +1,10 @@
 {% extends 'layout/base.html' %}
 {% block content %}
+    {% include 'includes/search_results.html' %}
+
     <form method='POST'> {% csrf_token %}
         {{ update_form.as_p }}
-        <div >
+        <div>
             <input class="btn green-button" type="submit" name="update" value="Salva">
             <a class="btn green-button" data-dismiss="modal">Annulla</a>
         </div>

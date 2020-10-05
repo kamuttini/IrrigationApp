@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    {% include 'dashboard/search_results.html' %}
+    {% include 'includes/search_results.html' %}
 
     <a href="/{{ area.garden.id }}"><i class="fas fa-arrow-left"></i></a>
     <h1 class="title" id="editable">{{ area.name }}</h1>
@@ -22,7 +22,7 @@
         </div>
      </div>
            <div class="col-6">
-            {% include 'dashboard/chart.html' %}
+            {% include 'includes/chart.html' %}
         </div>
     <div class="col margin">
         <a class="btn green-button" href="../irrigation/{{ area.irrigation_type }}">
