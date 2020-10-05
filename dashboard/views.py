@@ -2,7 +2,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import *
-from .models import Area, Garden, Irrigation, CalendarIrrigation
+from .models import *
 from notification.models import Notification
 from .methods import *
 
@@ -77,6 +77,7 @@ def area_detail(request, area_id):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
+    irrigation_list = Irrigation.objects.filter(area=area).order_by('-start')[:20]
 
     if request.method == "POST" and 'delete' in request.POST:
         area.delete()
@@ -91,7 +92,8 @@ def area_detail(request, area_id):
         'area': area,
         'garden_list': garden_list,
         'notifications': n,
-        'update_form': update_form
+        'update_form': update_form,
+        'irrigation_list': irrigation_list,
     }
     if request.GET:
         context['query'] = request.GET.get('q')
@@ -157,3 +159,26 @@ def weather(request):
         context['query'] = request.GET.get('q')
         context['area_search'], context['garden_search'] = search(request)
     return render(request, "dashboard/weather.html", context)
+
+
+@login_required(login_url="/authentication/login/")
+def settings(request):
+    garden_list = Garden.objects.filter(user=request.user).order_by('name')
+    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
+    settings = get_object_or_404(Setting, user=request.user)
+
+    update_form = SettingsForm(request.POST or None, instance=settings)
+    if request.method == "POST":
+        if update_form.is_valid():
+            update_form.save()
+            return HttpResponseRedirect('/')
+
+    context = {
+        'garden_list': garden_list,
+        'notifications': n,
+        'update_form': update_form
+    }
+    if request.GET:
+        context['query'] = request.GET.get('q')
+        context['area_search'], context['garden_search'] = search(request)
+    return render(request, "dashboard/settings.html", context)

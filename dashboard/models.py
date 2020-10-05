@@ -21,7 +21,7 @@ CALENDAR = 'C'
 SMART = 'S'
 IRRIGATION = [
     (MANUAL, 'Manuale'),
-    (CALENDAR, 'Calendario'),
+    (CALENDAR, 'Programmata'),
     (SMART, 'Intelligente'),
 ]
 
@@ -46,6 +46,10 @@ DURATION = [
 
 
 # Create your models here.
+class Setting(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    email_notification = models.BooleanField('Notifiche email', default='TRUE')
+
 class Location(models.Model):
     city = models.CharField(max_length=100)
     lon = models.FloatField()
