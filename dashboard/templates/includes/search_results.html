@@ -12,7 +12,7 @@
         {% if garden_search %}
             <p>Giardini:
             {% for object in garden_search %}
-                <a href="{{ object.id }}"><b>{{ object }}</b> </a>
+                <a href="/{{ object.id }}"><b>{{ object }}</b> </a>
             {% endfor %}
             </p>
         {% endif %}
