@@ -5,25 +5,28 @@
     <a href="/{{ area.garden.id }}"><i class="fas fa-arrow-left"></i></a>
     <h1 class="title" id="editable">{{ area.name }}</h1>
     <a id="edit" href="#" data-toggle="modal" data-target="#update_area"><i class="fas fa-pen"></i></a>
-    <div class="area-info margin col-8" style="padding: 12px; ">
-        <div class="row text-center">
-            <div class="area col-3">
-                <h6>Umidità</h6>
-                <h3>{{ area.humidity }}%</h3>
-            </div>
-            <div class="area col-3">
-                <h6>Ultima irrigazione</h6>
-                <p>{{ area.last_irrigation }}</p>
-            </div>
-            <div class="area col-3">
-                <h6>Tipo di irrigazione</h6>
-                <h3>{{ area.get_irrigation_type_display }}</h3>
+    <div class="row margin "style="padding: 12px; " >
+        <div class="area-info margin col-6" >
+            <div class="row text-center">
+                <div class="area col-3">
+                    <h6>Umidità</h6>
+                    <h4>{{ area.humidity }}%</h4>
+                </div>
+                <div class="area col-3">
+                    <h6>Ultima irrigazione</h6>
+                    <h4>{{ area.last_irrigation |date:"d M " }}</h4>
+                </div>
+                <div class="area col-3">
+                    <h6>Tipo di irrigazione</h6>
+                    <h4>{{ area.get_irrigation_type_display }}</h4>
+                </div>
             </div>
         </div>
-     </div>
-           <div class="col-6">
+        <div class="col-6">
             {% include 'includes/chart.html' %}
         </div>
+    </div>
+
     <div class="col margin">
         <a class="btn green-button" href="../irrigation/{{ area.irrigation_type }}">
             Vai a irrigazione</a>
