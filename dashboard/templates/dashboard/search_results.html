@@ -4,7 +4,7 @@
         {% if area_search %}
             <p>Aree:
             {% for object in area_search %}
-                <a href="{{ object.id }}/area_detail/"><b>{{ object }}</b></a>
+                <a href="/{{ object.id }}/area_detail/"><b>{{ object }}</b></a>
             {% endfor %}
             </p>
         {% endif %}
