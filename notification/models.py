@@ -19,8 +19,9 @@ class Notification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
 @receiver(post_save, sender=User)
-def create_welcome_message(sender, **kwargs):
+def initial_settings(sender, **kwargs):
     if kwargs.get('created', False):
+        Setting.objects.create(user=kwargs.get('instance')),
         Notification.objects.create(user=kwargs.get('instance'),
                                     title="Benvenuto nella Dashboard",
                                     message="Grazie per esserti registrato")
