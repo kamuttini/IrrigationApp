@@ -1,8 +1,8 @@
 {% extends 'layout/base.html' %}
 {% block content %}
     {% include 'includes/search_results.html' %}
-
-    <form method='POST'> {% csrf_token %}
+    <h2>Impostazioni Utente</h2>
+    <form method='POST' class="margin"> {% csrf_token %}
         {{ update_form.as_p }}
         <div>
             <input class="btn green-button" type="submit" name="update" value="Salva">

@@ -5,7 +5,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
 
-from dashboard.models import Area,Setting
+from dashboard.models import Area, Setting, Irrigation
 from django.core.mail import send_mail
 
 
@@ -28,6 +28,14 @@ def initial_settings(sender, **kwargs):
         Notification.objects.create(user=kwargs.get('instance'),
                                     title="Notifiche email",
                                     message="Le notifiche via email sono attive di default. Puoi modificare queste scelta in Imostazioni")
+
+@receiver(post_save, sender=Irrigation)
+def initial_settings(sender, instance, **kwargs):
+    if kwargs.get('created', False):
+        Notification.objects.create(user=instance.area.garden.user,
+                                    title="Irrigazione manuale avviata",
+                                    message=f'zona: {instance.area}')
+
 
 @receiver(pre_save, sender=Area)
 def notify_low_humidity(sender, instance, **kwargs):

@@ -7,13 +7,13 @@
         <h1>Irrigazione programmata della zona {{ area.name }}</h1>
     </div><br>
     <div class="row settings">
-        <div class="col-4 margin-left">
+        <div class="col-4 ">
             <p class="description">
                 Questa area viene annafiata <br>
                 {{ irrigation_settings.get_frequency_display }}
                 giorni per {{ irrigation_settings.duration }}
             </p>
-            <a class=" dropdown-toggle" data-toggle="collapse" href="#settings" role="button"
+            <a class="margin-left dropdown-toggle" data-toggle="collapse" href="#settings" role="button"
                aria-expanded="false" aria-controls="collapseExample">
                 <h4 id="edit-title">modifica le impostazioni</h4>
             </a>
@@ -31,7 +31,7 @@
             </div>
 
         </div>
-        <div class="col-3"></div>
+        <div class="col-4"></div>
         <div class="col-4">
             {% include 'includes/irrigation_list.html' %}
         </div>

@@ -90,9 +90,9 @@ class Area(models.Model):
 
 
 class Irrigation(models.Model):
-    area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)
-    date = models.DateField('data di irrigazione')
-    start = models.DateTimeField()
+    area = models.ForeignKey(Area, on_delete=models.CASCADE)
+    date = models.DateField('data di irrigazione', default=timezone.now)
+    start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField()
     irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
 
