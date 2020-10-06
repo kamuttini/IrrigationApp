@@ -107,19 +107,32 @@ def irrigation(request, area_id, type):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
-    irrigation_list = Irrigation.objects.filter(area=area)
-
+    irrigation_list = Irrigation.objects.filter(area=area).order_by('-start')
     context = {
         'area': area,
         'garden_list': garden_list,
         'irrigation_list': irrigation_list,
         'notifications': n
     }
+
     if request.GET:
         context['query'] = request.GET.get('q')
         context['area_search'], context['garden_search'] = search(request)
 
     if type == "M":
+        irrigation = Irrigation.objects.filter(area=area, end__gte=timezone.now()).order_by('-start')[:1]
+        context['irrigation'] = irrigation
+
+        if request.method == 'POST' and 'create' in request.POST:
+            Irrigation.objects.create(area=area, end=timezone.now() + datetime.timedelta(
+                    minutes=int(request.POST.get('value', ""))))
+
+        if irrigation:
+            if request.method == 'POST' and 'delete' in request.POST:
+                irrigation[0].end = timezone.now()
+                irrigation[0].save()
+                return render(request, 'dashboard/manual_irrigation.html', context)
+
         return render(request, 'dashboard/manual_irrigation.html', context)
 
     elif type == "C":

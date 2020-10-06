@@ -3,24 +3,31 @@
     {% include 'includes/search_results.html' %}
 
     <a href="/{{ area.id }}/area_detail"><i class="fas fa-arrow-left"></i></a>
-
+    <div class="row ">
         <h1>Irrigazione manuale della zona {{ area.name }}</h1>
-    <div class="row text-center" style="margin-top: 50px">
-        <div class="col-3 center timer margin-left">
-            <h2>Timer</h2>
-            <p id="demo"></p>
-            <input type="range" min="1" max="120" value="20" class="slider" id="timerRange">
-            <button class="btn green-button" type="button" onclick="Timer(Date.now())">Avvia</button>
-            <button class="btn green-button" onclick="Stop()">Stop</button>
+
+        <div class="col-8">
+            <div class="row text-center" style="margin-top: 50px">
+                <div class="col-5 center timer margin-left">
+                    <h2>Timer</h2>
+                    <p id="demo"></p>
+                    <form method='POST'> {% csrf_token %}
+                        <input type="range" min="1" max="120" name="value" value="20" class="slider" id="timerRange">
+                        <button class="btn green-button" name="create" type="submit">Avvia</button>
+                        <button class="btn green-button" name="delete" type="submit" onclick="Stop()">Stop</button>
+                    </form>
+                </div>
+                <div class="col-5 margin">
+                    <p class="description">imposta il timer e avvia l'irrigazione per quanto tempo desideri </p>
+                </div>
+            </div>
+
         </div>
-        <div class="col-3">
-            <p class="description">imposta il timer e avvia l'irrigazione per quanto tempo desideri </p>
-        </div>
+
         <div class="col-4">
             {% include 'includes/irrigation_list.html' %}
         </div>
     </div>
-
 
 
     <script>
@@ -32,15 +39,15 @@
             output.innerHTML = this.value + ' minuti';
         }
     </script>
-    <script>
-        var interval
+    {% if irrigation %}
 
-        // Set the date we're counting down to
-        function Timer(date) {
+        <script>
+            var interval
+
+            // Set the date we're counting down to
+
             var slider = document.getElementById("timerRange");
-            var countDownDate = new Date(date);
-            countDownDate.setMinutes(countDownDate.getMinutes() + parseInt(slider.value))
-
+            var countDownDate = new Date('{{ irrigation.0.end.isoformat }}');
             // Update the count down every 1 second
             interval = setInterval(function () {
 
@@ -49,6 +56,7 @@
 
                 // Find the distance between now and the count down date
                 var distance = countDownDate - now;
+                console.log(countDownDate)
 
                 // Time calculations for days, hours, minutes and seconds
                 var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -61,14 +69,16 @@
                 // If the count down is over, write some text
                 if (distance < 0) {
                     clearInterval(interval);
-                    document.getElementById("demo").innerHTML = "EXPIRED";
+                    document.getElementById("demo").innerHTML = "SCADUTO";
                 }
 
             }, 1000);
-        }
 
-        function Stop() {
-            clearInterval(interval);
-        }
-    </script>
+
+            function Stop() {
+                clearInterval(interval);
+            }
+        </script>
+
+    {% endif %}
 {% endblock content %}
