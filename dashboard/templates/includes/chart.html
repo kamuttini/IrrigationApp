@@ -1,4 +1,14 @@
-<div id="container" >
+<div>
+    <div class="dropdown" style="float:right; margin-top: -35px">
+        <button class="btn green-button dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+            Vista
+        </button>
+        <div class="dropdown-menu chart">
+            <a class="dropdown-item" onclick="updateWeek()" href="#">Settimanale</a>
+            <a class="dropdown-item" onclick="updateMonth()"href="#">Mensile</a>
+        </div>
+    </div>
     <canvas id="pie-chart"></canvas>
 </div>
 
@@ -36,7 +46,21 @@
 
     window.onload = function () {
         var ctx = document.getElementById('pie-chart').getContext('2d');
-        window.myPie = new Chart(ctx, config);
+        window.wateringChart = new Chart(ctx, config);
     };
 
+    function updateWeek() {
+        wateringChart.options.scales.xAxes[0] = {
+            type: 'time',
+            time: {unit: 'week'}
+        };
+        wateringChart.update();
+    }
+    function updateMonth() {
+        wateringChart.options.scales.xAxes[0] = {
+            type: 'time',
+            time: {unit: 'month'}
+        };
+        wateringChart.update();
+    }
 </script>

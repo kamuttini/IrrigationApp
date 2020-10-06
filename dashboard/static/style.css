@@ -201,7 +201,7 @@
     width: 18rem;
 }
 
-.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover{
+.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover{
     text-decoration: none;
     color: #91B77E;
 }
