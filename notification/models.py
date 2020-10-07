@@ -29,8 +29,9 @@ def initial_settings(sender, **kwargs):
                                     title="Notifiche email",
                                     message="Le notifiche via email sono attive di default. Puoi modificare queste scelta in Imostazioni")
 
+
 @receiver(post_save, sender=Irrigation)
-def initial_settings(sender, instance, **kwargs):
+def irrigation(sender, instance, **kwargs):
     if kwargs.get('created', False):
         Notification.objects.create(user=instance.area.garden.user,
                                     title="Irrigazione manuale avviata",
