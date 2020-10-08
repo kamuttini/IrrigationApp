@@ -4,10 +4,16 @@
     <h2>Impostazioni Utente</h2>
     <form method='POST' class="margin"> {% csrf_token %}
         {{ update_form.as_p }}
-        <div>
-            <input class="btn green-button" type="submit" name="update" value="Salva">
+        <div style="margin-top: -15px">
+            <input class="btn green-button" type="submit" name="update_email" value="Salva">
             <a class="btn green-button" data-dismiss="modal">Annulla</a>
         </div>
+    </form>
+
+    <form method='POST' class="margin"> {% csrf_token %}
+        {{ user_form.as_p }}
+        <input class="btn green-button" type="submit" name="update_password" value="Salva">
+        <a class="btn green-button" data-dismiss="modal">Annulla</a>
     </form>
 
 {% endblock content %}

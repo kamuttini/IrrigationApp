@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import PasswordChangeForm
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
@@ -125,7 +126,7 @@ def irrigation(request, area_id, type):
 
         if request.method == 'POST' and 'create' in request.POST:
             Irrigation.objects.create(area=area, end=timezone.now() + datetime.timedelta(
-                    minutes=int(request.POST.get('value', ""))))
+                minutes=int(request.POST.get('value', ""))))
 
         if irrigation:
             if request.method == 'POST' and 'delete' in request.POST:
@@ -180,16 +181,22 @@ def settings(request):
     n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     settings = get_object_or_404(Setting, user=request.user)
 
+    user_form = PasswordChangeForm(request.POST or None)
     update_form = SettingsForm(request.POST or None, instance=settings)
     if request.method == "POST":
-        if update_form.is_valid():
+        if update_form.is_valid() and 'update_email' in request.POST:
             update_form.save()
+            return HttpResponseRedirect('/')
+
+        if user_form.is_valid() and 'update_password' in request.POST:
+            user_form.save()
             return HttpResponseRedirect('/')
 
     context = {
         'garden_list': garden_list,
         'notifications': n,
-        'update_form': update_form
+        'update_form': update_form,
+        'user_form': user_form
     }
     if request.GET:
         context['query'] = request.GET.get('q')
