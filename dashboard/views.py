@@ -7,11 +7,22 @@ from .models import *
 from notification.models import Notification
 from .methods import *
 
+def custom_processor(request):
+    if request.user.id:
+        garden_list = Garden.objects.filter(user=request.user).order_by('name')
+        n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
 
-# Create your views here.
+        if request.GET:
+            query = request.GET.get('q')
+            area_search, garden_search = search(request)
+            return {'query': query, 'area_search': area_search, 'garden_search': garden_search,
+                    'garden_list': garden_list, 'notifications': n}
+
+        return {'garden_list': garden_list, 'notifications': n}
+
+# views here.
 @login_required(login_url="/authentication/login/")
 def index(request):
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
 
     for item in garden_list:
@@ -24,21 +35,13 @@ def index(request):
         return HttpResponseRedirect('/')
 
     context = {'garden_list': garden_list,
-               'notifications': n,
                'form': form
                }
-
-    if request.GET:
-        context['query'] = request.GET.get('q')
-        context['area_search'], context['garden_search'] = search(request)
-
     return render(request, 'dashboard/index.html', context)
 
 
 @login_required(login_url="/authentication/login/")
 def detail(request, garden_id):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     garden = get_object_or_404(Garden, pk=garden_id)
 
     create_form = AreaForm(request.POST or None)
@@ -59,24 +62,17 @@ def detail(request, garden_id):
             update_form.save()
 
     context = {
-        'garden_list': garden_list,
         'garden': garden,
         'weather': get_weather_info(garden.city, "hourly"),
-        'notifications': n,
         'create_form': create_form,
         'update_form': update_form
     }
-    if request.GET:
-        context['query'] = request.GET.get('q')
-        context['area_search'], context['garden_search'] = search(request)
 
     return render(request, 'dashboard/detail.html', context)
 
 
 @login_required(login_url="/authentication/login/")
 def area_detail(request, area_id):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
     irrigation_list = Irrigation.objects.filter(area=area).order_by('-start')[:20]
 
@@ -91,34 +87,21 @@ def area_detail(request, area_id):
 
     context = {
         'area': area,
-        'garden_list': garden_list,
-        'notifications': n,
         'update_form': update_form,
         'irrigation_list': irrigation_list,
     }
-    if request.GET:
-        context['query'] = request.GET.get('q')
-        context['area_search'], context['garden_search'] = search(request)
 
     return render(request, 'dashboard/area_detail.html', context)
 
 
 @login_required(login_url="/authentication/login/")
 def irrigation(request, area_id, type):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     area = get_object_or_404(Area, pk=area_id)
     irrigation_list = Irrigation.objects.filter(area=area).order_by('-start')
     context = {
         'area': area,
-        'garden_list': garden_list,
         'irrigation_list': irrigation_list,
-        'notifications': n
     }
-
-    if request.GET:
-        context['query'] = request.GET.get('q')
-        context['area_search'], context['garden_search'] = search(request)
 
     if type == "M":
         irrigation = Irrigation.objects.filter(area=area, end__gte=timezone.now()).order_by('-start')[:1]
@@ -154,7 +137,6 @@ def irrigation(request, area_id, type):
 @login_required(login_url="/authentication/login/")
 def weather(request):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     weather_list = []
     locations = []
 
@@ -167,22 +149,16 @@ def weather(request):
     context = {
         'garden_list': garden_list,
         'weather_list': weather_list,
-        'notifications': n
     }
-    if request.GET:
-        context['query'] = request.GET.get('q')
-        context['area_search'], context['garden_search'] = search(request)
     return render(request, "dashboard/weather.html", context)
 
 
 @login_required(login_url="/authentication/login/")
 def settings(request):
-    garden_list = Garden.objects.filter(user=request.user).order_by('name')
-    n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
     settings = get_object_or_404(Setting, user=request.user)
-
     user_form = PasswordChangeForm(request.POST or None)
     update_form = SettingsForm(request.POST or None, instance=settings)
+
     if request.method == "POST":
         if update_form.is_valid() and 'update_email' in request.POST:
             update_form.save()
@@ -193,12 +169,7 @@ def settings(request):
             return HttpResponseRedirect('/')
 
     context = {
-        'garden_list': garden_list,
-        'notifications': n,
         'update_form': update_form,
         'user_form': user_form
     }
-    if request.GET:
-        context['query'] = request.GET.get('q')
-        context['area_search'], context['garden_search'] = search(request)
     return render(request, "dashboard/settings.html", context)
