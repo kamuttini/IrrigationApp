@@ -7,9 +7,24 @@
     height: 100vh;
 }
 
+.content-row {
+    background-color: white;
+    height: 84vh;
+    overflow-y: scroll;
+    padding-top: 20px;
+    padding-left: 1vw;
+    padding-right: 1vw;
+}
+
+@media screen and (min-width: 576px) {
+    .content-row{
+        padding-top: 50px;
+    }
+}
+
 .main-content {
-    padding: 50px;
     color: #184018;
+    width: 100%;
 }
 
 .main-content a {
@@ -20,15 +35,16 @@
     color: white;
 }
 
-.margin{
+.margin {
     margin-top: 20px;
 }
 
-.margin-left{
+.margin-left {
     margin-left: 15px;
 }
-.margin-bottom{
-    margin-bottom: 20px;
+
+.margin-bottom {
+    margin-bottom: 15px;
 }
 
 .title {
@@ -72,7 +88,7 @@
     color: #999999;
 }
 
-.dimgray{
+.dimgray {
     color: dimgray;
 }
 
@@ -83,9 +99,6 @@
 .fa-arrow-left {
     font-size: 20px;
     display: block;
-    position: absolute;
-    margin-top: -30px;
-    left: 20px;
 }
 
 /* LOGIN */
@@ -196,7 +209,7 @@
 
 /*INDEX*/
 
-.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover{
+.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover {
     text-decoration: none;
     color: #91B77E;
 }
@@ -206,6 +219,10 @@
 }
 
 /*GARDEN_DETAIL*/
+.garden {
+    padding-left: 15px;
+}
+
 .area {
     height: 28%;
     padding: 30px 0;
@@ -222,8 +239,7 @@
     font-weight: bold;
 }
 
-.garden .weather-days {
-    width: 200px;
+.weather-box {
     border: 1px rgba(185, 226, 165, 0.6) solid;
     border-radius: 5px;
 }
@@ -247,13 +263,8 @@
     font-weight: normal;
 }
 
-.weather-days li {
-    list-style: none;
-}
-
 .weather-days .day {
     border-left: 1px rgba(185, 226, 165, 0.6) solid;
-    min-width: 150px;
 }
 
 .weather-days .day:first-child {
@@ -265,15 +276,14 @@
     height: 80px;
 }
 
-.weather-days .weather-info-list {
-    padding: 20px 40px 20px 40px;
+.weather-info-list {
+    padding: 20px;
 }
 
-.weather-info-list li {
+.weather-info-list p {
     font-size: 14px;
     font-weight: lighter;
     color: dimgray;
-    padding: 2px 0 4px 0;
 }
 
 .weather-info-list .weather-description {
@@ -286,9 +296,10 @@
     font-size: 13px;
 }
 
-.calendar a:hover{
+.calendar a:hover {
     color: #184018;
 }
+
 .calendar tr, .calendar td {
     border: 0.3px solid #184018;
 }
@@ -380,4 +391,3 @@ ul {
 .description {
     padding: 40px;
 }
-
