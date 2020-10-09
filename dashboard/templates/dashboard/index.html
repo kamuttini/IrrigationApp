@@ -3,7 +3,6 @@
 
 {% block content %}
 
-    {% include 'includes/search_results.html' %}
     <h2>Benvenuto {{ request.user | capfirst }}</h2>
     {% if garden_list %}
         <div class="row">

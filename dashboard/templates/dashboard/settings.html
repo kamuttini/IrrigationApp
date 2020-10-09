@@ -1,6 +1,6 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    {% include 'includes/search_results.html' %}
+
     <h2>Impostazioni Utente</h2>
     <form method='POST' class="margin"> {% csrf_token %}
         {{ update_form.as_p }}

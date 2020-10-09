@@ -1,7 +1,5 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    {% include 'includes/search_results.html' %}
-
     <form method="POST">{% csrf_token %}
         <h3>Procedere con l'eliminazione?</h3>
         <div class="margin">
