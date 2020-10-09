@@ -18,6 +18,9 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(default=django.utils.timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 @receiver(post_save, sender=User)
 def initial_settings(sender, **kwargs):
     if kwargs.get('created', False):

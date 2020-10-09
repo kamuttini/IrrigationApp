@@ -9,7 +9,7 @@
             <a class="dropdown-item" onclick="updateMonth()"href="#">Mensile</a>
         </div>
     </div>
-    <canvas id="pie-chart"></canvas>
+    <canvas id="watering-chart"></canvas>
 </div>
 
 <script>
@@ -44,23 +44,4 @@
         }
     };
 
-    window.onload = function () {
-        var ctx = document.getElementById('pie-chart').getContext('2d');
-        window.wateringChart = new Chart(ctx, config);
-    };
-
-    function updateWeek() {
-        wateringChart.options.scales.xAxes[0] = {
-            type: 'time',
-            time: {unit: 'week'}
-        };
-        wateringChart.update();
-    }
-    function updateMonth() {
-        wateringChart.options.scales.xAxes[0] = {
-            type: 'time',
-            time: {unit: 'month'}
-        };
-        wateringChart.update();
-    }
 </script>

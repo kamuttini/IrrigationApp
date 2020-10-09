@@ -6,9 +6,9 @@
     {% include 'includes/search_results.html' %}
     <h2>Benvenuto {{ request.user | capfirst }}</h2>
     {% if garden_list %}
-        <div class="row margin">
+        <div class="row">
             {% for garden in garden_list %}
-                <div class="col-4">
+                <div class="col-lg-4 col-md-5 col-sm-6 col-11 margin">
                     <div class="card">
                         <img class="card-img-top" src="{% static "images/" %}{{ garden.image }}" alt="Card image cap">
                         <div class="card-body">

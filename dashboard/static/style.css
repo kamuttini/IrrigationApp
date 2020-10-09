@@ -109,7 +109,9 @@
     background: linear-gradient(90deg, rgba(160, 197, 141, 1) 10%, rgba(118, 158, 99, 1) 81%, rgba(118, 158, 99, 1) 83%);
     z-index: 50;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    padding: 2.5vh;
+    padding-top: 2.5vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
 }
 
 .sidebar-toggle {
@@ -119,7 +121,6 @@
 
 .notification {
     position: relative;
-    left: 30px;
 }
 
 .notification-count {
@@ -128,8 +129,8 @@
     height: 20px;
     background: #a84909;
     border-radius: 13px;
-    margin-top: 20px;
-    margin-right: -10px;
+    margin-top: 22px;
+    right: 27px;
     cursor: pointer;
     font-weight: 900;
 }
@@ -152,7 +153,6 @@
     padding: 1.5vh;
     position: absolute;
     bottom: 0;
-    left: 0;
     width: 100%;
 }
 
@@ -164,14 +164,12 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 100;
     flex: none;
-    width: 20%;
 }
 
 #sidebar ul {
     text-decoration: none;
     list-style: none;
-    margin-top: 30%;
-    margin-left: 25%;
+    margin-top: 10vh;
 }
 
 #sidebar .active {
@@ -197,9 +195,6 @@
 }
 
 /*INDEX*/
-.card {
-    width: 18rem;
-}
 
 .card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover{
     text-decoration: none;
