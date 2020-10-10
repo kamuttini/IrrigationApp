@@ -21,7 +21,6 @@ class CalendarView(generic.ListView):
         return qs
 
     def get_context_data(self, **kwargs):
-        garden_list = Garden.objects.filter(user=self.request.user).order_by('name')
         context = super().get_context_data(**kwargs)
         d = get_date(self.request.GET.get('month', None))
         cal = Calendar(d.year, d.month)
@@ -29,11 +28,7 @@ class CalendarView(generic.ListView):
         context['calendar'] = mark_safe(html_cal)
         context['prev_month'] = prev_month(d)
         context['next_month'] = next_month(d)
-        context['garden_list'] = garden_list
 
-        if self.request.GET and 'q' in self.request.POST:
-            context['query'] = self.request.GET.get('q')
-            context['area_search'], context['garden_search'] = search(self.request)
         return context
 
 

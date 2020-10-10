@@ -13,7 +13,7 @@
                         <img class="card-img-top" src="{% static "images/" %}{{ garden.image }}" alt="Card image cap">
                         <div class="card-body">
                             <h4 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h4>
-                            <p class="card-text dimgray">Last rain on {{ garden.last_rain }}</p>
+                            <p class="card-text dimgray">Ultima pioggia {{ garden.last_rain | date:"d M "}}</p>
                             <p class="card-text dimgray">Prossima pioggia prevista
                                 {% if garden.next_rain == 0 %}:<strong> oggi</strong>
                                 {% else %}fra: <strong>{{ garden.next_rain }} giorni</strong> {% endif %}  </p>
