@@ -56,3 +56,11 @@ function updateMonth() {
     };
     wateringChart.update();
 }
+
+function updateDay() {
+    wateringChart.options.scales.xAxes[0] = {
+        type: 'time',
+        time: {unit: 'day'}
+    };
+    wateringChart.update();
+}
