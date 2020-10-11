@@ -384,6 +384,7 @@ ul {
     display: inline;
 }
 
+/* SETTINGS*/
 .settings a:hover {
     color: #184018;
 }
@@ -391,3 +392,13 @@ ul {
 .description {
     padding: 40px;
 }
+
+/* CHART */
+
+@media screen and (max-width: 768px) {
+    .view-option{
+        transform: scale(0.8);
+    }
+}
+
+
