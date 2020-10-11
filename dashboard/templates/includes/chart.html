@@ -24,7 +24,7 @@
                 ],
                 label: 'durata irrigazione',
             }],
-            labels: [{% for i in irrigation_list %}'{{ i.start |date:"d M Y"  }}', {% endfor %}],
+            labels: [{% for i in irrigation_list %}'{{ i.start |date:"Y-m-d"  }}', {% endfor %}],
         },
         options: {
             responsive: true,
