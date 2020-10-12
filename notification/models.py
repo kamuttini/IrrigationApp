@@ -40,6 +40,10 @@ def irrigation(sender, instance, **kwargs):
                                     title="Irrigazione manuale avviata",
                                     message=f'zona: {instance.area}')
 
+        area = get_object_or_404(Area, pk=instance.area.pk)
+        area.last_irrigation = instance.date
+        area.save()
+
 
 @receiver(pre_save, sender=Area)
 def notify_low_humidity(sender, instance, **kwargs):
