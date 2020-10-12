@@ -17,7 +17,7 @@
 }
 
 @media screen and (min-width: 576px) {
-    .content-row{
+    .content-row {
         padding-top: 50px;
     }
 }
@@ -258,11 +258,6 @@
 }
 
 /* WEATHER */
-.weather-box h4 {
-    padding: 10px 0 0 20px;
-    font-weight: normal;
-}
-
 .weather-days .day {
     border-left: 1px rgba(185, 226, 165, 0.6) solid;
 }
@@ -272,8 +267,9 @@
 }
 
 .weather-image-icon {
-    width: 80px;
-    height: 80px;
+    width: 80%;
+    min-width: 25px;
+    max-width: 80px;
 }
 
 .weather-info-list {
@@ -286,11 +282,15 @@
     color: dimgray;
 }
 
-.weather-info-list .weather-description {
+.weather-info-list .weather-description, .day-of-week {
     font-size: 15px;
-    font-weight: 600;
 }
 
+@media screen and (max-width: 768px) {
+    .weather-info-list p, .weather-description {
+       font-size: 10px;
+    }
+}
 /* CALENDAR */
 .calendar {
     font-size: 13px;
