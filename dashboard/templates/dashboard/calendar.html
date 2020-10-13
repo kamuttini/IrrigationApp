@@ -1,21 +1,23 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    <div style="width: 700px">
-        <div class="row margin-bottom">
-            <div class="col-4 ">
-                <a class="btn green-button" href="{% url 'agenda:calendar' %}?{{ prev_month }}"> Previous
-                    Month </a>
-            </div>
-            <div class="col-4 text-center">
-                <a class="btn green-button" href="new/"> New Event </a>
-            </div>
-            <div class="col-4">
-                <a class="btn float-right green-button " href="{% url 'agenda:calendar' %}?{{ next_month }}"> Next Month </a>
+
+        <div class="container" style="max-width:930px;">
+            <div class="row" id="calendar" >
+                    <div class="col-md-4 col-5 margin-bottom " id="prev">
+                        <a class="btn green-button" href="{% url 'agenda:calendar' %}?{{ prev_month }}"> Precedente
+                        </a>
+                    </div>
+                    <div class="col-md-4 col-5 text-center">
+                        <a class="btn green-button" href="new/"> Nuovo evento </a>
+                    </div>
+                    <div class="col-md-4 col-5" id="next">
+                        <a class="btn  green-button float-md-right"
+                           href="{% url 'agenda:calendar' %}?{{ next_month }}">
+                            Successivo</a>
+                    </div>
+                {{ calendar }}
             </div>
         </div>
-    </div>
-
-    {{ calendar }}
 
 
     <script>

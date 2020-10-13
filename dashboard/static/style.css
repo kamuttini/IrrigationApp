@@ -294,7 +294,24 @@
 }
 /* CALENDAR */
 .calendar {
+    width: 100%;
     font-size: 13px;
+}
+
+#next{
+    position:relative;
+    float:right
+}
+
+@media screen and (max-width: 767px) {
+    .calendar{
+        transform: scale(0.8);
+        margin-top: -20px;
+        overflow: hidden;
+    }
+    #prev, #next{
+        margin-left: 5%;
+    }
 }
 
 .calendar a:hover {
