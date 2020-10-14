@@ -1,6 +1,8 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    {% include 'includes/search_results.html' %}
+<div class="row" >
+<div class="col-1"></div>
+<div class="col-11 ">
     <h2>Impostazioni Utente</h2>
     <form method='POST' class="margin"> {% csrf_token %}
         {{ update_form.as_p }}
@@ -15,5 +17,8 @@
         <input class="btn green-button" type="submit" name="update_password" value="Salva">
         <a class="btn green-button" data-dismiss="modal">Annulla</a>
     </form>
+
+</div>
+</div>
 
 {% endblock content %}

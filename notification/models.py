@@ -18,6 +18,9 @@ class Notification(models.Model):
     timestamp = models.DateTimeField(default=django.utils.timezone.now)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 @receiver(post_save, sender=User)
 def initial_settings(sender, **kwargs):
     if kwargs.get('created', False):
@@ -36,6 +39,10 @@ def irrigation(sender, instance, **kwargs):
         Notification.objects.create(user=instance.area.garden.user,
                                     title="Irrigazione manuale avviata",
                                     message=f'zona: {instance.area}')
+
+        area = get_object_or_404(Area, pk=instance.area.pk)
+        area.last_irrigation = instance.date
+        area.save()
 
 
 @receiver(pre_save, sender=Area)

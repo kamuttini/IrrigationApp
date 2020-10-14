@@ -8,17 +8,19 @@ from notification.models import Notification
 from .methods import *
 
 def custom_processor(request):
-    if request.user.id:
+    if request.user.is_authenticated:
         garden_list = Garden.objects.filter(user=request.user).order_by('name')
         n = Notification.objects.filter(user=request.user, viewed=False).order_by('timestamp')
 
-        if request.GET:
+        if request.GET and 'q' in request.GET:
             query = request.GET.get('q')
             area_search, garden_search = search(request)
             return {'query': query, 'area_search': area_search, 'garden_search': garden_search,
                     'garden_list': garden_list, 'notifications': n}
 
         return {'garden_list': garden_list, 'notifications': n}
+
+    return {}
 
 # views here.
 @login_required(login_url="/authentication/login/")

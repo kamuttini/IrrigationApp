@@ -1,31 +1,35 @@
 {% extends 'layout/base.html' %}
 {% block content %}
-    {% include 'includes/search_results.html' %}
-
-    <a href="/{{ area.id }}/area_detail"><i class="fas fa-arrow-left"></i></a>
-    <div class="row ">
-        <h1>Irrigazione manuale della zona {{ area.name }}</h1>
-
-        <div class="col-8">
+    <div class="col-1">
+        <a href="/{{ area.id }}/area_detail"><i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="row margin ">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <h1>Irrigazione manuale della zona {{ area.name }}</h1>
             <div class="row text-center" style="margin-top: 50px">
-                <div class="col-5 center timer margin-left">
-                    <h2>Timer</h2>
-                    <p id="demo"></p>
-                    <form method='POST'> {% csrf_token %}
-                        <input type="range" min="1" max="120" name="value" value="20" class="slider" id="timerRange">
-                        <button class="btn green-button" name="create" type="submit">Avvia</button>
-                        <button class="btn green-button" name="delete" type="submit" onclick="Stop()">Stop</button>
-                    </form>
+                <div class="col-10 col-md-7 margin-bottom">
+                    <div class="row">
+                        <div class="col-md-5 col-12 center timer margin-left">
+                            <h2>Timer</h2>
+                            <p id="demo"></p>
+                            <form method='POST'> {% csrf_token %}
+                                <input type="range" min="1" max="120" name="value" value="20" class="slider"
+                                       id="timerRange">
+                                <button class="btn green-button" name="create" type="submit">Avvia</button>
+                                <button class="btn green-button" name="delete" type="submit" onclick="Stop()">Stop
+                                </button>
+                            </form>
+                        </div>
+                        <div class="col-md-6 col-12 margin">
+                            <p class="description">imposta il timer e avvia l'irrigazione per quanto tempo desideri </p>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-5 margin">
-                    <p class="description">imposta il timer e avvia l'irrigazione per quanto tempo desideri </p>
+                <div class="col-10 col-md-4 ">
+                    {% include 'includes/irrigation_list.html' %}
                 </div>
             </div>
-
-        </div>
-
-        <div class="col-4">
-            {% include 'includes/irrigation_list.html' %}
         </div>
     </div>
 

@@ -23,12 +23,10 @@ def get_weather_info(location, forecast_type):
             info_day = {
                 'day': WEEK[day_of_week.strftime("%a")],
 
-                'temperature_min': str(response[i]['temp'][0]['min']['value']) + '°' +
-                                   response[i]['temp'][0]['min'][
-                                       'units'],
-                'temperature_max': str(response[i]['temp'][1]['max']['value']) + '°' +
-                                   response[i]['temp'][1]['max'][
-                                       'units'],
+                'temperature_min': float(response[i]['temp'][0]['min']['value'])
+                ,
+                'temperature_max': float(response[i]['temp'][1]['max']['value'])
+                ,
                 'precipitation': str(response[i]['precipitation_probability']['value']) +
                                  response[i]['precipitation_probability']['units'],
                 'description': response[i]['weather_code']['value']

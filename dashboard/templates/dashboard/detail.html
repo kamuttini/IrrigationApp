@@ -1,43 +1,51 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% block content %}
-    {% include 'includes/search_results.html' %}
-
-    <a href="/"><i class="fas fa-arrow-left"></i></a>
-    <h1 class="title" id="editable">{{ garden }}</h1>
-    <a id="edit" href="#" data-toggle="modal" data-target="#update_garden"><i class="fas fa-pen"></i></a>
-    <div class="row margin garden">
-        <div class="col-9 margin-left">
-            <h3 class="dimgray">{{ garden.city }}</h3>
-            <div class="row margin text-center">
-                {% for area in garden.area_set.all %}
-                    <a>
-                        <div class="col-2 area margin-left">
-                            <a href="/{{ area.id }}/area_detail/">{{ area.name }}</a>
+    <div class="col-1">
+        <a href="/"><i class="fas fa-arrow-left"></i></a>
+    </div>
+    <div class="row margin">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <h1 class="title" id="editable">{{ garden }}</h1>
+            <a id="edit" href="#" data-toggle="modal" data-target="#update_garden"><i class="fas fa-pen"></i></a>
+            <div class="margin-left margin ">
+                <div class="row ">
+                    <div class="col-xl-9  col-lg-8 col-7">
+                        <h3 class="dimgray">{{ garden.city }}</h3>
+                        <div class="row margin text-center garden">
+                            {% for area in garden.area_set.all %}
+                                <a>
+                                    <div class="col-lg-2 col-md-3 col-sm-5 col-7 area margin-bottom ">
+                                        <a href="/{{ area.id }}/area_detail/">{{ area.name }}</a>
+                                    </div>
+                                </a>
+                            {% endfor %}
                         </div>
-                    </a>
-                {% endfor %}
+                    </div>
+
+                    <div class="col-lg-2 col-4 weather-box  weather-info-list text-center">
+                            <p class="day_of_week"><b>{{ weather.day }}</b></p>
+                            <img class="weather-image-icon" src="{% static weather.weather_icons_path %}"
+                                 alt="Weather icon">
+                            <p class="weather-description">{{ weather.description }}</p>
+                            <p style="color:orange"><b>{{ weather.temp }}</b></p>
+                            <p><b>possibilità di precipitazioni: {{ weather.precipitation }}% </b></p>
+                    </div>
+                </div>
+                <div class="row margin margin-bottom">
+                    <div class="col">
+                        <a class="btn green-button" data-toggle="modal" data-target="#add_area"> Aggiungi area</a>
+                        <a class="btn red-button" data-toggle="modal" data-target="#delete_garden">Elimina il
+                            giardino</a>
+                    </div>
+                </div>
             </div>
-        </div>
 
-        <div class="col-2 weather-days text-center">
-            <ul class="weather-info-list">
-                <li class="day_of_week"><b>{{ weather.day }}</b></li>
-                <img class="weather-image-icon" src="{% static weather.weather_icons_path %}" alt="Weather icon">
-                <li class="weather-description">{{ weather.description }}</li>
-                <li style="color:orange"><b>{{ weather.temp }}</b></li>
-                <li><b>possibilità di precipitazioni: {{ weather.precipitation }}% </b></li>
-            </ul>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col margin-left">
-            <a class="btn green-button" data-toggle="modal" data-target="#add_area"> Aggiungi una nuova
-                area</a>
-            <a class="btn red-button" data-toggle="modal" data-target="#delete_garden">Elimina il giardino</a>
         </div>
     </div>
 
+    
     <!-- Modal for area creation -->
     <div class="modal fade" id="add_area" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">

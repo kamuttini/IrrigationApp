@@ -1,60 +1,66 @@
-<nav class="col-2" id="sidebar">
+<nav class="col-lg-2 col-md-3 col-6" id="sidebar">
     {% load static %}
+    <div class="d-md-none">
+        <span class="close" onclick="toggleNav()">&times;</span>
+    </div>
     <a href="{% url 'index' %}">
-        <!--<img class="mx-auto d-block" src="{% static 'images/logo_crop.png' %} 500w" srcset="{% static 'images/logo_new.png' %} 1000w" alt="logo" id="logo">-->
         <picture>
-          <source media="(min-width:768px)" srcset="{% static 'images/logo_new.png' %}">
-          <img id="logo" src="{% static 'images/logo_crop.png' %}" alt="logo_small">
+            <source media="(min-width:768px)" srcset="{% static 'images/logo_new.png' %}">
+            <img id="logo" src="{% static 'images/logo_crop.png' %}" alt="logo_small">
         </picture>
     </a>
-    <ul class="navbar-nav dimgray">
-        <li class="nav-item {% if request.resolver_match.url_name == "index" %} active {% endif %}">
-            <a class="nav-link" href="{% url 'index' %}">
-                <i class="fas fa-home"></i>
-                <span class="nav-text"> Home </span>
-            </a>
-        </li>
-        <li class="nav-item {% if request.resolver_match.url_name == "calendar" %} active {% endif %}">
-            <a class="nav-link" href="/calendar">
-                <i class="fas fa-calendar-alt"></i>
-                <span class="nav-text">Calendario</span>
-            </a>
-        </li>
-        <li class="nav-item {% if request.resolver_match.url_name == "weather" %} active {% endif %}">
-            <a class="nav-link" href="/weather">
-                <i class="fas fa-cloud-sun"></i>
-                <span class="nav-text">Meteo</span>
-            </a>
-        </li>
-        <li>
-            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == "detail" %}active {% endif %}"
-               data-toggle="collapse" href="#collapseExample" role="button"
-               aria-expanded="false" aria-controls="collapseExample">
-                <i class="fas fa-seedling"></i>
-                <span class="nav-text">Impianti</span>
-            </a>
-            <div class="collapse" id="collapseExample">
-                {% if garden_list %}
+    <div class="row justify-content-center ">
+        <div class="col-xl-8 col-10 ">
+            <ul class="navbar-nav dimgray">
+                <li class="nav-item {% if request.resolver_match.url_name == "index" %} active {% endif %}">
+                    <a class="nav-link" href="{% url 'index' %}">
+                        <i class="fas fa-home"></i>
+                        <span class="nav-text"> Home </span>
+                    </a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == "calendar" %} active {% endif %}">
+                    <a class="nav-link" href="{% url 'agenda:calendar' %}">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span class="nav-text">Calendario</span>
+                    </a>
+                </li>
+                <li class="nav-item {% if request.resolver_match.url_name == "weather" %} active {% endif %}">
+                    <a class="nav-link" href="{% url 'weather' %}">
+                        <i class="fas fa-cloud-sun"></i>
+                        <span class="nav-text">Meteo</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == "detail" %}active {% endif %}"
+                       data-toggle="collapse" href="#collapseExample" role="button"
+                       aria-expanded="false" aria-controls="collapseExample">
+                        <i class="fas fa-seedling"></i>
+                        <span class="nav-text">Impianti</span>
+                    </a>
+                    <div class="collapse" id="collapseExample">
+                        {% if garden_list %}
 
-                    {% for garden in garden_list %}
-                        <a class="nav-link" href=" /{{ garden.id }}/">{{ garden.name }} </a>
-                    {% endfor %}
-                {% else %}
-                    <p> Non ci sono giardini salvati</p>
-                {% endif %}
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/settings">
-                <i class="fas fa-cog"></i>
-                <span class="nav-text" >Impostazioni</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="{% url 'logout' %}">
-                <i class="fas fa-sign-out-alt"></i>
-                <span class="nav-text">Logout</span>
-            </a>
-        </li>
-    </ul>
+                            {% for garden in garden_list %}
+                                <a class="nav-link" href=" /{{ garden.id }}/">{{ garden.name }} </a>
+                            {% endfor %}
+                        {% else %}
+                            <p> Non ci sono giardini salvati</p>
+                        {% endif %}
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'settings' %}">
+                        <i class="fas fa-cog"></i>
+                        <span class="nav-text">Impostazioni</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span class="nav-text">Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </nav>

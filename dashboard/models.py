@@ -100,6 +100,8 @@ class Irrigation(models.Model):
         delta = self.end - self.start
         return divmod(delta.total_seconds(), 60)[0]
 
+    def __str__(self):
+        return str(self.date)
 
 class CalendarIrrigation(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)
