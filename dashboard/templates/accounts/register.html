@@ -17,14 +17,14 @@
 
         <h3 class="fw-300 c-grey-900 mB-40">
           <a target="_blank" rel="noopener noreferrer"
-             href="https://appseed.us/admin-dashboards/django-dashboard-adminator">Irrigator Dashboard</a> - Register
+             href="https://appseed.us/admin-dashboards/django-dashboard-adminator">Irrigator Dashboard</a> - Registra un nuovo utente
         </h3>
 
         {% if msg %}
             <h4 class="fw-300 c-grey-900 mB-40">{{ msg | safe }}</h4>
         {% else %}
             <p class="fw-300 c-grey-900 mB-40">
-              Add your credentials 
+              Aggiungi le tue credenziali
             </p>
         {% endif %}
 
@@ -33,13 +33,13 @@
           {% csrf_token %}
 
           <div class="form-group">
-            <label class="text-normal text-dark">Username</label>
+            <label class="text-normal text-dark">Nome utente</label>
             {{ form.username }}
           </div>
           <span class="text-error">{{ form.username.errors }}</span>
 
           <div class="form-group">
-            <label class="text-normal text-dark">eMail Address</label>
+            <label class="text-normal text-dark">Indirizzo email</label>
             {{ form.email }}
           </div>
           <span class="text-error">{{ form.email.errors }}</span>
@@ -57,10 +57,10 @@
           <span class="text-error">{{ form.password1.errors }}</span>
 
           <div class="form-group">
-            <button type="submit" name="register" class="btn btn-primary">Register</button> 
+            <button type="submit" name="register" class="btn btn-primary">Registrati</button>
 
             &nbsp; &nbsp;
-            <span class="text-small font-weight-semibold">Have and account?</span>
+            <span class="text-small font-weight-semibold">Hai già un account?</span>
             <a href="{% url 'login' %}" class="text-black text-small">Login</a>
           </div>
 
