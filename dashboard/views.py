@@ -51,7 +51,7 @@ def detail(request, garden_id):
         if create_form.is_valid():
             create_form.instance.garden = get_object_or_404(Garden, pk=garden_id)
             create_form.save()
-            calendar_irrigation = CalendarIrrigation(area=create_form.instance)
+            calendar_irrigation = ScheduledIrrigation(area=create_form.instance)
             calendar_irrigation.save()
 
     if request.method == "POST" and 'delete' in request.POST:
@@ -122,7 +122,7 @@ def irrigation(request, area_id, type):
         return render(request, 'dashboard/manual_irrigation.html', context)
 
     elif type == "C":
-        irrigation_settings = get_object_or_404(CalendarIrrigation, area=area)
+        irrigation_settings = get_object_or_404(ScheduledIrrigation, area=area)
         form = CalendarIrrigationForm(request.POST or None, instance=irrigation_settings)
 
         if form.is_valid():
@@ -130,7 +130,7 @@ def irrigation(request, area_id, type):
 
         context['form'] = form
         context['irrigation_settings'] = irrigation_settings
-        return render(request, 'dashboard/calendar_irrigation.html', context)
+        return render(request, 'dashboard/scheduled_irrigation.html', context)
 
     elif type == "S":
         return render(request, 'dashboard/smart_irrigation.html', context)

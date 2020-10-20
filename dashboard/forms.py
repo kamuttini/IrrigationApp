@@ -4,7 +4,7 @@ from .models import *
 
 class GardenForm(forms.ModelForm):
     city = forms.ModelChoiceField(label='Città', queryset=Location.objects.all(), to_field_name="city",
-                                  widget=forms.TextInput(attrs={'placeholder':'inserisci il comune'}))
+                                  widget=forms.TextInput(attrs={'placeholder': 'inserisci il comune'}))
     class Meta:
         model = Garden
         fields = [
@@ -30,10 +30,14 @@ class AreaForm(forms.ModelForm):
             'irrigation_type': 'Tipo di irrigazione'
         }
 
+
+HOUR_CHOICES = [(datetime.time(hour=x), '{:02d}:00'.format(x)) for x in range(0, 24)]
+
 class CalendarIrrigationForm(forms.ModelForm):
     class Meta:
-        model = CalendarIrrigation
+        model = ScheduledIrrigation
         exclude = ('area',)
+        widgets = {'hour': forms.Select(choices=HOUR_CHOICES)}
 
 
 class SettingsForm(forms.ModelForm):
