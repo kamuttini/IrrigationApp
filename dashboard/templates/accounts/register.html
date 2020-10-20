@@ -21,7 +21,7 @@
         </h3>
 
         {% if msg %}
-            <h4 class="fw-300 c-grey-900 mB-40">{{ msg | safe }}</h4>
+            <h4 class="fw-300 c-grey-900 mB-40" {% if success %}style="color: green" {% else %} style="color: red"{% endif %}>{{ msg | safe }}</h4>
         {% else %}
             <p class="fw-300 c-grey-900 mB-40">
               Aggiungi le tue credenziali

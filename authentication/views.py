@@ -48,13 +48,13 @@ def register_user(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
 
-            msg = 'User created - please <a href="/authentication/login">login</a>.'
+            msg = 'Utente registrato con successo - <a href="/authentication/login">accedi</a>.'
             success = True
 
             # return redirect("/login/")
 
         else:
-            msg = 'Form is not valid'
+            msg = 'Correggere i campi evidenziati'
     else:
         form = SignUpForm()
 
