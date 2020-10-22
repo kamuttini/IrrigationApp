@@ -2,48 +2,7 @@ from django.db import models
 import datetime
 from django.utils import timezone
 from django.contrib.auth.models import User
-
-PLANT = 'cover/balcony.jpg'
-TERRACE = 'cover/terrace.jpg'
-FLOWER = 'cover/flower.jpg'
-GARDEN = 'cover/garden.jpg'
-VEGETABLE = 'cover/vegetable.jpg'
-IMG_CHOICES = (
-    (PLANT, 'Pianta'),
-    (TERRACE, 'Albero'),
-    (GARDEN, 'Prato'),
-    (VEGETABLE, 'Verdura'),
-    (FLOWER, 'Fiore'),
-)
-
-MANUAL = 'M'
-CALENDAR = 'C'
-SMART = 'S'
-IRRIGATION = [
-    (MANUAL, 'Manuale'),
-    (CALENDAR, 'Programmata'),
-    (SMART, 'Intelligente'),
-]
-
-FREQUENCY = [
-    ('0', 'ogni giorno'),
-    ('1', 'giorni alterni'),
-    ('2', 'ogni 2 giorni'),
-    ('3', 'ogni 3 giorni'),
-    ('4', 'ogni 4 giorni'),
-    ('5', 'ogni 5 giorni'),
-    ('7', 'una volta a settimana'),
-    ('10', 'ogni 10 giorni'),
-    ('14', 'una volta ogni due settimane'),
-]
-
-DURATION = [
-    '1 minuto ', '2 minuti ', '3 minuti ', '4 minuti ', '5 minuti ', '6 minuti ', '7 minuti ', '8 minuti ', '9 minuti ',
-    '10 minuti ', '11 minuti ', '12 minuti ', '13 minuti ', '14 minuti ', '15 minuti ', '20 minuti ', '25 minuti ',
-    '30 minuti ', '40 minuti ', '30 minuti ', '45 minuti ',
-    '50 minuti ', '55 minuti ', '60 minuti ',
-]
-
+from irrigation.settings import *
 
 # Create your models here.
 class Setting(models.Model):
