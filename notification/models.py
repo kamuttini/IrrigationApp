@@ -30,7 +30,7 @@ def initial_settings(sender, **kwargs):
                                     message="Grazie per esserti registrato")
         Notification.objects.create(user=kwargs.get('instance'),
                                     title="Notifiche email",
-                                    message="Le notifiche via email sono attive di default. Puoi modificare queste scelta in Imostazioni")
+                                    message="Le notifiche via email sono attive di default. Puoi modificare queste scelta in Impostazioni")
 
 
 @receiver(post_save, sender=Irrigation)
