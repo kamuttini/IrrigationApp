@@ -207,6 +207,9 @@
     color: #91B77E;
 }
 
+#collapseList{
+    margin-left: 30px;
+}
 /*INDEX*/
 
 .card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover {

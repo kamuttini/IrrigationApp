@@ -2,7 +2,6 @@
 function toggleNav() {
     var e = document.getElementById("sidebar");
     var x = document.getElementsByClassName('nav-text')
-    var t = document.getElementsByClassName('navbar-nav')
     var l = document.getElementById("logo")
 
     //on desktop
