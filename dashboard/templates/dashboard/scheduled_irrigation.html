@@ -11,8 +11,9 @@
                 <div class="col-md-8 col-10" style="margin-bottom: 50px">
                     <p class="description">
                         Questa area viene annafiata <br>
-                        {{ irrigation_settings.get_frequency_display }}
-                        per {{ irrigation_settings.duration }}
+                        <strong>{{ irrigation_settings.get_frequency_display }}</strong>
+                        per <strong>{{ irrigation_settings.duration }}</strong><br>
+                        alle {{ irrigation_settings.hour | time }}
                     </p>
                     <a class="margin-left dropdown-toggle" data-toggle="collapse" href="#settings" role="button"
                        aria-expanded="false" aria-controls="collapseExample">
