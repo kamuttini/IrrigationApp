@@ -32,12 +32,12 @@
                 </li>
                 <li>
                     <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == "detail" %}active {% endif %}"
-                       data-toggle="collapse" href="#collapseExample" role="button"
+                       onclick="bigSidebar()" data-toggle="collapse" href="#collapseList"  role="button"
                        aria-expanded="false" aria-controls="collapseExample">
                         <i class="fas fa-seedling"></i>
                         <span class="nav-text">Impianti</span>
                     </a>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" id="collapseList">
                         {% if garden_list %}
 
                             {% for garden in garden_list %}

@@ -19,7 +19,7 @@
         type: 'line',
         data: {
             datasets: [{
-                data: [{% for i in irrigation_list %}{{ i.get_duration }}, {% endfor %}],
+                data: [{% for i in irrigation_list %} parseInt({{i.get_duration}}) , {% endfor %}],
                 backgroundColor: [
                     'rgba(99,138,255, 0.4)',
                 ],

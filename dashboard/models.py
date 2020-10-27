@@ -20,7 +20,6 @@ class Location(models.Model):
 
 class Garden(models.Model):
     name = models.CharField(max_length=200)
-    position = models.IntegerField(default=0)
     city = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
     last_rain = models.DateTimeField('ultima pioggia', default="2012-01-01 00:01", editable=False)
     next_rain = models.DateTimeField(default='2012-01-01 00:01')
@@ -36,7 +35,6 @@ class Garden(models.Model):
 class Area(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=10)
-    position = models.IntegerField(default=0)
     humidity = models.IntegerField(default=0)
     last_irrigation = models.DateTimeField('ultima irrigazione', default="2012-01-01 00:01", editable=False)
     irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
