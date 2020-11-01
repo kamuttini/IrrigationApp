@@ -3,7 +3,7 @@ import requests
 import datetime as DT
 from .models import Area, Garden
 from django.db.models import Q
-from secrets import WHEATHER_API_KEY
+from secrets import WEATHER_API_KEY
 
 def get_weather_info(location, forecast_type):
     today = DT.date.today()
@@ -12,7 +12,7 @@ def get_weather_info(location, forecast_type):
 
     querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
                    "fields": "precipitation_probability,temp,weather_code",
-                   "apikey": WHEATHER_API_KEY}
+                   "apikey": WEATHER_API_KEY}
 
     response = requests.request("GET", url, params=querystring).json()
     weather_info = []
