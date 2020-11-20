@@ -1,4 +1,4 @@
-from .static.translation import WEATHER, WEEK
+from static.translation import WEATHER, WEEK
 import requests
 import datetime as DT
 from .models import Area, Garden

@@ -25,21 +25,21 @@
 <div class="container-fluid">
     <div class="row body-container" style="overflow: hidden">
 
-        {% include 'includes/sidebar.html' %}
+        {% include 'includes/../includes/sidebar.html' %}
 
         <div class="col">
-            {% include 'includes/header.html' %}
+            {% include 'includes/../includes/header.html' %}
 
             <div class="row content-row">
                 <div class="main-content">
-                    {% include 'includes/search_results.html' %}
+                    {% include 'includes/../includes/search_results.html' %}
 
                     {% block content %}{% endblock content %}
 
                 </div>
             </div>
 
-            {% include 'includes/footer.html' %}
+            {% include 'includes/../includes/footer.html' %}
 
         </div>
     </div>
