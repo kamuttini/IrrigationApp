@@ -3,7 +3,7 @@ import requests
 import datetime as DT
 from .models import Area, Garden
 from django.db.models import Q
-from secrets import WEATHER_API_KEY
+from mysettings import WEATHER_API_KEY
 
 def get_weather_info(location, forecast_type):
     today = DT.date.today()
