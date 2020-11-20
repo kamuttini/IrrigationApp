@@ -1,16 +1,14 @@
 from datetime import datetime, timedelta, date
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.views import generic
-from django.urls import reverse
 from django.utils.safestring import mark_safe
 import calendar
 
 from .models import *
 from .utils import Calendar
 from .forms import EventForm
-from dashboard.models import Garden
-from dashboard.methods import search
+
 
 class CalendarView(generic.ListView):
     model = Event
@@ -63,7 +61,7 @@ def event(request, event_id=None):
 
     form = EventForm(request.POST or None, instance=instance)
     if request.POST and form.is_valid():
-        instance.user= request.user
+        instance.user = request.user
         form.save()
         return HttpResponseRedirect(reverse('agenda:calendar'))
 

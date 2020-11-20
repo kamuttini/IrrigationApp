@@ -54,7 +54,7 @@ def notify_low_humidity(sender, instance, **kwargs):
             send_mail(
                 f'Umidità della zona {instance} bassa',
                 'umidità sotto il 30%, intervenire',
-                'camilla.cantiani@gmail.com',
+                'irrigator.it@gmail.com',
                 [instance.garden.user.email],
                 fail_silently=False,
             )
