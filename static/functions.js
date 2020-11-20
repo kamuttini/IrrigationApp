@@ -28,6 +28,11 @@ function toggleNav() {
     }
 }
 
+/*  PAGE REFRESH ON VIEWPORT RESIZE */
+window.onresize = function(event)
+{
+document.location.reload(true);
+}
 
 window.onload = function initial() {
     var e = document.getElementById("sidebar");

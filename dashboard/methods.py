@@ -60,7 +60,7 @@ def get_rain(location, mode):
 
     querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
                    "fields": "precipitation_probability",
-                   "apikey": "6KIHRzYEnmDjo2nD68e6GWlHYGfbRIO2"}
+                   "apikey": WEATHER_API_KEY}
 
     response = requests.request("GET", url, params=querystring).json()
 
