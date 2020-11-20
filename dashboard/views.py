@@ -158,7 +158,7 @@ def weather(request):
 @login_required(login_url="/authentication/login/")
 def settings(request):
     settings = get_object_or_404(Setting, user=request.user)
-    user_form = PasswordChangeForm(request.POST or None)
+    user_form = PasswordChangeForm(request.user, request.POST or None)
     update_form = SettingsForm(request.POST or None, instance=settings)
 
     if request.method == "POST":

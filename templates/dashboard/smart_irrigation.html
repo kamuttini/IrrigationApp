@@ -1,4 +1,4 @@
-{% extends 'layout/base.html' %}
+{% extends 'layout/../layout/base.html' %}
 {% block content %}
     <a href="/{{ area.id }}/area_detail" ><i class="fas fa-arrow-left"></i></a>
 
@@ -6,6 +6,6 @@
         <h1>Irrigazione Intelligente della zona {{ area.name }}</h1>
     </div><br>
     <div class="col-4">
-        {% include 'includes/irrigation_list.html' %}
+        {% include 'includes/../includes/irrigation_list.html' %}
     </div>
 {% endblock content %}
