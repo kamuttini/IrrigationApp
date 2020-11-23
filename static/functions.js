@@ -2,19 +2,22 @@
 function toggleNav() {
     var e = document.getElementById("sidebar");
     var x = document.getElementsByClassName('nav-text')
-    var l = document.getElementById("logo")
+    var ls = document.getElementById("logo-small")
+    var lb = document.getElementById("logo-big")
 
     //on desktop
     if (window.innerWidth > 830 && e.style.width === '5%') {
         e.style.width = 'unset'
         for (i = 0; i < x.length; i++)
             x[i].style.display = 'inline';
-        l.style.display = 'block';
+        lb.style.display = 'block';
+        ls.style.display = 'none';
     } else if (window.innerWidth > 830) {
         e.style.width = '5%'
         for (i = 0; i < x.length; i++)
             x[i].style.display = 'none';
-        l.style.display = 'none'
+        ls.style.display = 'block';
+        lb.style.display = 'none';
     }
 
     //on mobile

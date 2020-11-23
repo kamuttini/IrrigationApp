@@ -189,7 +189,11 @@
     font-weight: bold;
 }
 
-#sidebar #logo {
+#sidebar #logo-small{
+    display: none;
+}
+
+#sidebar #logo-small, #sidebar #logo-big {
     width: 70%;
     margin: 10%;
     height: auto;
