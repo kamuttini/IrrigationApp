@@ -24,11 +24,11 @@ Application features:
 
 - alerts and internal notification system
 
-- calendar displaying irrigations and h- weather has the possibility to add customizable events
+- calendar displaying irrigations which has the possibility to add customizable events
 
-- charts for displaying watering duration
+- charts for displaying watering time
 
-- search bar
+- search bar, for researches based on the city or the name of the area or garden.
 
 Installation:
 ----- 
@@ -47,7 +47,18 @@ Installation:
 6. Update db with initial data 
 
     `python manage.py migrate`
-7. Run application
+    
+7. create a python file named mysettings and add 
+   - secret key for your django app (you can generate one at [djecrety.ir](https://djecrety.ir/) )
+   
+      `SECRET_KEY = ''`
+   - password for the gmail account used to send notifications (your account need to be set in the settings.py)
+   
+      `PASSWORD_GMAIL = '' `
+   - ClimaCell API KEY
+   
+      `WEATHER_API_KEY = ' '`   
+8. Run application
 
     `python manage.py runserver
 `
