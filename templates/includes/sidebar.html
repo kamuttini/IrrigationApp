@@ -4,10 +4,12 @@
         <span class="close" onclick="toggleNav()">&times;</span>
     </div>
     <a href="{% url 'index' %}">
-        <picture>
+        <!--<picture>
             <source media="(min-width:768px)" srcset="{% static 'images/logo_new.png' %}">
             <img id="logo" src="{% static 'images/logo_crop.png' %}" alt="logo_small">
-        </picture>
+        </picture>-->
+        <img id="logo-small" src="{% static 'images/logo_crop.png' %}" alt="logo_small">
+        <img id="logo-big" src="{% static 'images/logo_new.png' %}" alt="logo_small">
     </a>
     <div class="row justify-content-center ">
         <div class="col-xl-8 col-10 ">
