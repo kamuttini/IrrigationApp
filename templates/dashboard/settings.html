@@ -1,24 +1,31 @@
 {% extends 'layout/../layout/base.html' %}
 {% block content %}
-<div class="row" >
-<div class="col-1"></div>
-<div class="col-11 ">
-    <h2>Impostazioni Utente</h2>
-    <form method='POST' class="margin "> {% csrf_token %}
-        {{ update_form.as_p }}
-        <div style="margin-top: -15px">
-            <input class="btn green-button" type="submit" name="update_email" value="Salva">
-            <a class="btn green-button" data-dismiss="modal">Annulla</a>
-        </div>
-    </form>
-    <h5 class="margin">Modifica password</h5>
-    <form method='POST' class="margin"> {% csrf_token %}
-        {{ user_form.as_p }}
-        <input class="btn green-button" type="submit" name="update_password" value="Salva">
-        <a class="btn green-button" data-dismiss="modal">Annulla</a>
-    </form>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-11 ">
+            <h2>Impostazioni Utente</h2>
+            <form method='POST' class="margin "> {% csrf_token %}
+                {{ update_form.as_p }}
+                <div style="margin-top: -15px">
+                    <small>Spuntando la casella rimarrai aggiornato via email ogni volta l'umidità del terreno è bassa.</small><br><br>
+                    <input class="btn green-button" type="submit" name="update_email" value="Salva">
+                    <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                </div>
+            </form>
+            <div class="margin  dropdown-toggle" data-toggle="collapse" href="#password" role="button"
+               aria-expanded="false" aria-controls="collapseExample" style="cursor: pointer; transition: 0.1s">
+                <h5 style="display: inline;">Modifica password</h5>
+            </div>
+            <div id="password" class="collapse margin">
+                <form method='POST' class="margin"> {% csrf_token %}
+                    {{ user_form.as_p }}
+                    <input class="btn green-button" type="submit" name="update_password" value="Salva">
+                    <a class="btn green-button" data-dismiss="modal">Annulla</a>
+                </form>
+            </div>
 
-</div>
-</div>
+
+        </div>
+    </div>
 
 {% endblock content %}

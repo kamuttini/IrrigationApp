@@ -1,23 +1,24 @@
 {% extends 'layout/../layout/base.html' %}
 
 {% block content %}
+    <div class="container">
+        <div class="clearfix margin-bottom">
+            <a class="btn green-button left" href="/calendar"> Torna al calendario </a>
+        </div>
 
-    <div class="clearfix">
-        <a class="btn green-button left" href="/calendar"> Back to calendar </a>
+        <form method="post" >
+            {% csrf_token %}
+            <table class="form form-table">
+                {{ form }}
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn green-button right"> Salva </button>
+                    </td>
+                    {% if  request.get_full_path != "/calendar/new/" %}
+                        <td colspan="3"><a class="btn red-button" href="../delete/">Elimina l'evento</a></td>
+                    {% endif %}
+                </tr>
+            </table>
+        </form>
     </div>
-
-    <form method="post">
-        {% csrf_token %}
-        <table class="form form-table">
-            {{ form }}
-            <tr>
-                <td colspan="2">
-                    <button type="submit" class="btn green-button right"> Submit</button>
-                </td>
-                 {% if  request.get_full_path != "/calendar/new/" %}
-                <td colspan="3"><a class="btn red-button" href="../delete/">Elimina l'evento</a></td>
-                {% endif %}
-            </tr>
-        </table>
-    </form>
 {% endblock %}
