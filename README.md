@@ -9,7 +9,7 @@ Application features:
 
 - Control multiples gardens per account and create different watering areas
 
-- For each area you can choose between 3 irrigation types:
+- For each area you can choose between 3 watering methods:
   - **manual**
   
     irrigation starts by activating a timer for selected time
@@ -20,35 +20,35 @@ Application features:
   
     computer decides when it's the best time to start watering the area and how long it has to last. All this decisions are based on humidity and  last rain  parameters combined with weather forecast.
        
-- email notifications
+- Email notifications
 
-- alerts and internal notification system
+- Alerts and internal notification system
 
-- calendar displaying irrigations which has the possibility to add customizable events
+- Calendar displaying irrigations which has the possibility to add customizable events
 
-- charts for displaying watering time
+- Charts for displaying watering time
 
-- search bar, for researches based on the city or the name of the area or garden.
+- Search bar, for researches based on the city or the name of the area or garden.
 
 Installation:
 ----- 
 
-1. create and activate your virtual environment
+1. Create and activate your virtual environment
 2. Use the package manager pip to install Django 
 
     `pip install django`
 3. Install requests modules
      
     `pip install requests`
-3. clone git repository 
-4. get into project folder
+3. Clone git repository 
+4. Get into project folder
  
     `cd IrrigationApp`
 6. Update db with initial data 
 
     `python manage.py migrate`
     
-7. create a python file named mysettings and add 
+7. Create a python file named mysettings and add 
    - secret key for your django app (you can generate one at [djecrety.ir](https://djecrety.ir/) )
    
       `SECRET_KEY = ''`
