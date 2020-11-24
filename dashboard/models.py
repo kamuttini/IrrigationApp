@@ -21,7 +21,7 @@ class Location(models.Model):
 class Garden(models.Model):
     name = models.CharField(max_length=200)
     city = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
-    last_rain = models.DateTimeField('ultima pioggia', default="2012-01-01 00:01", editable=False)
+    last_rain = models.DateTimeField('ultima pioggia', blank=True, null=True)
     next_rain = models.DateTimeField(default='2012-01-01 00:01')
     image = models.CharField(max_length=255,
                              choices=IMG_CHOICES,
