@@ -5,6 +5,7 @@ from .models import Area, Garden
 from django.db.models import Q
 from mysettings import WEATHER_API_KEY
 
+
 def get_weather_info(location, forecast_type):
     today = DT.date.today()
 
@@ -40,7 +41,7 @@ def get_weather_info(location, forecast_type):
             'weather_info': weather_info
         }
 
-    if forecast_type == "hourly":
+    else:
         info_day = {
             'day': WEEK[today.strftime("%a")],
             'temp': str(response[0]['temp']['value']) + '°' + response[0]['temp']['units'],
@@ -78,46 +79,8 @@ def get_rain(location, mode):
         for item in weather_info:
             if item['precipitation'] >= "50":
                 return weather_info.index(item)
-    elif mode == 'today':
-        info_day = {
-            'location': location,
-            'date': response[0]['observation_time']['value'],
-            'precipitation': str(response[0]['precipitation_probability']['value']),
-        }
-        context = info_day
-    elif mode == 'tomorrow':
-        info_day = {
-            'location': location,
-            'date': response[1]['observation_time']['value'],
-            'precipitation': str(response[1]['precipitation_probability']['value']),
-        }
-        context = info_day
+
     return context
-
-
-def irrigate(location, umidity):
-    time = DT.time
-    irrigation = False
-    rain_tod = get_rain(location, 'today')
-    rain_tom = get_rain(location, 'tomorrow')
-
-    if time.hour == 6:
-        if rain_tom['precipitation'] > 50 and umidity < 30:
-            print("Irrigazione minore effettuata")  # IRRIGA DI MENO
-            irrigation = True
-        if not irrigation and (umidity < 30 or rain_tod['precipitation'] < 50):
-            print("Irrigazione effettuata")  # IRRIGA
-            irrigation = True
-
-    if not irrigation and time.hour == 20:
-        if rain_tom['precipitation'] > 50 and umidity < 30:
-            print("Irrigazione minore effettuata")  # IRRIGA DI MENO
-            irrigation = True
-        if not irrigation and (umidity < 30 or rain_tod['precipitation'] < 50):
-            print("Irrigazione effettuata")  # IRRIGA
-            irrigation = True
-
-    return irrigation
 
 
 def search(request):
@@ -136,3 +99,5 @@ def search(request):
                 Q(city__city__icontains=item))
 
     return qs, qs2
+
+

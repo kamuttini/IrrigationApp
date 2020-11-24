@@ -7,6 +7,8 @@ from .models import *
 from notification.models import Notification
 from .methods import *
 
+
+# information requested in all views
 def custom_processor(request):
     if request.user.is_authenticated:
         garden_list = Garden.objects.filter(user=request.user).order_by('name')
@@ -23,16 +25,18 @@ def custom_processor(request):
     return {}
 
 # views here.
-@login_required(login_url="/authentication/login/")
+@login_required(login_url="/authentication/login/")       # access permitted only if user is logged in
 def index(request):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
 
+    # for each garden get request to update next_rain field.
     for item in garden_list:
         item.next_rain = get_rain(item.city, 'next')
 
+    # form to create new garden
     form = GardenForm(request.POST or None)
     if form.is_valid():
-        form.instance.user = request.user
+        form.instance.user = request.user     # set current user as user
         form.save()
         return HttpResponseRedirect('/')
 
@@ -46,18 +50,23 @@ def index(request):
 def detail(request, garden_id):
     garden = get_object_or_404(Garden, pk=garden_id)
 
+    # form to create new area
     create_form = AreaForm(request.POST or None)
     if request.method == "POST" and 'create' in request.POST:
         if create_form.is_valid():
             create_form.instance.garden = get_object_or_404(Garden, pk=garden_id)
             create_form.save()
+
+            # schedule future irrigation for this area
             calendar_irrigation = ScheduledIrrigation(area=create_form.instance)
             calendar_irrigation.save()
 
+    #delete garden
     if request.method == "POST" and 'delete' in request.POST:
         garden.delete()
         return HttpResponseRedirect('/')
 
+    # update garden info
     update_form = GardenForm(request.POST or None, instance=garden, initial={'city': garden.city})
     if request.method == "POST" and 'update' in request.POST:
         if update_form.is_valid():
@@ -105,6 +114,7 @@ def irrigation(request, area_id, type):
         'irrigation_list': irrigation_list,
     }
 
+    # different process for each type of irrigation Manual (M) , Scheduled (C), Smart (S)
     if type == "M":
         irrigation = Irrigation.objects.filter(area=area, end__gte=timezone.now()).order_by('-start')[:1]
         context['irrigation'] = irrigation
@@ -115,7 +125,7 @@ def irrigation(request, area_id, type):
 
         if irrigation:
             if request.method == 'POST' and 'delete' in request.POST:
-                irrigation[0].end = timezone.now()
+                irrigation[0].end = timezone.now()   # if the irrigation is stop before prefixed time, current time value is passed as end
                 irrigation[0].save()
                 return render(request, 'dashboard/manual_irrigation.html', context)
 
