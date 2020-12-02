@@ -72,15 +72,21 @@
 
                 // If the count down is over, write some text
                 if (distance < 0) {
-                    clearInterval(interval);
                     document.getElementById("demo").innerHTML = "SCADUTO";
+                    Stop()
                 }
 
             }, 1000);
 
 
             function Stop() {
+                var server = 'http://' + "{{ irrigation.0.area.garden.ip  }}"
+                var url = server + '/update?relay=' + "{{irrigation.0.area.relay}}" + '&state=0'
                 clearInterval(interval);
+                var xmlHttp = new XMLHttpRequest();
+                xmlHttp.open("GET", url, true);
+                xmlHttp.send(null);
+                return xmlHttp.responseText;
             }
         </script>
 
