@@ -27,6 +27,7 @@ class Garden(models.Model):
     image = models.CharField(max_length=255,
                              choices=IMG_CHOICES,
                              default=PLANT)
+    ip = models.CharField('Indirizzo Ip Esp32', max_length=200, blank=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -37,8 +38,9 @@ class Area(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
     name = models.CharField(max_length=10)
     humidity = models.IntegerField(default=0)
-    last_irrigation = models.DateTimeField('ultima irrigazione', default="2012-01-01 00:01", editable=False)
+    last_irrigation = models.DateTimeField('Ultima irrigazione', default="2012-01-01 00:01", editable=False)
     irrigation_type = models.CharField(max_length=1, choices=IRRIGATION, default=MANUAL)
+    relay = models.IntegerField('Interruttore', blank=True, null=True)
 
     def __str__(self):
         return self.name
@@ -60,6 +62,7 @@ class Irrigation(models.Model):
 
     def __str__(self):
         return str(self.date)
+
 
 class ScheduledIrrigation(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)

@@ -10,7 +10,8 @@ class GardenForm(forms.ModelForm):
         fields = [
             'name',
             'image',
-            'city'
+            'city',
+            'ip'
         ]
         labels= {
             'name': 'Nome',
@@ -24,6 +25,7 @@ class AreaForm(forms.ModelForm):
         fields = [
             'name',
             'irrigation_type',
+            'relay'
         ]
         labels = {
             'name': 'Nome',
