@@ -1,4 +1,5 @@
 import django.utils
+import requests
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
@@ -36,10 +37,17 @@ def initial_settings(sender, **kwargs):
 @receiver(post_save, sender=Irrigation)
 def irrigation(sender, instance, **kwargs):
     if kwargs.get('created', False):
+        # call to relay
+        server_url = 'http://' + str(instance.area.garden.ip)
+        url = server_url + '/update?relay=' + str(instance.area.relay) + '&state=1'
+        requests.request('GET', url)
+
+        # create notification
         Notification.objects.create(user=instance.area.garden.user,
                                     title="Irrigazione manuale avviata",
                                     message=f'zona: {instance.area}')
 
+        # update last irrigation field of current area
         area = get_object_or_404(Area, pk=instance.area.pk)
         area.last_irrigation = instance.date
         area.save()
