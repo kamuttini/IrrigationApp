@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import PasswordChangeForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseNotFound
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
 from .forms import *
@@ -24,8 +24,9 @@ def custom_processor(request):
 
     return {}
 
+
 # views here.
-@login_required(login_url="/authentication/login/")       # access permitted only if user is logged in
+@login_required(login_url="/authentication/login/")  # access permitted only if user is logged in
 def index(request):
     garden_list = Garden.objects.filter(user=request.user).order_by('name')
 
@@ -36,7 +37,7 @@ def index(request):
     # form to create new garden
     form = GardenForm(request.POST or None)
     if form.is_valid():
-        form.instance.user = request.user     # set current user as user
+        form.instance.user = request.user  # set current user as user
         form.save()
         return HttpResponseRedirect('/')
 
@@ -61,7 +62,7 @@ def detail(request, garden_id):
             calendar_irrigation = ScheduledIrrigation(area=create_form.instance)
             calendar_irrigation.save()
 
-    #delete garden
+    # delete garden
     if request.method == "POST" and 'delete' in request.POST:
         garden.delete()
         return HttpResponseRedirect('/')
@@ -125,7 +126,7 @@ def irrigation(request, area_id, type):
 
         if irrigation:
             if request.method == 'POST' and 'delete' in request.POST:
-                irrigation[0].end = timezone.now()   # if the irrigation is stop before prefixed time, current time value is passed as end
+                irrigation[0].end = timezone.now()  # if the irrigation is stop before prefixed time, current time value is passed as end
                 irrigation[0].save()
                 return render(request, 'dashboard/manual_irrigation.html', context)
 
@@ -185,3 +186,22 @@ def settings(request):
         'user_form': user_form
     }
     return render(request, "dashboard/settings.html", context)
+
+
+def update_temperature(request, garden_id, temp):
+    try:
+        garden = get_object_or_404(Garden, id=garden_id)
+        garden.temperature = temp
+        garden.save()
+    except:
+        return HttpResponseNotFound(
+            "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
+
+    return HttpResponse(status=200)
+
+
+def update_humidity(request, area_id, humidity):
+    area = get_object_or_404(Area, id=area_id)
+    area.humidity = humidity
+    area.save()
+    return HttpResponse(status=200)

@@ -23,6 +23,7 @@ class Garden(models.Model):
     city = models.ForeignKey(Location, on_delete=models.CASCADE, default=None)
     last_rain = models.DateTimeField('ultima pioggia', blank=True, null=True)
     next_rain = models.DateTimeField(default='2012-01-01 00:01')
+    temperature = models.FloatField(blank=True, null=True)
     image = models.CharField(max_length=255,
                              choices=IMG_CHOICES,
                              default=PLANT)
