@@ -201,7 +201,32 @@ def update_temperature(request, garden_id, temp):
 
 
 def update_humidity(request, area_id, humidity):
-    area = get_object_or_404(Area, id=area_id)
-    area.humidity = humidity
-    area.save()
+    try:
+        area = get_object_or_404(Area, id=area_id)
+        area.humidity = humidity
+        area.save()
+    except:
+        return HttpResponseNotFound(
+            "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
+    return HttpResponse(status=200)
+
+
+def register_rain(request, garden_id):
+    try:
+        garden = get_object_or_404(Garden, id=garden_id)
+        Rain.objects.create(garden=garden)
+    except:
+        return HttpResponseNotFound(
+            "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
+    return HttpResponse(status=201)
+
+
+def register_rain_halt(request, garden_id):
+    try:
+        rain = Rain.objects.filter(garden=garden_id).latest('start')
+        rain.end = timezone.now()
+        rain.save()
+    except:
+        return HttpResponseNotFound(
+            "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
     return HttpResponse(status=200)

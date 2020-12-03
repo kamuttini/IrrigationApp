@@ -11,4 +11,7 @@ urlpatterns = [
     path('settings/', views.settings, name='settings'),
     path('update_temperature/<int:garden_id>/<temp>/', views.update_temperature, name='update_temperature'),
     path('update_humidity/<int:area_id>/<int:humidity>/', views.update_humidity, name='update_humidity'),
+    path('register_rain/<int:garden_id>/', views.register_rain, name='register_rain'),
+    path('register_rain_halt/<int:garden_id>/', views.register_rain_halt, name='register_rain_halt')
+
 ]

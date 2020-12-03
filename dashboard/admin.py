@@ -11,6 +11,7 @@ admin.site.register(Location)
 admin.site.register(Irrigation)
 admin.site.register(ScheduledIrrigation)
 admin.site.register(Setting)
+admin.site.register(Rain)
 
 
 class SettingInline(admin.StackedInline):
