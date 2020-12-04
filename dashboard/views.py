@@ -87,6 +87,7 @@ def detail(request, garden_id):
 def area_detail(request, area_id):
     area = get_object_or_404(Area, pk=area_id)
     irrigation_list = Irrigation.objects.filter(area=area).order_by('-start')[:20]
+    rain_list = Rain.objects.filter(garden=area.garden_id).order_by('-start').exclude(end=None)
 
     if request.method == "POST" and 'delete' in request.POST:
         area.delete()
@@ -101,6 +102,7 @@ def area_detail(request, area_id):
         'area': area,
         'update_form': update_form,
         'irrigation_list': irrigation_list,
+        'rain_list': rain_list
     }
 
     return render(request, 'dashboard/area_detail.html', context)

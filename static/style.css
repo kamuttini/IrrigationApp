@@ -216,9 +216,9 @@
 }
 /*INDEX*/
 
-.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover {
+.card-title a:hover, .fa-arrow-left:hover, .search-result a:hover, .chart .dropdown-item:hover, .green-hover:hover {
     text-decoration: none;
-    color: #91B77E;
+    color: #91B77E !important;
 }
 
 .card-text {

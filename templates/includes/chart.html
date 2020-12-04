@@ -1,13 +1,14 @@
 <div>
     <div class="dropdown" style="float:right; margin-top: -35px">
-        <button class="btn view-option green-button dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        <button class="btn view-option green-button dropdown-toggle" type="button" id="dropdownMenuButton"
+                data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
             Vista
         </button>
         <div class="dropdown-menu chart">
             <a class="dropdown-item" onclick="updateDay()" href="#">Giornaliera</a>
             <a class="dropdown-item" onclick="updateWeek()" href="#">Settimanale</a>
-            <a class="dropdown-item" onclick="updateMonth()"href="#">Mensile</a>
+            <a class="dropdown-item" onclick="updateMonth()" href="#">Mensile</a>
         </div>
     </div>
     <canvas class="margin-bottom" id="watering-chart"></canvas>
@@ -19,13 +20,25 @@
         type: 'line',
         data: {
             datasets: [{
-                data: [{% for i in irrigation_list %} parseInt({{i.get_duration}}) , {% endfor %}],
-                backgroundColor: [
+                yAxisID: 'irrigation',
+                data: [{% for i in irrigation_list %}{x: new Date('{{ i.start |date:"c"  }}'),
+                        y: parseInt({{i.get_duration}}) }, {% endfor %}],
+                borderColor: [
                     'rgba(99,138,255, 0.4)',
                 ],
+                fill: false,
                 label: 'durata irrigazione',
+            }, {
+                yAxisID: 'rain',
+                data: [{% for i in rain_list %}{x: new Date('{{ i.start |date:"c"  }}'),
+                        y: parseInt({{i.get_duration}}) }, {% endfor %}],
+                borderColor: [
+                    'rgb(255,99,112)',
+                ],
+                fill: false,
+
+                label: 'durata pioggia',
             }],
-            labels: [{% for i in irrigation_list %}'{{ i.start |date:"Y-m-d"  }}', {% endfor %}],
         },
         options: {
             responsive: true,
@@ -34,11 +47,26 @@
                     type: 'time',
                     time: {
                         unit: 'month'
-                    }
+                    },
+
                 }],
                 yAxes: [{
+                    id: 'rain',
+                    position: 'right',
                     ticks: {
                         beginAtZero: true
+                    },
+                    gridLines: {
+                        color: "rgba(0, 0, 0, 0.05)",
+                    }
+                }, {
+                    id: 'irrigation',
+                    position: 'left',
+                    ticks: {
+                        beginAtZero: true
+                    },
+                    gridLines: {
+                       color: "rgba(0, 0, 0, 0.05)",
                     }
                 }]
             }

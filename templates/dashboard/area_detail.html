@@ -11,6 +11,9 @@
             <div class="row margin ">
                 <div class="col-lg-5 col-11 order-lg-2">
                     {% include 'includes/../includes/chart.html' %}
+                    <div class="row ">
+                        <a href="#" class="margin-left green-hover" data-toggle="modal" data-target="#rain_list"><h6>Elenco ultime piogge</h6></a>
+                    </div>
                 </div>
                 <div class="area-info margin margin-left col-lg-6 col-11 order-lg-1">
                     <div class="row text-center">
@@ -85,27 +88,14 @@
         </div>
     </div>
 
-    <!-- Modal for unload list -->
-    <div class="modal fade" id="update_area" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- Modal to display rain list -->
+    <div class="modal fade" id="rain_list" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modifica area</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form method='POST'> {% csrf_token %}
-                        {{ update_form.as_p }}
-                        <div class="modal-footer">
-                            <input class="btn green-button" type="submit" name="update" value="Salva">
-                            <a class="btn green-button" data-dismiss="modal">Annulla</a>
-                        </div>
-                    </form>
-                </div>
+                {% include 'includes/../includes/rain_list.html' %}
             </div>
         </div>
     </div>
+
 
 {% endblock content %}

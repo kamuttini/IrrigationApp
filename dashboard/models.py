@@ -4,10 +4,12 @@ from django.utils import timezone
 from django.contrib.auth.models import User
 from irrigation.settings import *
 
+
 # Create your models here.
 class Setting(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email_notification = models.BooleanField('Notifiche email', default=True)
+
 
 class Location(models.Model):
     city = models.CharField(max_length=100)
@@ -75,3 +77,13 @@ class Rain(models.Model):
     garden = models.ForeignKey(Garden, on_delete=models.CASCADE, default=None)
     start = models.DateTimeField(default=timezone.now)
     end = models.DateTimeField(blank=True, null=True)
+
+    def get_duration(self):
+        if self.end is not None:
+            delta = self.end - self.start
+            return divmod(delta.total_seconds(), 60)[0]
+        else:
+            return None
+
+    def __str__(self):
+        return str(self.start)
