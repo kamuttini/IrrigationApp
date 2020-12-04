@@ -15,7 +15,7 @@
                                 <h4 class="card-title"><a href="/{{ garden.id }}/">{{ garden.name }} </a></h4>
                                 <p class="card-text dimgray">Ultima pioggia:
                                     {% if garden.last_rain %}
-                                        {{ garden.last_rain | date:"d M " }}
+                                        {{ garden.last_rain | date:" D j M " }}
                                         {% else %}
                                         non registrata
                                     {% endif %}</p>

@@ -214,7 +214,9 @@ def update_humidity(request, area_id, humidity):
 def register_rain(request, garden_id):
     try:
         garden = get_object_or_404(Garden, id=garden_id)
-        Rain.objects.create(garden=garden)
+        obj = Rain.objects.create(garden=garden)
+        garden.last_rain = obj.start
+        garden.save()
     except:
         return HttpResponseNotFound(
             "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
