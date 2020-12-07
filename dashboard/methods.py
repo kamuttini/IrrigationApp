@@ -4,7 +4,6 @@ import datetime as DT
 from .models import Area, Garden
 from django.db.models import Q
 from mysettings import WEATHER_API_KEY
-from crontab import CronTab
 
 
 def get_weather_info(location, forecast_type):
@@ -102,90 +101,3 @@ def search(request):
     return qs, qs2
 
 
-# function to that return the frequency value for crontab jobs
-def start_frequency(drange, hour):
-    today = DT.date.today().day
-    print(today)
-    if drange == 1:
-        result = '0 ' + str(hour) + ' * * *'
-        return result
-    elif drange == 2:
-        if today % 2 == 0:
-            result = '0 ' + str(hour) + ' 2-30/2 * *'
-            return result
-        else:
-            result = '0 ' + hour + ' 1-30/2 * *'
-            return result
-    else:
-        result = '0 ' + str(hour) + ' ' + str(today) + '-31/' + str(drange) + ' * *'
-        return result
-
-
-def stop_frequency(drange, hour, min):
-    today = DT.date.today().day
-    print(today)
-    if min == '60':
-        hour += 1
-        min = '0'
-
-    if drange == 1:
-        result = min + str(hour) + ' * * *'
-        return result
-    elif drange == 2:
-        if today % 2 == 0:
-            result = min + str(hour) + ' 2-30/2 * *'
-            return result
-        else:
-            result = min + hour + ' 1-30/2 * *'
-            return result
-    else:
-        result = min + str(hour) + ' ' + str(today) + '-31/' + drange + ' * *'
-        return result
-
-
-# create command with esp32 ip address
-def create_command(type, ip, garden, relay):
-    fin = open("../static/commands/base_command.py", "rt")
-
-    # read file contents to string
-    data = fin.read()
-    # replace all occurrences of the required string
-    data = data.replace('ip_address', ip)
-    data = data.replace('type', type)
-    data = data.replace('relay', relay)
-    # close the input file
-    fin.close()
-    # open the input file in write mode
-
-    file_name = garden + '_relay' + relay + '_' + type + '.py'
-
-    fin = open(file_name, "w")
-    # overrite the input file with the resulting data
-    fin.write(data)
-    # close the file
-    fin.close()
-
-
-def schedule_irrigation(task):
-    cron = CronTab(user='root')
-    file_name_on = 'python ../static/commands/' + str(task.area.garden.id) + '_relay' + str(task.area.relay) + '_1.py'
-    file_name_off = 'python ../static/commands/' + str(task.area.garden.id) + '_relay' + str(task.area.relay) + '_0.py'
-    try:
-        job1 = cron.find_command(command=file_name_on)
-        job2 = cron.find_command(command=file_name_off)
-    except:
-        job1 = cron.new(command=file_name_on)
-        job2 = cron.new(command=file_name_off)
-    job1.setall(start_frequency(task.frequency, task.hour))
-    job2.setall(start_frequency(task.frequency, task.hour.time.hour, task.duration))
-    cron.write()
-
-
-def remove_scheduled_irrigation(area):
-    cron = CronTab(user='root')
-    file_name_on = 'python ../static/commands/' + str(area.garden.id) + '_relay' + str(area.relay) + '_1.py'
-    file_name_off = 'python ../static/commands/' + str(area.garden.id) + '_relay' + str(area.relay) + '_0.py'
-    job1 = cron.find_command(command=file_name_on)
-    job2 = cron.find_command(command=file_name_off)
-    cron.remove(job1)
-    cron.remove(job2)
