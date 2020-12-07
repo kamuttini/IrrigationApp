@@ -12,7 +12,7 @@
                     <p class="description">
                         Questa area viene annafiata <br>
                         <strong>{{ irrigation_settings.get_frequency_display }}</strong>
-                        per <strong>{{ irrigation_settings.duration }}</strong><br>
+                        per <strong>{{ irrigation_settings.get_duration_display }}</strong><br>
                         alle {{ irrigation_settings.hour | time }}
                     </p>
                     <a class="margin-left dropdown-toggle" data-toggle="collapse" href="#settings" role="button"

@@ -69,7 +69,7 @@ class Irrigation(models.Model):
 class ScheduledIrrigation(models.Model):
     area = models.ForeignKey(Area, on_delete=models.CASCADE, default=None)
     frequency = models.CharField('frequenza', max_length=10, choices=FREQUENCY, default='2')
-    duration = models.CharField('durata', max_length=100, choices=zip(DURATION, DURATION), default='20 minuti')
+    duration = models.CharField('durata', max_length=100, choices=DURATION, default='20')
     hour = models.TimeField('Orario', default=datetime.time(00, 00))
 
 
