@@ -62,6 +62,10 @@ def detail(request, garden_id):
             calendar_irrigation = ScheduledIrrigation(area=create_form.instance)
             calendar_irrigation.save()
 
+            #create commands to start and stop irrigation
+            create_command('1', create_form.instance.garden.ip, str(create_form.instance.garden), str(create_form.instance.relay))
+            create_command('0', create_form.instance.garden.ip, str(create_form.instance.garden), str(create_form.instance.relay))
+
     # delete garden
     if request.method == "POST" and 'delete' in request.POST:
         garden.delete()
@@ -91,6 +95,7 @@ def area_detail(request, area_id):
 
     if request.method == "POST" and 'delete' in request.POST:
         area.delete()
+        remove_scheduled_irrigation(area)
         return HttpResponseRedirect('/')
 
     update_form = AreaForm(request.POST or None, instance=area)
@@ -140,6 +145,7 @@ def irrigation(request, area_id, type):
 
         if form.is_valid():
             form.save()
+            schedule_irrigation(irrigation_settings)
 
         context['form'] = form
         context['irrigation_settings'] = irrigation_settings
