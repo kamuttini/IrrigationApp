@@ -1,8 +1,9 @@
 import os
 
 from celery import Celery
-
 # set the default Django settings module for the 'celery' program.
+import requests, json
+
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'irrigation.settings')
 
 app = Celery('irrigation')
@@ -21,6 +22,15 @@ app.autodiscover_tasks()
 def debug_task(self):
     print(f'Request: {self.request!r}')
 
+
 @app.task(bind=True)
 def hello_world(self):
     print('Hello world!')
+
+
+@app.task(bind=True)
+def relay_on(self, ip, relay):
+    # call to relay
+    server_url = 'http://' + str(ip)
+    url = server_url + '/update?relay=' + str(relay) + '&state=1'
+    requests.request('GET', url)

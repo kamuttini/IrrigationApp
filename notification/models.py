@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import django.utils
 import requests
 from django.db import models
@@ -6,8 +8,9 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
 
-from dashboard.models import Area, Setting, Irrigation
+from dashboard.models import Area, Setting, Irrigation, ScheduledIrrigation
 from django.core.mail import send_mail
+from django_celery_beat.models import IntervalSchedule, PeriodicTask
 
 
 # Create your models here.
@@ -64,3 +67,17 @@ def notify_low_humidity(sender, instance, **kwargs):
         Notification.objects.create(user=instance.garden.user,
                                     title="Umidità bassa",
                                     message=message)
+
+
+@receiver(post_save, sender=ScheduledIrrigation)
+def create_or_update_periodic_task(sender, instance, created, **kwargs):
+    if not created and instance.area.irrigation_type == 'C':
+        start_time: datetime = datetime.today()
+        start_time.replace(int(str(datetime.today().year)), int(str(datetime.today().month)),
+                           int(str(datetime.today().day)), int(str(instance.hour.hour)))
+        PeriodicTask.objects.create(name='on_' + str(instance.area),
+                                    task='relay_on',
+                                    enabled=True,
+                                    interval=IntervalSchedule.objects.get(every=instance.frequency, period='days'),
+                                    args=[instance.area.garden.ip, instance.area.relay],
+                                    start_time=start_time)

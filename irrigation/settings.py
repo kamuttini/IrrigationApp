@@ -176,8 +176,7 @@ IRRIGATION = [
 ]
 
 FREQUENCY = [
-    ('0', 'ogni giorno'),
-    ('1', 'giorni alterni'),
+    ('1', 'ogni giorno'),
     ('2', 'ogni 2 giorni'),
     ('3', 'ogni 3 giorni'),
     ('4', 'ogni 4 giorni'),

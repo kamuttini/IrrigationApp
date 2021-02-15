@@ -13,3 +13,5 @@ irrigation/celerybeat-schedule.bak
 irrigation/celerybeat-schedule.dat
 
 irrigation/celerybeat-schedule.dir
+
+celerybeat.pid
