@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 import django.utils
@@ -24,6 +25,7 @@ class Notification(models.Model):
 
     def __str__(self):
         return self.title
+
 
 @receiver(post_save, sender=User)
 def initial_settings(sender, **kwargs):
@@ -72,12 +74,21 @@ def notify_low_humidity(sender, instance, **kwargs):
 @receiver(post_save, sender=ScheduledIrrigation)
 def create_or_update_periodic_task(sender, instance, created, **kwargs):
     if not created and instance.area.irrigation_type == 'C':
-        start_time: datetime = datetime.today()
-        start_time.replace(int(str(datetime.today().year)), int(str(datetime.today().month)),
-                           int(str(datetime.today().day)), int(str(instance.hour.hour)))
-        PeriodicTask.objects.create(name='on_' + str(instance.area),
-                                    task='relay_on',
+        task_name_on = 'on_' + str(instance.area.id)
+        task_name_off = 'off_' + str(instance.area.id)
+        if PeriodicTask.objects.filter(name=task_name_on).exists():
+            get_object_or_404(PeriodicTask, name=task_name_on).delete()
+
+        PeriodicTask.objects.create(name=task_name_on,
+                                    task='irrigation.celery.relay_on',
                                     enabled=True,
-                                    interval=IntervalSchedule.objects.get(every=instance.frequency, period='days'),
-                                    args=[instance.area.garden.ip, instance.area.relay],
-                                    start_time=start_time)
+                                    interval=IntervalSchedule.objects.get(every='15', period='seconds'),
+                                    kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay}))
+
+        PeriodicTask.objects.create(name=task_name_off,
+                                    task='irrigation.celery.relay_off',
+                                    enabled=True,
+                                    interval=IntervalSchedule.objects.get(every='25', period='seconds'),
+                                    kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay}))
+
+

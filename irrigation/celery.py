@@ -34,3 +34,10 @@ def relay_on(self, ip, relay):
     server_url = 'http://' + str(ip)
     url = server_url + '/update?relay=' + str(relay) + '&state=1'
     requests.request('GET', url)
+
+@app.task(bind=True)
+def relay_off(self, ip, relay):
+    # call to relay
+    server_url = 'http://' + str(ip)
+    url = server_url + '/update?relay=' + str(relay) + '&state=0'
+    requests.request('GET', url)
