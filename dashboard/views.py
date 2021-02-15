@@ -123,6 +123,7 @@ def irrigation(request, area_id, type):
         context['irrigation'] = irrigation
 
         if request.method == 'POST' and 'create' in request.POST:
+            activate_relay(area.garden.ip, area.relay)
             Irrigation.objects.create(area=area, end=timezone.now() + datetime.timedelta(
                 minutes=int(request.POST.get('value', ""))))
 

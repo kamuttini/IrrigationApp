@@ -37,11 +37,6 @@ def initial_settings(sender, **kwargs):
 @receiver(post_save, sender=Irrigation)
 def irrigation(sender, instance, **kwargs):
     if kwargs.get('created', False):
-        # call to relay
-        server_url = 'http://' + str(instance.area.garden.ip)
-        url = server_url + '/update?relay=' + str(instance.area.relay) + '&state=1'
-        requests.request('GET', url)
-
         # create notification
         Notification.objects.create(user=instance.area.garden.user,
                                     title="Irrigazione manuale avviata",

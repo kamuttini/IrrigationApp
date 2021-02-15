@@ -101,3 +101,9 @@ def search(request):
     return qs, qs2
 
 
+
+def activate_relay(ip, relay):
+    # call to activate relay
+    server_url = 'http://' + str(ip)
+    url = server_url + '/update?relay=' + str(relay) + '&state=1'
+    requests.request('GET', url)
