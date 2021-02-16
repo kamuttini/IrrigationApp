@@ -235,3 +235,11 @@ def register_rain_halt(request, garden_id):
         return HttpResponseNotFound(
             "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
     return HttpResponse(status=200)
+
+
+def register_irrigation(request, t, area_id, duration):
+    duration_f = duration + 1
+    area = get_object_or_404(Area, id=area_id)
+    obj = Irrigation.objects.create(irrigation_type=t, area=area,
+                                    end=timezone.now() + datetime.timedelta(minutes=duration_f))
+    return HttpResponse(status=201)

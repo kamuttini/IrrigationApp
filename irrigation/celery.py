@@ -29,11 +29,15 @@ def hello_world(self):
 
 
 @app.task(bind=True)
-def relay_on(self, ip, relay):
+def relay_on(self, ip, relay, area, duration):
+    
+    requests.request('POST', 'http://127.0.0.1:8000/register_irrigation/C/' + str(area) + '/'+duration+'/')
+
     # call to relay
     server_url = 'http://' + str(ip)
     url = server_url + '/update?relay=' + str(relay) + '&state=1'
     requests.request('GET', url)
+
 
 @app.task(bind=True)
 def relay_off(self, ip, relay):

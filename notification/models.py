@@ -79,11 +79,14 @@ def create_or_update_periodic_task(sender, instance, created, **kwargs):
         if PeriodicTask.objects.filter(name=task_name_on).exists():
             get_object_or_404(PeriodicTask, name=task_name_on).delete()
 
+        if PeriodicTask.objects.filter(name=task_name_off).exists():
+            get_object_or_404(PeriodicTask, name=task_name_off).delete()
+
         PeriodicTask.objects.create(name=task_name_on,
                                     task='irrigation.celery.relay_on',
                                     enabled=True,
                                     interval=IntervalSchedule.objects.get(every='15', period='seconds'),
-                                    kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay}))
+                                    kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay, "area": instance.area.pk, "duration": instance.duration}))
 
         PeriodicTask.objects.create(name=task_name_off,
                                     task='irrigation.celery.relay_off',
