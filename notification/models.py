@@ -1,8 +1,6 @@
 import json
-from datetime import datetime
 
 import django.utils
-import requests
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save
@@ -11,7 +9,8 @@ from django.shortcuts import get_object_or_404
 
 from dashboard.models import Area, Setting, Irrigation, ScheduledIrrigation
 from django.core.mail import send_mail
-from django_celery_beat.models import IntervalSchedule, PeriodicTask
+from django_celery_beat.models import IntervalSchedule, PeriodicTask, CrontabSchedule
+import datetime as DT
 
 
 # Create your models here.
@@ -71,6 +70,18 @@ def notify_low_humidity(sender, instance, **kwargs):
                                     message=message)
 
 
+@receiver(pre_save, sender=Area)
+def check_irrigation_type(sender, instance, **kwargs):
+    task_name_on = 'on_' + str(instance.id)
+    task_name_off = 'off_' + str(instance.id)
+    if instance.irrigation_type == 'M' or instance.irrigation_type == 'S':
+        if PeriodicTask.objects.filter(name=task_name_on).exists():
+            get_object_or_404(PeriodicTask, name=task_name_on).delete()
+
+        if PeriodicTask.objects.filter(name=task_name_off).exists():
+            get_object_or_404(PeriodicTask, name=task_name_off).delete()
+
+
 @receiver(post_save, sender=ScheduledIrrigation)
 def create_or_update_periodic_task(sender, instance, created, **kwargs):
     if not created and instance.area.irrigation_type == 'C':
@@ -85,13 +96,65 @@ def create_or_update_periodic_task(sender, instance, created, **kwargs):
         PeriodicTask.objects.create(name=task_name_on,
                                     task='irrigation.celery.relay_on',
                                     enabled=True,
-                                    interval=IntervalSchedule.objects.get(every='15', period='seconds'),
-                                    kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay, "area": instance.area.pk, "duration": instance.duration}))
+                                    crontab=start_frequency(instance.frequency, instance.hour),
+                                    kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay,
+                                                       "area": instance.area.pk, "duration": instance.duration}))
 
         PeriodicTask.objects.create(name=task_name_off,
                                     task='irrigation.celery.relay_off',
                                     enabled=True,
-                                    interval=IntervalSchedule.objects.get(every='25', period='seconds'),
+                                    crontab=stop_frequency(instance.frequency, instance.hour, instance.duration),
                                     kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay}))
 
 
+# function that returns the frequency value for crontab jobs
+def start_frequency(drange, hour):
+    today = DT.date.today().day
+    if drange == 2:
+        if today % 2 == 0:
+            if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month='2-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month='2-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month='2-30/2')
+
+        else:
+            if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month='1-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month='1-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month='1-30/2')
+
+    else:
+        repetition = '*/' + drange
+        if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month=repetition).exists():
+            obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month=repetition)
+        else:
+            obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month=repetition)
+    return obj
+
+
+def stop_frequency(drange, hour, min):
+    today = DT.date.today().day
+    if min == '60':
+        min = '59'
+
+    today = DT.date.today().day
+    if drange == 2:
+        if today % 2 == 0:
+            if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month='2-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month='2-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month='2-30/2')
+
+        else:
+            if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month='1-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month='1-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month='1-30/2')
+
+    else:
+        repetition = '*/' + drange
+        if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month=repetition).exists():
+            obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month=repetition)
+        else:
+            obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month=repetition)
+    return obj
