@@ -1,11 +1,45 @@
 {% extends 'layout/../layout/base.html' %}
 {% block content %}
-    <a href="/{{ area.id }}/area_detail" ><i class="fas fa-arrow-left"></i></a>
-
-    <div class="col-12">
-        <h1>Irrigazione Intelligente della zona {{ area.name }}</h1>
-    </div><br>
-    <div class="col-4">
-        {% include 'includes/../includes/irrigation_list.html' %}
+    <div class="col-1">
+        <a href="/{{ area.id }}/area_detail"><i class="fas fa-arrow-left"></i></a>
     </div>
+    <div class="row margin ">
+        <div class="col-1"></div>
+        <div class="col-11">
+            <h1>Irrigazione smart della zona {{ area.name }}</h1>
+            <div class="row settings">
+                <div class="col-md-8 col-10" style="margin-bottom: 50px">
+                    <p class="description" style="width:60%">
+                        Questa area dovrebbe essere irrigata
+                        <strong>{{ irrigation_settings.get_frequency_display }}</strong>
+                        per <strong>{{ irrigation_settings.get_duration_display }}</strong><br>
+                        alle {{ irrigation_settings.hour | time }}<br>
+                        Sulla base di questi parametri e delle condizioni atmosferiche viene deciso il momento migliore per annaffiare e
+                        l'effettiva durata dell'irrigazione.
+                    </p>
+                    <a class="margin-left dropdown-toggle" data-toggle="collapse" href="#settings" role="button"
+                       aria-expanded="false" aria-controls="collapseExample">
+                        <h4 id="edit-title">modifica le impostazioni</h4>
+                    </a>
+
+                    <div class="collapse margin " id="settings">
+                        <form class= 'margin-left' method="POST">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <div class="margin">
+                                <input class="btn green-button" type="submit" value="Salva">
+                                <a class="btn  green-button" href="/">Annulla</a>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+                <div class="col-md-4 col-10 ">
+                    {% include 'includes/../includes/irrigation_list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock content %}

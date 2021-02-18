@@ -135,7 +135,7 @@ def irrigation(request, area_id, type):
 
         return render(request, 'dashboard/manual_irrigation.html', context)
 
-    elif type == "C":
+    else:
         irrigation_settings = get_object_or_404(ScheduledIrrigation, area=area)
         form = CalendarIrrigationForm(request.POST or None, instance=irrigation_settings)
 
@@ -144,10 +144,11 @@ def irrigation(request, area_id, type):
 
         context['form'] = form
         context['irrigation_settings'] = irrigation_settings
-        return render(request, 'dashboard/scheduled_irrigation.html', context)
+        if type == "C":
+            return render(request, 'dashboard/scheduled_irrigation.html', context)
 
-    elif type == "S":
-        return render(request, 'dashboard/smart_irrigation.html', context)
+        if type == "S":
+            return render(request, 'dashboard/smart_irrigation.html', context)
 
 
 @login_required(login_url="/authentication/login/")
