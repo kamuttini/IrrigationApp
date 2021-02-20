@@ -40,10 +40,11 @@ def initial_settings(sender, **kwargs):
 
 @receiver(post_save, sender=Irrigation)
 def irrigation(sender, instance, **kwargs):
+    settings = get_object_or_404(Setting, user=instance.area.garden.user)
     if kwargs.get('created', False):
         # create notification
         Notification.objects.create(user=instance.area.garden.user,
-                                    title="Irrigazione manuale avviata",
+                                    title="Irrigazione avviata",
                                     message=f'zona: {instance.area}')
 
         # update last irrigation field of current area
@@ -51,11 +52,21 @@ def irrigation(sender, instance, **kwargs):
         area.last_irrigation = instance.date
         area.save()
 
+    if instance.irrigation_type != 'M':
+        if settings.email_notification:
+            send_mail(
+                'irrigazione avviata',
+                f'Irrigazione della zona {instance.area} appena iniziata! Durerà {instance.duration} minuti',
+                'irrigator.it@gmail.com',
+                [instance.garden.user.email],
+                fail_silently=False,
+            )
+
 
 @receiver(pre_save, sender=Area)
 def notify_low_humidity(sender, instance, **kwargs):
-    if instance.humidity < 30:
-        message = f"l'umidità della zona {instance} è sotto il 30%."
+    if instance.humidity < 20:
+        message = f"l'umidità della zona {instance} è sotto il 10%."
         settings = get_object_or_404(Setting, user=instance.garden.user)
         if settings.email_notification:
             send_mail(
