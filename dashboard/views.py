@@ -123,6 +123,7 @@ def irrigation(request, area_id, type):
         context['irrigation'] = irrigation
 
         if request.method == 'POST' and 'create' in request.POST:
+            activate_relay(area.garden.ip, area.relay)
             Irrigation.objects.create(area=area, end=timezone.now() + datetime.timedelta(
                 minutes=int(request.POST.get('value', ""))))
 
@@ -134,7 +135,7 @@ def irrigation(request, area_id, type):
 
         return render(request, 'dashboard/manual_irrigation.html', context)
 
-    elif type == "C":
+    else:
         irrigation_settings = get_object_or_404(ScheduledIrrigation, area=area)
         form = CalendarIrrigationForm(request.POST or None, instance=irrigation_settings)
 
@@ -143,10 +144,11 @@ def irrigation(request, area_id, type):
 
         context['form'] = form
         context['irrigation_settings'] = irrigation_settings
-        return render(request, 'dashboard/scheduled_irrigation.html', context)
+        if type == "C":
+            return render(request, 'dashboard/scheduled_irrigation.html', context)
 
-    elif type == "S":
-        return render(request, 'dashboard/smart_irrigation.html', context)
+        if type == "S":
+            return render(request, 'dashboard/smart_irrigation.html', context)
 
 
 @login_required(login_url="/authentication/login/")
@@ -234,3 +236,11 @@ def register_rain_halt(request, garden_id):
         return HttpResponseNotFound(
             "<h1>Operazione non completata</h1><br><p>L'indirizzo potrebbe essere errato o l'id inesistente</p>")
     return HttpResponse(status=200)
+
+
+def register_irrigation(request, t, area_id, duration):
+    duration_f = duration + 1
+    area = get_object_or_404(Area, id=area_id)
+    obj = Irrigation.objects.create(irrigation_type=t, area=area,
+                                    end=timezone.now() + datetime.timedelta(minutes=duration_f))
+    return HttpResponse(status=201)

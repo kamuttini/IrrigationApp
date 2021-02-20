@@ -1,4 +1,5 @@
 from django.urls import path
+from django.views.decorators.csrf import csrf_exempt
 
 from . import views
 
@@ -12,6 +13,7 @@ urlpatterns = [
     path('update_temperature/<int:garden_id>/<temp>/', views.update_temperature, name='update_temperature'),
     path('update_humidity/<int:area_id>/<int:humidity>/', views.update_humidity, name='update_humidity'),
     path('register_rain/<int:garden_id>/', views.register_rain, name='register_rain'),
-    path('register_rain_halt/<int:garden_id>/', views.register_rain_halt, name='register_rain_halt')
+    path('register_rain_halt/<int:garden_id>/', views.register_rain_halt, name='register_rain_halt'),
+    path('register_irrigation/<slug:t>/<int:area_id>/<int:duration>/', csrf_exempt(views.register_irrigation), name='register_irrigation')
 
 ]

@@ -34,7 +34,9 @@ function toggleNav() {
 /*  PAGE REFRESH ON VIEWPORT RESIZE */
 window.onresize = function(event)
 {
-document.location.reload(true);
+    if (!(window.location.href.indexOf("authentication") > -1)){
+        document.location.reload(true);}
+
 }
 
 window.onload = function initial() {

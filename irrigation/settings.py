@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_celery_beat',
     'agenda.apps.AgendaConfig',
     'notification.apps.NotificationConfig',
     'dashboard.apps.DashboardConfig',
@@ -141,7 +142,16 @@ EMAIL_HOST_PASSWORD = PASSWORD_GMAIL
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
+# Celery Configuration Options
+CELERY_TIMEZONE = 'Europe/Rome'
+CELERY_TASK_TRACK_STARTED = True
+CELERY_TASK_TIME_LIMIT = 30 * 60
 
+
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
 PLANT = 'cover/balcony.jpg'
 TERRACE = 'cover/terrace.jpg'
@@ -166,8 +176,7 @@ IRRIGATION = [
 ]
 
 FREQUENCY = [
-    ('0', 'ogni giorno'),
-    ('1', 'giorni alterni'),
+    ('1', 'ogni giorno'),
     ('2', 'ogni 2 giorni'),
     ('3', 'ogni 3 giorni'),
     ('4', 'ogni 4 giorni'),

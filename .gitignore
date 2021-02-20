@@ -8,3 +8,10 @@ db.sqlite3
 db.sqlite3-journal
 .idea/
 mysettings.py
+irrigation/celerybeat-schedule.bak
+
+irrigation/celerybeat-schedule.dat
+
+irrigation/celerybeat-schedule.dir
+
+celerybeat.pid
