@@ -1,7 +1,10 @@
+from django.shortcuts import get_object_or_404
+from django_celery_beat.models import CrontabSchedule
+
 from static.translation import WEATHER, WEEK
 import requests
 import datetime as DT
-from .models import Area, Garden
+from .models import Area, Garden, Rain, Location
 from django.db.models import Q
 from mysettings import WEATHER_API_KEY
 
@@ -101,9 +104,96 @@ def search(request):
     return qs, qs2
 
 
-
 def activate_relay(ip, relay):
     # call to activate relay
     server_url = 'http://' + str(ip)
     url = server_url + '/update?relay=' + str(relay) + '&state=1'
     requests.request('GET', url)
+
+
+# function that returns the frequency value for crontab jobs
+def start_frequency(drange, hour):
+    today = DT.date.today().day
+    if drange == 2:
+        if today % 2 == 0:
+            if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month='2-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month='2-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month='2-30/2')
+
+        else:
+            if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month='1-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month='1-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month='1-30/2')
+
+    else:
+        repetition = '*/' + drange
+        if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month=repetition).exists():
+            obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month=repetition)
+        else:
+            obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month=repetition)
+    return obj
+
+
+def stop_frequency(drange, hour, min):
+    today = DT.date.today().day
+    if min == '60':
+        min = '59'
+
+    today = DT.date.today().day
+    if drange == 2:
+        if today % 2 == 0:
+            if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month='2-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month='2-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month='2-30/2')
+
+        else:
+            if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month='1-30/2').exists():
+                obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month='1-30/2')
+            else:
+                obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month='1-30/2')
+
+    else:
+        repetition = '*/' + drange
+        if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month=repetition).exists():
+            obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month=repetition)
+        else:
+            obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month=repetition)
+    return obj
+
+
+def is_raining(area):
+    today = DT.date.today().day
+    if Rain.objects.exists(garden=area.garden, start=today, end=None):
+        return True
+    return False
+
+
+def get_rain_probability(area, day):
+    url = "https://api.climacell.co/v3/weather/forecast/daily"
+    location = get_object_or_404(Location, city=area.garden.city)
+    querystring = {"lat": location.lat, "lon": location.lon, "unit_system": "si", "start_time": "now",
+                   "fields": "precipitation_probability",
+                   "apikey": WEATHER_API_KEY}
+
+    response = requests.request("GET", url, params=querystring).json()
+
+    if day == 'today':
+        i = 0
+    else:
+        i = 1
+    if response[i]['precipitation_probability']['value'] >= 50:
+        return True
+
+    return False
+
+
+def has_rained(area):
+    today = DT.date.today()
+    ref = today-DT.timedelta(hours=12)
+    if Rain.objects.exists(garden=area.garden, start__gte=ref):
+        return True
+
+    return False

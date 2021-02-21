@@ -7,6 +7,7 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
 
+from dashboard.methods import start_frequency, stop_frequency
 from dashboard.models import Area, Setting, Irrigation, ScheduledIrrigation
 from django.core.mail import send_mail
 from django_celery_beat.models import IntervalSchedule, PeriodicTask, CrontabSchedule
@@ -118,54 +119,4 @@ def create_or_update_periodic_task(sender, instance, created, **kwargs):
                                     kwargs=json.dumps({"ip": instance.area.garden.ip, "relay": instance.area.relay}))
 
 
-# function that returns the frequency value for crontab jobs
-def start_frequency(drange, hour):
-    today = DT.date.today().day
-    if drange == 2:
-        if today % 2 == 0:
-            if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month='2-30/2').exists():
-                obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month='2-30/2')
-            else:
-                obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month='2-30/2')
 
-        else:
-            if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month='1-30/2').exists():
-                obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month='1-30/2')
-            else:
-                obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month='1-30/2')
-
-    else:
-        repetition = '*/' + drange
-        if not CrontabSchedule.objects.filter(minute='0', hour=hour, day_of_month=repetition).exists():
-            obj = CrontabSchedule.objects.create(minute='0', hour=hour, day_of_month=repetition)
-        else:
-            obj = get_object_or_404(CrontabSchedule, minute='0', hour=hour, day_of_month=repetition)
-    return obj
-
-
-def stop_frequency(drange, hour, min):
-    today = DT.date.today().day
-    if min == '60':
-        min = '59'
-
-    today = DT.date.today().day
-    if drange == 2:
-        if today % 2 == 0:
-            if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month='2-30/2').exists():
-                obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month='2-30/2')
-            else:
-                obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month='2-30/2')
-
-        else:
-            if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month='1-30/2').exists():
-                obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month='1-30/2')
-            else:
-                obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month='1-30/2')
-
-    else:
-        repetition = '*/' + drange
-        if not CrontabSchedule.objects.filter(minute=min, hour=hour, day_of_month=repetition).exists():
-            obj = CrontabSchedule.objects.create(minute=min, hour=hour, day_of_month=repetition)
-        else:
-            obj = get_object_or_404(CrontabSchedule, minute=min, hour=hour, day_of_month=repetition)
-    return obj

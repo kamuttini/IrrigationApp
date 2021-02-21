@@ -2,7 +2,7 @@ import os
 
 from celery import Celery
 # set the default Django settings module for the 'celery' program.
-import requests, json
+import requests
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'irrigation.settings')
 
@@ -28,20 +28,6 @@ def hello_world(self):
     print('Hello world!')
 
 
-@app.task(bind=True)
-def relay_on(self, ip, relay, area, duration):
-    
-    requests.request('POST', 'http://127.0.0.1:8000/register_irrigation/C/' + str(area) + '/'+duration+'/')
-
-    # call to relay
-    server_url = 'http://' + str(ip)
-    url = server_url + '/update?relay=' + str(relay) + '&state=1'
-    requests.request('GET', url)
 
 
-@app.task(bind=True)
-def relay_off(self, ip, relay):
-    # call to relay
-    server_url = 'http://' + str(ip)
-    url = server_url + '/update?relay=' + str(relay) + '&state=0'
-    requests.request('GET', url)
+
