@@ -17,31 +17,21 @@
 <script>
 
     var config = {
-        type: 'line',
+        type: 'bar',
         data: {
             datasets: [{
-                yAxisID: 'irrigation',
                 data: [{% for i in irrigation_list %}{x: new Date('{{ i.start |date:"c"  }}'),
                         y: parseInt({{i.get_duration}}) }, {% endfor %}],
-                borderColor: [
-                    'rgba(99,138,255, 0.4)',
-                ],
-                fill: false,
+                backgroundColor: 'rgba(99,138,255, 0.4)',
                 label: 'durata irrigazione',
             }, {
-                yAxisID: 'rain',
                 data: [{% for i in rain_list %}{x: new Date('{{ i.start |date:"c"  }}'),
                         y: parseInt({{i.get_duration}}) }, {% endfor %}],
-                borderColor: [
-                    'rgb(255,99,112)',
-                ],
-                fill: false,
-
+                backgroundColor: 'rgb(255,99,112)',
                 label: 'durata pioggia',
             }],
         },
         options: {
-            responsive: true,
             scales: {
                 xAxes: [{
                     type: 'time',
@@ -51,23 +41,14 @@
 
                 }],
                 yAxes: [{
-                    id: 'rain',
-                    position: 'right',
+                    position: 'left',
                     ticks: {
                         beginAtZero: true
                     },
                     gridLines: {
                         color: "rgba(0, 0, 0, 0.05)",
                     }
-                }, {
-                    id: 'irrigation',
-                    position: 'left',
-                    ticks: {
-                        beginAtZero: true
-                    },
-                    gridLines: {
-                       color: "rgba(0, 0, 0, 0.05)",
-                    }
+
                 }]
             }
         }
